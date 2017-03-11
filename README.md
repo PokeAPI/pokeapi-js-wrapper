@@ -2,6 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/pokeapi-js-wrapper.svg)](https://badge.fury.io/js/pokeapi-js-wrapper)
 [![Build Status](https://travis-ci.org/PokeAPI/pokeapi-js-wrapper.svg?branch=master)](https://travis-ci.org/PokeAPI/pokeapi-js-wrapper)
+[![Mocha browser tetst](https://img.shields.io/badge/test-browser-brightgreen.svg)](https://pokeapi.github.io/pokeapi-js-wrapper/test/test.html)
 [![Ghit.me](https://ghit.me/badge.svg?repo=PokeAPI/pokeapi-js-wrapper)](https://ghit.me/repo/PokeAPI/pokeapi-js-wrapper)
 
 A PokeAPI wrapper intended for browsers only. Comes fully asynchronous (with [localForage](https://github.com/localForage/localForage)) and built-in cache. For a Node (server-side) wrapper see: [pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2)
@@ -14,6 +15,7 @@ A PokeAPI wrapper intended for browsers only. Comes fully asynchronous (with [lo
 - [Usage](#usage)
   - [Example requests](#example-requests)
 - [Configuration](#configuration)
+- [Tests](#tests)
 - [Endpoints](#endpoints)
   - [Berries](#berries)
   - [Contests](#contests)
@@ -28,6 +30,7 @@ A PokeAPI wrapper intended for browsers only. Comes fully asynchronous (with [lo
   - [Utility](#utility)
 - [Root Endpoints](#root-endpoints)
   - [List of supported root endpoints](#list-of-supported-root-endpoints)
+- [Internet Explorer 8](#internet-explorer-8)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -35,16 +38,13 @@ A PokeAPI wrapper intended for browsers only. Comes fully asynchronous (with [lo
 
 ![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![Safari](https://raw.github.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Opera](https://raw.github.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Edge](https://raw.github.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![IE](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Internet_Explorer_10_logo.svg/48px-Internet_Explorer_10_logo.svg.png) |
 --- | --- | --- | --- | --- | --- |
-✔ | ✔ | ✔ | ✔ | ✔ | 8+ ✔ |
-
-You can install with Npm!
+✔ | ✔ | ✔ | ✔ | ✔ | [8+](#internet-explorer-8) ✔ |
 
 ```shell
 npm install pokeapi-js-wrapper
 ```
 
 ## Usage
-
 
 ```js
 var Pokedex = require('pokeapi-js-wrapper');
@@ -53,14 +53,14 @@ var P = new Pokedex.Pokedex();
 
 ```html
 <script src="https://unpkg.com/pokeapi-js-wrapper/dist/index.js"></script>
-<script>var P = new Pokedex.Pokedex();</script>
+<script> var P = new Pokedex.Pokedex(); </script>
 ```
 
 **NOTE**: Any function with the designation "ByName" can also be passed an integer ID. However, the functions with the designation "ById" can only be passed an integer ID. Refer to the [pokeapi v2 docs](http://pokeapi.co/docsv2/) to find out more about how the data is structured.
 
 **UPDATE**: You can pass an array to each endpoint, it will retrive data for each array element. If you scroll down, you will find an example.
 
-### Example requests
+### [Example](http://jsbin.com/jedakor/edit?html,console) requests
 
 ```js
   P.getPokemonByName('eevee') // with Promise
@@ -82,10 +82,20 @@ var options = {
   hostName: 'localhost:443',
   versionPath: '/api/v2/',
   cache: true,
-  tiemout: 5 * 1000 // 5s
+  timeout: 5 * 1000 // 5s
 }
 var P = new Pokedex.Pokedex(options);
 ```
+
+## Tests
+
+`pokeapi-js-wrapper` can be tested using two strategies. One is with Node, since this package works even with Node (altough not recommended), and the other with a browser.
+
+```js
+npm test
+```
+
+Or open `/test/test.html` in your browser. A live version can be found at [`gh-pages`](https://pokeapi.github.io/pokeapi-js-wrapper/test/test.html)
 
 ## Endpoints
 
@@ -658,3 +668,7 @@ This is what you will get:
 - .getStatsList()
 - .getTypesList()
 - .getLanguagesList()
+
+## Internet Explorer 8
+
+In order to target this browser if must load a Promise polyfill before `pokeapi-js-wrapper`. You can choose one of your chioce, we recommed [jakearchibald/es6-promise](https://cdnjs.com/libraries/es6-promise) or [stefanpenner/es6-promise](https://github.com/stefanpenner/es6-promise)
