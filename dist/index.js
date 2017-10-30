@@ -3571,7 +3571,6 @@ function loadUrl(url) {
             timeout: _default.values.timeout
         };
         _axios2.default.get(url, options).then(function (response) {
-            //console.log(response)
             // if there was an error
             if (response.status >= 400) {
                 reject(response);

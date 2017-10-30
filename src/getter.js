@@ -38,7 +38,6 @@ function loadUrl(url) {
         }
         axios.get(url, options)
             .then(response => {
-                //console.log(response)
                 // if there was an error
                 if (response.status >= 400) {
                     reject(response);
