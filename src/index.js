@@ -7,6 +7,7 @@ import { configurator } from './configurator.js';
 export class Pokedex {
     constructor(config) {
         configurator.setPokedexConfiguration(config);
+        configurator.setRootEndpointConfiguration(config);
         
         // add to Pokedex.prototype all our endpoint functions
         endpoints.forEach(endpoint => {
@@ -29,7 +30,6 @@ export class Pokedex {
 
         rootEndpoints.forEach(rootEndpoint => {
             this[rootEndpoint[0]] = config => {
-                configurator.setRootEndpointConfiguration(config);
                 return loadResource(`${values.versionPath}${rootEndpoint[1]}?limit=${values.limit}&offset=${values.offset}`);
             }
         });

@@ -1,13 +1,38 @@
 describe("pokedex", function () {
   var id = 2,
-  P = new Pokedex.Pokedex()
   secureP = new Pokedex.Pokedex({ protocol: 'https' });
 
   this.timeout(21000);
 
+  describe(".resource(Mixed: array)", function () {
+    it("should have property name", function () {
+      return secureP.resource(['/api/v2/pokemon/36', 'api/v2/berry/8', 'https://pokeapi.co/api/v2/ability/9/']).then(res => {
+        expect(res[0]).to.have.property('name');
+        expect(res[1]).to.have.property('name');
+        expect(res[2]).to.have.property('name');
+      })  
+    });
+  });
+
+  describe(".resource(Path: string)", function () {
+    it("should have property height", function () {
+      return secureP.resource('/api/v2/pokemon/34').then(res => {
+        expect(res).to.have.property('height');
+      }) 
+    });
+  });
+
+  describe(".resource(Url: string)", function () {
+    it("should have property height", function () {
+      return secureP.resource('https://pokeapi.co/api/v2/pokemon/400').then(res => {
+        expect(res).to.have.property('height')
+      }) 
+    });
+  });
+
   describe(".getVersionByName(Id: int)", function () {
     it("should have property name", function () {
-      return P.getVersionByName(id).then(res => {
+      return secureP.getVersionByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -413,7 +438,7 @@ describe("pokedex", function () {
 
   describe(".getBerryByName(Array: string)", function() {
     it("should have length 3", function() {
-      return P.getBerryByName(['cheri', 'chesto', 'pecha']).then(res => {
+      return secureP.getBerryByName(['cheri', 'chesto', 'pecha']).then(res => {
         expect(res).to.have.length(3);
       })
     });
@@ -421,7 +446,7 @@ describe("pokedex", function () {
 
   describe(".getBerryByName(Array: int)", function() {
     it("should have length 3", function () {
-      return P.getBerryByName([1, 3, 5]).then(res => {
+      return secureP.getBerryByName([1, 3, 5]).then(res => {
         expect(res).to.have.length(3);
       })
     });
@@ -429,7 +454,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonByName(Array: int)", function() {
     it("should have length 4", function() {
-      return P.getPokemonByName([15, 35, 433, 444]).then(res => {
+      return secureP.getPokemonByName([15, 35, 433, 444]).then(res => {
         expect(res).to.have.length(4);
       })
     });
@@ -437,7 +462,7 @@ describe("pokedex", function () {
 
   describe(".getBerryByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getBerryByName(id).then(res => {
+      return secureP.getBerryByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -445,7 +470,7 @@ describe("pokedex", function () {
 
   describe(".getBerryByName(Id: int) cached", function() {
     it("should have property name", function() {
-      return P.getBerryByName(id).then(res => {
+      return secureP.getBerryByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -453,7 +478,7 @@ describe("pokedex", function () {
 
   describe(".getBerryFirmnessByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getBerryFirmnessByName(id).then(res => {
+      return secureP.getBerryFirmnessByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -461,7 +486,7 @@ describe("pokedex", function () {
 
   describe(".getBerryFlavorByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getBerryFlavorByName(id).then(res => {
+      return secureP.getBerryFlavorByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -469,7 +494,7 @@ describe("pokedex", function () {
 
   describe(".getContestTypeByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getContestTypeByName(id).then(res => {
+      return secureP.getContestTypeByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -477,7 +502,7 @@ describe("pokedex", function () {
 
   describe(".getContestEffectById(Id: int)", function() {
     it("should have property id", function() {
-      return P.getContestEffectById(id).then(res => {
+      return secureP.getContestEffectById(id).then(res => {
         expect(res).to.have.property("id");
       })
     });
@@ -485,7 +510,7 @@ describe("pokedex", function () {
 
   describe(".getSuperContestEffectById(Id: int)", function() {
     it("should have property id", function() {
-      return P.getSuperContestEffectById(id).then(res => {
+      return secureP.getSuperContestEffectById(id).then(res => {
         expect(res).to.have.property("id");
       })
     });
@@ -493,7 +518,7 @@ describe("pokedex", function () {
 
   describe(".getEncounterMethodByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getEncounterMethodByName(id).then(res => {
+      return secureP.getEncounterMethodByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -501,7 +526,7 @@ describe("pokedex", function () {
 
   describe(".getEncounterConditionByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getEncounterConditionByName(id).then(res => {
+      return secureP.getEncounterConditionByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -509,7 +534,7 @@ describe("pokedex", function () {
 
   describe(".getEncounterConditionValueByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getEncounterConditionValueByName(id).then(res => {
+      return secureP.getEncounterConditionValueByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -517,7 +542,7 @@ describe("pokedex", function () {
 
   describe(".getEvolutionChainById(Id: int)", function() {
     it("should have property name", function() {
-      return P.getEvolutionChainById(id).then(res => {
+      return secureP.getEvolutionChainById(id).then(res => {
         expect(res).to.have.property("id");
       })
     });
@@ -525,7 +550,7 @@ describe("pokedex", function () {
 
   describe(".getEvolutionTriggerByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getEvolutionTriggerByName(id).then(res => {
+      return secureP.getEvolutionTriggerByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -533,7 +558,7 @@ describe("pokedex", function () {
 
   describe(".getGenerationByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getGenerationByName(id).then(res => {
+      return secureP.getGenerationByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -541,7 +566,7 @@ describe("pokedex", function () {
 
   describe(".getPokedexByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getPokedexByName(id).then(res => {
+      return secureP.getPokedexByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -549,7 +574,7 @@ describe("pokedex", function () {
 
   describe(".getVersionByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getVersionByName(id).then(res => {
+      return secureP.getVersionByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -557,7 +582,7 @@ describe("pokedex", function () {
 
   describe(".getVersionGroupByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getVersionGroupByName(id).then(res => {
+      return secureP.getVersionGroupByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -565,7 +590,7 @@ describe("pokedex", function () {
 
   describe(".getItemByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getItemByName(id).then(res => {
+      return secureP.getItemByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -573,7 +598,7 @@ describe("pokedex", function () {
 
   describe(".getItemAttributeByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getItemAttributeByName(id).then(res => {
+      return secureP.getItemAttributeByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -581,7 +606,7 @@ describe("pokedex", function () {
 
   describe(".getItemCategoryByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getItemCategoryByName(id).then(res => {
+      return secureP.getItemCategoryByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -589,7 +614,7 @@ describe("pokedex", function () {
 
   describe(".getItemFlingEffectByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getItemFlingEffectByName(id).then(res => {
+      return secureP.getItemFlingEffectByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -597,7 +622,7 @@ describe("pokedex", function () {
 
   describe(".getItemPocketByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getItemPocketByName(id).then(res => {
+      return secureP.getItemPocketByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -605,7 +630,7 @@ describe("pokedex", function () {
 
   describe(".getMachineById(Id: int)", function() {
     it("should have property id", function() {
-      return P.getMachineById(id).then(res => {
+      return secureP.getMachineById(id).then(res => {
         expect(res).to.have.property("id");
       })
     });
@@ -613,7 +638,7 @@ describe("pokedex", function () {
 
   describe(".getMoveByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getMoveByName(id).then(res => {
+      return secureP.getMoveByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -621,7 +646,7 @@ describe("pokedex", function () {
 
   describe(".getMoveAilmentByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getMoveAilmentByName(id).then(res => {
+      return secureP.getMoveAilmentByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -629,7 +654,7 @@ describe("pokedex", function () {
 
   describe(".getMoveBattleStyleByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getMoveBattleStyleByName(id).then(res => {
+      return secureP.getMoveBattleStyleByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -637,7 +662,7 @@ describe("pokedex", function () {
 
   describe(".getMoveCategoryByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getMoveCategoryByName(id).then(res => {
+      return secureP.getMoveCategoryByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -645,7 +670,7 @@ describe("pokedex", function () {
 
   describe(".getMoveDamageClassByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getMoveDamageClassByName(id).then(res => {
+      return secureP.getMoveDamageClassByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -653,7 +678,7 @@ describe("pokedex", function () {
 
   describe(".getMoveTargetByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getMoveTargetByName(id).then(res => {
+      return secureP.getMoveTargetByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -661,7 +686,7 @@ describe("pokedex", function () {
 
   describe(".getLocationByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getLocationByName(id).then(res => {
+      return secureP.getLocationByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -669,7 +694,7 @@ describe("pokedex", function () {
 
   describe(".getLocationAreaByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getLocationAreaByName(id).then(res => {
+      return secureP.getLocationAreaByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -677,7 +702,7 @@ describe("pokedex", function () {
 
   describe(".getPalParkAreaByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getPalParkAreaByName(id).then(res => {
+      return secureP.getPalParkAreaByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -685,7 +710,7 @@ describe("pokedex", function () {
 
   describe(".getRegionByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getRegionByName(id).then(res => {
+      return secureP.getRegionByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -693,7 +718,7 @@ describe("pokedex", function () {
 
   describe(".getAbilityByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getAbilityByName(id).then(res => {
+      return secureP.getAbilityByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -701,7 +726,7 @@ describe("pokedex", function () {
 
   describe(".getCharacteristicById(Id: int)", function() {
     it("should have property name", function() {
-      return P.getCharacteristicById(id).then(res => {
+      return secureP.getCharacteristicById(id).then(res => {
         expect(res).to.have.property("id");
       })
     });
@@ -709,7 +734,7 @@ describe("pokedex", function () {
 
   describe(".getEggGroupByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getEggGroupByName(id).then(res => {
+      return secureP.getEggGroupByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -717,7 +742,7 @@ describe("pokedex", function () {
 
   describe(".getGenderByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getGenderByName(id).then(res => {
+      return secureP.getGenderByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -725,7 +750,7 @@ describe("pokedex", function () {
 
   describe(".getGrowthRateByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getGrowthRateByName(id).then(res => {
+      return secureP.getGrowthRateByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -733,7 +758,7 @@ describe("pokedex", function () {
 
   describe(".getNatureByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getNatureByName(id).then(res => {
+      return secureP.getNatureByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -741,7 +766,7 @@ describe("pokedex", function () {
 
   describe(".getPokeathlonStatByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getPokeathlonStatByName(id).then(res => {
+      return secureP.getPokeathlonStatByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -749,7 +774,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getPokemonByName(id).then(res => {
+      return secureP.getPokemonByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -757,7 +782,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonColorByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getPokemonColorByName(id).then(res => {
+      return secureP.getPokemonColorByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -765,7 +790,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonFormByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getPokemonFormByName(id).then(res => {
+      return secureP.getPokemonFormByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -773,7 +798,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonHabitatByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getPokemonHabitatByName(id).then(res => {
+      return secureP.getPokemonHabitatByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -781,7 +806,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonShapeByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getPokemonShapeByName(id).then(res => {
+      return secureP.getPokemonShapeByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -789,7 +814,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonSpeciesByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getPokemonSpeciesByName(id).then(res => {
+      return secureP.getPokemonSpeciesByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -797,7 +822,7 @@ describe("pokedex", function () {
 
   describe(".getStatByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getStatByName(id).then(res => {
+      return secureP.getStatByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -805,7 +830,7 @@ describe("pokedex", function () {
 
   describe(".getTypeByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getTypeByName(id).then(res => {
+      return secureP.getTypeByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });
@@ -813,7 +838,7 @@ describe("pokedex", function () {
 
   describe(".getLanguageByName(Id: int)", function() {
     it("should have property name", function() {
-      return P.getLanguageByName(id).then(res => {
+      return secureP.getLanguageByName(id).then(res => {
         expect(res).to.have.property("name");
       })
     });

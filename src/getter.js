@@ -5,11 +5,6 @@ import { values } from './default.js';
 
 const CACHE_PREFIX = "pokeapi-js-wrapper-";
 
-var instance = axios.create({
-    baseURL: `${values.protocol}://${values.hostName}`,
-    timeout: values.timeout
-});
-
 function loadResource(url) {
     return new Promise((resolve, reject) => {
         localForage.ready()
@@ -37,8 +32,13 @@ function loadResource(url) {
 
 function loadUrl(url) {
     return new Promise((resolve, reject) => {
-        instance.get(url)
+        let options = {
+            baseURL: `${values.protocol}://${values.hostName}/`,
+            timeout: values.timeout
+        }
+        axios.get(url, options)
             .then(response => {
+                //console.log(response)
                 // if there was an error
                 if (response.status >= 400) {
                     reject(response);
