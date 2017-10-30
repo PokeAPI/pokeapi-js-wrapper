@@ -12,10 +12,51 @@ chai.use(require("chai-as-promised"));
 describe("pokedex", function () {
   var promise,
     id = 2,
+    path = '/api/v2/pokemon/34',
+    url = 'https://pokeapi.co/api/v2/pokemon/35',
     P = new Pokedex.Pokedex()
-    secureP = new Pokedex.Pokedex({protocol: 'https'});
+    secureP = new Pokedex.Pokedex({ protocol: 'https' });
 
   this.timeout(21000);
+
+  describe(".resource(Mixed: array)", function () {
+    before(function () {
+      promise = P.resource(['/api/v2/pokemon/36', 'api/v2/berry/8', 'https://pokeapi.co/api/v2/ability/9/']);
+    });
+    it("should succeed", function () {
+      return promise;
+    });
+    it("should have length 3", function() {
+      return expect(promise).to.eventually.have.length(3);
+    });
+    it("should have property name", function () {
+      return expect(promise).to.eventually.all.have.property('name');
+    });
+  });
+
+  describe(".resource(Path: string)", function () {
+    before(function () {
+      promise = P.resource(path);
+    });
+    it("should succeed", function () {
+      return promise;
+    });
+    it("should have property height", function () {
+      return expect(promise).to.eventually.have.property('height');
+    });
+  });
+
+  describe(".resource(Url: string)", function () {
+    before(function () {
+      promise = P.resource(url);
+    });
+    it("should succeed", function () {
+      return promise;
+    });
+    it("should have property height", function () {
+      return expect(promise).to.eventually.have.property('height')
+    });
+  });
 
   describe(".getVersionByName(Id: int)", function () {
     before(function () {
@@ -25,7 +66,7 @@ describe("pokedex", function () {
       return promise;
     });
     it("should have property name", function () {
-      return expect(P.getVersionByName(id)).to.eventually.have.property("name");
+      return expect(promise).to.eventually.have.property("name");
     });
   });
 

@@ -1,7 +1,7 @@
 const values = {};
 
 values.protocol = 'http';
-values.hostName = '://pokeapi.co';
+values.hostName = 'pokeapi.co';
 values.versionPath = '/api/v2/';
 values.offset = 0;
 values.limit = 100000;

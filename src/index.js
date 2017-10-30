@@ -15,7 +15,7 @@ export class Pokedex {
 
                     // if the user has submitted a Name or an ID, return the JSON promise
                     if (typeof input === 'number' || typeof input === 'string') {
-                        return loadResource(`${values.protocol}${values.hostName}${values.versionPath}${endpoint[1]}/${input}/`); 
+                        return loadResource(`${values.versionPath}${endpoint[1]}/${input}/`); 
                     }
 
                     // if the user has submitted an Array
@@ -30,14 +30,24 @@ export class Pokedex {
         rootEndpoints.forEach(rootEndpoint => {
             this[rootEndpoint[0]] = config => {
                 configurator.setRootEndpointConfiguration(config);
-                return loadResource(`${values.protocol}${values.hostName}${values.versionPath}${rootEndpoint[1]}?limit=${values.limit}&offset=${values.offset}`);
+                return loadResource(`${values.versionPath}${rootEndpoint[1]}?limit=${values.limit}&offset=${values.offset}`);
             }
         });
+    }
+
+    resource(path) {
+        if (typeof path === 'string') {
+            return loadResource(path)
+        } else if (typeof path === 'object') {
+            return Promise.all(path.map(p => loadResource(p)));
+        } else {
+            return 'String or Array is required'
+        }
     }
 };
 
 function mapResources(endpoint, input) {
     return input.map(res => {
-        return loadResource(`${values.protocol}${values.hostName}${values.versionPath}${endpoint[1]}/${res}/`);
+        return loadResource(`${values.versionPath}${endpoint[1]}/${res}/`);
     });
 }
