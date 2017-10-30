@@ -58,7 +58,7 @@ var P = new Pokedex.Pokedex();
 
 **NOTE**: Any function with the designation "ByName" can also be passed an integer ID. However, the functions with the designation "ById" can only be passed an integer ID. Refer to the [pokeapi v2 docs](http://pokeapi.co/docsv2/) to find out more about how the data is structured.
 
-**UPDATE**: You can pass an array to each endpoint, it will retrive data for each array element. If you scroll down, you will find an example.
+**UPDATE**: You can pass an array to each function, it will retrive data for each array element. If you scroll down, you will find two examples.
 
 ### [Example](http://jsbin.com/jedakor/edit?html,console) requests
 
@@ -67,12 +67,16 @@ var P = new Pokedex.Pokedex();
     .then(function(response) {
       console.log(response);
     });
+  P.resource(['/api/v2/pokemon/36', 'api/v2/berry/8', 'https://pokeapi.co/api/v2/ability/9/'])
+    .then(function(response) {
+      console.log(response); // resource function accepts singles or arrays of URLs/paths
+    });
 ```
 
 ## Configuration
 
 Pass an Object to Pokedex() in order to configure it. Available options: `protocol`, `hostName`, `versionPath`, `cache`, `timeout` in ms.
-Any option is optional :smile:. If no Object is passed, the Pokedex will be initialized to grab data from pokeapi.co using http with 20 seconds timeout and caching resources.
+Any option is optional :smile:. If no Object is passed, the Pokedex will be initialized to grab data from pokeapi.co using http with 20 seconds timeout and caching resources. We recommend to use HTTPS protocol since Pokeapi.co recently enabled HTTP redirects.
 
 
 ```js
@@ -560,6 +564,22 @@ Use **getLanguageByName** to return data about specific pokemon language.
 
 ```js
   P.getLanguageByName("ja")
+    .then(function(response) {
+      console.log(response);
+    });
+```
+
+### Custom URLs and paths
+
+Use **resource** to return data about any URL or path.
+
+```js
+  P.resource(['/api/v2/pokemon/36', 'api/v2/berry/8', 'https://pokeapi.co/api/v2/ability/9/'])
+    .then(function(response) {
+      console.log(response); // resource function accepts singles or arrays of URLs/paths
+    });
+
+  P.resource('api/v2/berry/5')
     .then(function(response) {
       console.log(response);
     });
