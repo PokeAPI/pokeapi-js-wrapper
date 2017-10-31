@@ -28,6 +28,7 @@ A PokeAPI wrapper intended for browsers only. Comes fully asynchronous (with [lo
   - [Locations](#locations)
   - [Pokemon](#pokemon)
   - [Utility](#utility)
+  - [Custom URLs and paths](#custom-urls-and-paths)
 - [Root Endpoints](#root-endpoints)
   - [List of supported root endpoints](#list-of-supported-root-endpoints)
 - [Internet Explorer 8](#internet-explorer-8)
@@ -144,7 +145,8 @@ This method fetches data asynchronously. So it is quite fast :smile:
   // response.forEach((item) => {console.log(item.size)}) // 80,50,20
 ```
 
-### Contests
+<details>
+  <summary>### Contests</summary>
 
 Use **getContestTypeByName** to return data about the effects of moves when used in contests.
 
@@ -173,7 +175,10 @@ Use **getSuperContestEffectById** to return data about the effects of moves when
     });
 ```
 
-### Encounters
+</details>
+
+<details>
+  <summary>### Encounters</summary>
 
 Use **getEncounterMethodByName** to return data about the conditions in which a trainer may encounter a pokemon in the wild.
 
@@ -202,7 +207,10 @@ Use **getEncounterConditionValueByName** to return data the various states that 
     });
 ```
 
-### Evolution
+</details>
+
+<details>
+  <summary>### Evolution</summary>
 
 Use **getEvolutionChainById** to return data evolution chains.
 
@@ -222,7 +230,10 @@ Use **getEvolutionTriggerByName** to return data about triggers which cause poke
     });
 ```
 
-### Games
+</details>
+
+<details>
+  <summary>### Games</summary>
 
 Use **getGenerationByName** to return data about the different generations of pokemon games.
 
@@ -260,7 +271,10 @@ Use **getVersionGroupByName** to return data about specific version groups of po
     });
 ```
 
-### Items
+</details>
+
+<details>
+  <summary>### Items</summary>
 
 Use **getItemByName** to return data about specific items.
 
@@ -307,7 +321,10 @@ Use **getItemPocketByName** to return data about specific pockets in a players b
     });
 ```
 
-### Machines
+</details>
+
+<details>
+  <summary>### Machines</summary>
 
 Use **getMachineById** to return data about specific machine.
 
@@ -318,7 +335,10 @@ Use **getMachineById** to return data about specific machine.
     });
 ```
 
-### Moves
+</details>
+
+<details>
+  <summary>### Moves</summary>
 
 Use **getMoveByName** to return data about specific pokemon move.
 
@@ -383,7 +403,10 @@ Use **getMoveTargetByName** to return data about specific pokemon move target.
     });
 ```
 
-### Locations
+</details>
+
+<details>
+  <summary>### Locations</summary>
 
 Use **getLocationByName** to return data about specific pokemon location.
 
@@ -421,7 +444,10 @@ Use **getRegionByName** to return data about specific pokemon region.
     });
 ```
 
-### Pokemon
+</details>
+
+<details>
+  <summary>### Pokemon</summary>
 
 Use **getAbilityByName** to return data about specific pokemon ability.
 
@@ -558,7 +584,10 @@ Use **getTypeByName** to return data about specific pokemon type.
     });
 ```
 
-### Utility
+</details>
+
+<details>
+  <summary>### Utility</summary>
 
 Use **getLanguageByName** to return data about specific pokemon language.
 
@@ -569,7 +598,10 @@ Use **getLanguageByName** to return data about specific pokemon language.
     });
 ```
 
-### Custom URLs and paths
+</details>
+
+<details>
+  <summary>### Custom URLs and paths</summary>
 
 Use **resource** to return data about any URL or path.
 
@@ -584,6 +616,8 @@ Use **resource** to return data about any URL or path.
       console.log(response);
     });
 ```
+
+</details>
 
 ## Root Endpoints
 
@@ -637,7 +671,8 @@ This is what you will get:
 }
 ```
 
-### List of supported root endpoints
+<details>
+  <summary>### List of supported root endpoints</summary>
 
 - .getEndpointsList()
 - .getBerriesList()
@@ -688,6 +723,8 @@ This is what you will get:
 - .getStatsList()
 - .getTypesList()
 - .getLanguagesList()
+
+</details>
 
 ## Internet Explorer 8
 
