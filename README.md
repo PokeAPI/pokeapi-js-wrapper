@@ -145,8 +145,7 @@ This method fetches data asynchronously. So it is quite fast :smile:
   // response.forEach((item) => {console.log(item.size)}) // 80,50,20
 ```
 
-<details>
-  <summary>### Contests</summary>
+### Contests
 
 Use **getContestTypeByName** to return data about the effects of moves when used in contests.
 
@@ -175,10 +174,7 @@ Use **getSuperContestEffectById** to return data about the effects of moves when
     });
 ```
 
-</details>
-
-<details>
-  <summary>### Encounters</summary>
+### Encounters
 
 Use **getEncounterMethodByName** to return data about the conditions in which a trainer may encounter a pokemon in the wild.
 
@@ -207,10 +203,7 @@ Use **getEncounterConditionValueByName** to return data the various states that 
     });
 ```
 
-</details>
-
-<details>
-  <summary>### Evolution</summary>
+### Evolution
 
 Use **getEvolutionChainById** to return data evolution chains.
 
@@ -230,10 +223,7 @@ Use **getEvolutionTriggerByName** to return data about triggers which cause poke
     });
 ```
 
-</details>
-
-<details>
-  <summary>### Games</summary>
+### Games
 
 Use **getGenerationByName** to return data about the different generations of pokemon games.
 
@@ -271,10 +261,7 @@ Use **getVersionGroupByName** to return data about specific version groups of po
     });
 ```
 
-</details>
-
-<details>
-  <summary>### Items</summary>
+### Items
 
 Use **getItemByName** to return data about specific items.
 
@@ -321,10 +308,7 @@ Use **getItemPocketByName** to return data about specific pockets in a players b
     });
 ```
 
-</details>
-
-<details>
-  <summary>### Machines</summary>
+### Machines
 
 Use **getMachineById** to return data about specific machine.
 
@@ -335,10 +319,7 @@ Use **getMachineById** to return data about specific machine.
     });
 ```
 
-</details>
-
-<details>
-  <summary>### Moves</summary>
+### Moves
 
 Use **getMoveByName** to return data about specific pokemon move.
 
@@ -403,10 +384,7 @@ Use **getMoveTargetByName** to return data about specific pokemon move target.
     });
 ```
 
-</details>
-
-<details>
-  <summary>### Locations</summary>
+### Locations
 
 Use **getLocationByName** to return data about specific pokemon location.
 
@@ -444,10 +422,7 @@ Use **getRegionByName** to return data about specific pokemon region.
     });
 ```
 
-</details>
-
-<details>
-  <summary>### Pokemon</summary>
+### Pokemon
 
 Use **getAbilityByName** to return data about specific pokemon ability.
 
@@ -584,10 +559,7 @@ Use **getTypeByName** to return data about specific pokemon type.
     });
 ```
 
-</details>
-
-<details>
-  <summary>### Utility</summary>
+### Utility
 
 Use **getLanguageByName** to return data about specific pokemon language.
 
@@ -598,10 +570,7 @@ Use **getLanguageByName** to return data about specific pokemon language.
     });
 ```
 
-</details>
-
-<details>
-  <summary>### Custom URLs and paths</summary>
+### Custom URLs and paths
 
 Use **resource** to return data about any URL or path.
 
@@ -616,8 +585,6 @@ Use **resource** to return data about any URL or path.
       console.log(response);
     });
 ```
-
-</details>
 
 ## Root Endpoints
 
@@ -671,8 +638,7 @@ This is what you will get:
 }
 ```
 
-<details>
-  <summary>### List of supported root endpoints</summary>
+### List of supported root endpoints
 
 - .getEndpointsList()
 - .getBerriesList()
@@ -723,8 +689,6 @@ This is what you will get:
 - .getStatsList()
 - .getTypesList()
 - .getLanguagesList()
-
-</details>
 
 ## Internet Explorer 8
 
