@@ -30,7 +30,7 @@ export class Pokedex {
 
         rootEndpoints.forEach(rootEndpoint => {
             this[rootEndpoint[0]] = config => {
-                return loadResource(`${values.versionPath}${rootEndpoint[1]}?limit=${values.limit}&offset=${values.offset}`);
+                return loadResource(`${values.versionPath}${rootEndpoint[1]}?limit=${config.limit}&offset=${config.offset}`);
             }
         });
     }

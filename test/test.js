@@ -15,9 +15,25 @@ describe("pokedex", function () {
     path = '/api/v2/pokemon/34',
     url = 'https://pokeapi.co/api/v2/pokemon/35',
     P = new Pokedex.Pokedex()
-    secureP = new Pokedex.Pokedex({ protocol: 'https' });
+    secureP = new Pokedex.Pokedex({ protocol: 'https' }),
+    interval = {
+      limit: 10,
+      offset: 34
+    }
 
   this.timeout(21000);
+
+  describe(".getPokemonsList(interval: Interval) with interval", function () {
+    before(function () {
+      promise = P.getPokemonsList(interval);
+    });
+    it("should succeed", function () {
+      return promise;
+    });
+    it("should have length results", function() {
+      return expect(promise).to.eventually.have.property('results');
+    });
+  });
 
   describe(".resource(Mixed: array)", function () {
     before(function () {
