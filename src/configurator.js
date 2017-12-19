@@ -26,10 +26,10 @@ configurator.setPokedexConfiguration = (config) => {
 
 configurator.setRootEndpointConfiguration = (config) => {
 	if (config) {
-        if (config.offset) {
+        if (config.hasOwnProperty('offset')) {
             values.setOffset(config.offset);
         }
-        if (config.limit) {
+        if (config.hasOwnProperty('limit')) {
             values.setLimit(config.limit);
         }
     }
