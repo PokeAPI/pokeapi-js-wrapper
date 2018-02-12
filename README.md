@@ -44,19 +44,19 @@ A PokeAPI wrapper intended for browsers only. Comes fully asynchronous (with [lo
 ✔ | ✔ | ✔ | ✔ | ✔ | [8+](#internet-explorer-8) ✔ |
 
 ```shell
-npm install pokeapi-js-wrapper
+npm install pokeapi-js-wrapper --save
 ```
 
 ## Usage
 
 ```js
-var Pokedex = require('pokeapi-js-wrapper');
-var P = new Pokedex.Pokedex();
+const Pokedex = require('pokeapi-js-wrapper');
+const P = new Pokedex.Pokedex();
 ```
 
 ```html
 <script src="https://unpkg.com/pokeapi-js-wrapper/dist/index.js"></script>
-<script> var P = new Pokedex.Pokedex(); </script>
+<script> const P = new Pokedex.Pokedex(); </script>
 ```
 
 **NOTE**: Any function with the designation "ByName" can also be passed an integer ID. However, the functions with the designation "ById" can only be passed an integer ID. Refer to the [pokeapi v2 docs](http://pokeapi.co/docsv2/) to find out more about how the data is structured.
@@ -66,10 +66,14 @@ var P = new Pokedex.Pokedex();
 ### [Example](http://jsbin.com/jedakor/edit?html,console) requests
 
 ```js
+  const golduck = await P.getPokemonByName('golduck') // with await, be sure to be in an async function (and in a try/catch)
+  console.log(golduck)
+  
   P.getPokemonByName('eevee') // with Promise
     .then(function(response) {
       console.log(response);
     });
+    
   P.resource(['/api/v2/pokemon/36', 'api/v2/berry/8', 'https://pokeapi.co/api/v2/ability/9/'])
     .then(function(response) {
       console.log(response); // resource function accepts singles or arrays of URLs/paths
@@ -79,19 +83,19 @@ var P = new Pokedex.Pokedex();
 ## Configuration
 
 Pass an Object to Pokedex() in order to configure it. Available options: `protocol`, `hostName`, `versionPath`, `cache`, `timeout` in ms.
-Any option is optional :smile:. If no Object is passed, the Pokedex will be initialized to grab data from pokeapi.co using http with 20 seconds timeout and caching resources. We recommend to use HTTPS protocol since Pokeapi.co recently enabled HTTP redirects.
+Any option is optional :smile:. If no Object is passed, the Pokedex will be initialized to grab data from pokeapi.co using http with 20 seconds timeout and caching resources. We recommend to use HTTPS protocol since Pokeapi.co recently enabled HTTP->HTTPS redirects.
 
 
 ```js
-var Pokedex = require('pokeapi-js-wrapper');
-var options = {
+const Pokedex = require('pokeapi-js-wrapper');
+const options = {
   protocol: 'https',
   hostName: 'localhost:443',
   versionPath: '/api/v2/',
   cache: true,
   timeout: 5 * 1000 // 5s
 }
-var P = new Pokedex.Pokedex(options);
+const P = new Pokedex.Pokedex(options);
 ```
 
 ## Tests
