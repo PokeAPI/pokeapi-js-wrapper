@@ -5,6 +5,7 @@
 [![Mocha browser tetst](https://img.shields.io/badge/test-browser-brightgreen.svg)](https://pokeapi.github.io/pokeapi-js-wrapper/test/test.html)
 [![Known Vulnerabilities](https://snyk.io/test/github/pokeapi/pokeapi-js-wrapper/badge.svg?targetFile=package.json)](https://snyk.io/test/github/pokeapi/pokeapi-js-wrapper?targetFile=package.json)
 
+Maintainer: [Naramsim](https://github.com/Naramsim)
 
 A PokeAPI wrapper intended for browsers only. Comes fully asynchronous (with [localForage](https://github.com/localForage/localForage)) and built-in cache. For a Node (server-side) wrapper see: [pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2)
 
