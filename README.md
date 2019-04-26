@@ -61,7 +61,7 @@ const P = new Pokedex.Pokedex();
 
 **NOTE**: Any function with the designation "ByName" can also be passed an integer ID. However, the functions with the designation "ById" can only be passed an integer ID. Refer to the [pokeapi v2 docs](http://pokeapi.co/docsv2/) to find out more about how the data is structured.
 
-**UPDATE**: You can pass an array to each function, it will retrive data for each array element. If you scroll down, you will find two examples.
+**UPDATE**: You can pass an array to each function, it will retrieve data for each array element. If you scroll down, you will find two examples.
 
 ### [Example](http://jsbin.com/jedakor/edit?html,console) requests
 
