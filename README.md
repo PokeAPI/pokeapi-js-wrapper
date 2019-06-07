@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/pokeapi-js-wrapper.svg)](https://badge.fury.io/js/pokeapi-js-wrapper)
 [![Build Status](https://travis-ci.org/PokeAPI/pokeapi-js-wrapper.svg?branch=master)](https://travis-ci.org/PokeAPI/pokeapi-js-wrapper)
-[![Mocha browser tetst](https://img.shields.io/badge/test-browser-brightgreen.svg)](https://pokeapi.github.io/pokeapi-js-wrapper/test/test.html)
+[![Mocha browser tests](https://img.shields.io/badge/test-browser-brightgreen.svg)](https://pokeapi.github.io/pokeapi-js-wrapper/test/test.html)
 [![Known Vulnerabilities](https://snyk.io/test/github/pokeapi/pokeapi-js-wrapper/badge.svg?targetFile=package.json)](https://snyk.io/test/github/pokeapi/pokeapi-js-wrapper?targetFile=package.json)
 
 Maintainer: [Naramsim](https://github.com/Naramsim)
@@ -73,7 +73,7 @@ const P = new Pokedex.Pokedex();
     .then(function(response) {
       console.log(response);
     });
-    
+
   P.resource(['/api/v2/pokemon/36', 'api/v2/berry/8', 'https://pokeapi.co/api/v2/ability/9/'])
     .then(function(response) {
       console.log(response); // resource function accepts singles or arrays of URLs/paths
@@ -83,7 +83,7 @@ const P = new Pokedex.Pokedex();
 ## Configuration
 
 Pass an Object to Pokedex() in order to configure it. Available options: `protocol`, `hostName`, `versionPath`, `cache`, `timeout` in ms.
-Any option is optional :smile:. If no Object is passed, the Pokedex will be initialized to grab data from pokeapi.co using http with 20 seconds timeout and caching resources. We recommend to use HTTPS protocol since Pokeapi.co recently enabled HTTP->HTTPS redirects.
+Any option is optional :smile:. If no Object is passed, the Pokedex will be initialized to grab data from pokeapi.co using http with 20 seconds timeout and caching resources. HTTPS is the default protocol.
 
 
 ```js
