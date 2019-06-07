@@ -3,9 +3,6 @@ var Pokedex = require("../dist/index.js");
 var chai = require('chai'),
   expect = chai.expect,
   assert = chai.assert;
-//var P = new Pokedex.Pokedex();
-//P.getVersionByName(2).then(v => console.log(v)).catch(v => console.log(v))
-// order matters: github.com/chaijs/chai-things/issues/4#issuecomment-87801365
 chai.use(require("chai-things"));
 chai.use(require("chai-as-promised"));
 
@@ -14,8 +11,7 @@ describe("pokedex", function () {
     id = 2,
     path = '/api/v2/pokemon/34',
     url = 'https://pokeapi.co/api/v2/pokemon/35',
-    P = new Pokedex.Pokedex()
-    secureP = new Pokedex.Pokedex({ protocol: 'https' }),
+    secureP = new Pokedex.Pokedex(),
     interval = {
       limit: 10,
       offset: 34
@@ -25,7 +21,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonsList(interval: Interval) with interval", function () {
     before(function () {
-      promise = P.getPokemonsList(interval);
+      promise = secureP.getPokemonsList(interval);
     });
     it("should succeed", function () {
       return promise;
@@ -37,7 +33,7 @@ describe("pokedex", function () {
 
   describe(".resource(Mixed: array)", function () {
     before(function () {
-      promise = P.resource(['/api/v2/pokemon/36', 'api/v2/berry/8', 'https://pokeapi.co/api/v2/ability/9/']);
+      promise = secureP.resource(['/api/v2/pokemon/36', 'api/v2/berry/8', 'https://pokeapi.co/api/v2/ability/9/']);
     });
     it("should succeed", function () {
       return promise;
@@ -52,7 +48,7 @@ describe("pokedex", function () {
 
   describe(".resource(Path: string)", function () {
     before(function () {
-      promise = P.resource(path);
+      promise = secureP.resource(path);
     });
     it("should succeed", function () {
       return promise;
@@ -64,7 +60,7 @@ describe("pokedex", function () {
 
   describe(".resource(Url: string)", function () {
     before(function () {
-      promise = P.resource(url);
+      promise = secureP.resource(url);
     });
     it("should succeed", function () {
       return promise;
@@ -76,7 +72,7 @@ describe("pokedex", function () {
 
   describe(".getVersionByName(Id: int)", function () {
     before(function () {
-      promise = P.getVersionByName(id);
+      promise = secureP.getVersionByName(id);
     });
     it("should succeed", function () {
       return promise;
@@ -682,7 +678,7 @@ describe("pokedex", function () {
 
   describe(".getBerryByName(Array: string)", function() {
     before(function() {
-      promise = P.getBerryByName(['cheri', 'chesto', 'pecha']);
+      promise = secureP.getBerryByName(['cheri', 'chesto', 'pecha']);
     });
     it("should succeed", function() {
       return promise;
@@ -697,7 +693,7 @@ describe("pokedex", function () {
 
   describe(".getBerryByName(Array: int)", function() {
     before(function() {
-      promise = P.getBerryByName([1, 3, 5]);
+      promise = secureP.getBerryByName([1, 3, 5]);
     });
     it("should succeed", function() {
       return promise;
@@ -712,7 +708,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonByName(Array: int)", function() {
     before(function() {
-      promise = P.getPokemonByName([15, 35, 433, 444]);
+      promise = secureP.getPokemonByName([15, 35, 433, 444]);
     });
     it("should succeed", function() {
       return promise;
@@ -727,7 +723,7 @@ describe("pokedex", function () {
 
   describe(".getBerryByName(Id: int)", function() {
     before(function() {
-      promise = P.getBerryByName(id);
+      promise = secureP.getBerryByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -739,7 +735,7 @@ describe("pokedex", function () {
 
   describe(".getBerryByName(Id: int) cached", function() {
     before(function() {
-      promise = P.getBerryByName(id);
+      promise = secureP.getBerryByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -751,7 +747,7 @@ describe("pokedex", function () {
 
   describe(".getBerryFirmnessByName(Id: int)", function() {
     before(function() {
-      promise = P.getBerryFirmnessByName(id);
+      promise = secureP.getBerryFirmnessByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -763,7 +759,7 @@ describe("pokedex", function () {
 
   describe(".getBerryFlavorByName(Id: int)", function() {
     before(function() {
-      promise = P.getBerryFlavorByName(id);
+      promise = secureP.getBerryFlavorByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -775,7 +771,7 @@ describe("pokedex", function () {
 
   describe(".getContestTypeByName(Id: int)", function() {
     before(function() {
-      promise = P.getContestTypeByName(id);
+      promise = secureP.getContestTypeByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -787,7 +783,7 @@ describe("pokedex", function () {
 
   describe(".getContestEffectById(Id: int)", function() {
     before(function() {
-      promise = P.getContestEffectById(id);
+      promise = secureP.getContestEffectById(id);
     });
     it("should succeed", function() {
       return promise;
@@ -799,7 +795,7 @@ describe("pokedex", function () {
 
   describe(".getSuperContestEffectById(Id: int)", function() {
     before(function() {
-      promise = P.getSuperContestEffectById(id);
+      promise = secureP.getSuperContestEffectById(id);
     });
     it("should succeed", function() {
       return promise;
@@ -811,7 +807,7 @@ describe("pokedex", function () {
 
   describe(".getEncounterMethodByName(Id: int)", function() {
     before(function() {
-      promise = P.getEncounterMethodByName(id);
+      promise = secureP.getEncounterMethodByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -823,7 +819,7 @@ describe("pokedex", function () {
 
   describe(".getEncounterConditionByName(Id: int)", function() {
     before(function() {
-      promise = P.getEncounterConditionByName(id);
+      promise = secureP.getEncounterConditionByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -835,7 +831,7 @@ describe("pokedex", function () {
 
   describe(".getEncounterConditionValueByName(Id: int)", function() {
     before(function() {
-      promise = P.getEncounterConditionValueByName(id);
+      promise = secureP.getEncounterConditionValueByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -847,7 +843,7 @@ describe("pokedex", function () {
 
   describe(".getEvolutionChainById(Id: int)", function() {
     before(function() {
-      promise = P.getEvolutionChainById(id);
+      promise = secureP.getEvolutionChainById(id);
     });
     it("should succeed", function() {
       return promise;
@@ -859,7 +855,7 @@ describe("pokedex", function () {
 
   describe(".getEvolutionTriggerByName(Id: int)", function() {
     before(function() {
-      promise = P.getEvolutionTriggerByName(id);
+      promise = secureP.getEvolutionTriggerByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -871,7 +867,7 @@ describe("pokedex", function () {
 
   describe(".getGenerationByName(Id: int)", function() {
     before(function() {
-      promise = P.getGenerationByName(id);
+      promise = secureP.getGenerationByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -883,7 +879,7 @@ describe("pokedex", function () {
 
   describe(".getPokedexByName(Id: int)", function() {
     before(function() {
-      promise = P.getPokedexByName(id);
+      promise = secureP.getPokedexByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -895,7 +891,7 @@ describe("pokedex", function () {
 
   describe(".getVersionByName(Id: int)", function() {
     before(function() {
-      promise = P.getVersionByName(id);
+      promise = secureP.getVersionByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -907,7 +903,7 @@ describe("pokedex", function () {
 
   describe(".getVersionGroupByName(Id: int)", function() {
     before(function() {
-      promise = P.getVersionGroupByName(id);
+      promise = secureP.getVersionGroupByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -919,7 +915,7 @@ describe("pokedex", function () {
 
   describe(".getItemByName(Id: int)", function() {
     before(function() {
-      promise = P.getItemByName(id);
+      promise = secureP.getItemByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -931,7 +927,7 @@ describe("pokedex", function () {
 
   describe(".getItemAttributeByName(Id: int)", function() {
     before(function() {
-      promise = P.getItemAttributeByName(id);
+      promise = secureP.getItemAttributeByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -943,7 +939,7 @@ describe("pokedex", function () {
 
   describe(".getItemCategoryByName(Id: int)", function() {
     before(function() {
-      promise = P.getItemCategoryByName(id);
+      promise = secureP.getItemCategoryByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -955,7 +951,7 @@ describe("pokedex", function () {
 
   describe(".getItemFlingEffectByName(Id: int)", function() {
     before(function() {
-      promise = P.getItemFlingEffectByName(id);
+      promise = secureP.getItemFlingEffectByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -967,7 +963,7 @@ describe("pokedex", function () {
 
   describe(".getItemPocketByName(Id: int)", function() {
     before(function() {
-      promise = P.getItemPocketByName(id);
+      promise = secureP.getItemPocketByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -979,7 +975,7 @@ describe("pokedex", function () {
 
   describe(".getMachineById(Id: int)", function() {
     before(function() {
-      promise = P.getMachineById(id);
+      promise = secureP.getMachineById(id);
     });
     it("should succeed", function() {
       return promise;
@@ -991,7 +987,7 @@ describe("pokedex", function () {
 
   describe(".getMoveByName(Id: int)", function() {
     before(function() {
-      promise = P.getMoveByName(id);
+      promise = secureP.getMoveByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1003,7 +999,7 @@ describe("pokedex", function () {
 
   describe(".getMoveAilmentByName(Id: int)", function() {
     before(function() {
-      promise = P.getMoveAilmentByName(id);
+      promise = secureP.getMoveAilmentByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1015,7 +1011,7 @@ describe("pokedex", function () {
 
   describe(".getMoveBattleStyleByName(Id: int)", function() {
     before(function() {
-      promise = P.getMoveBattleStyleByName(id);
+      promise = secureP.getMoveBattleStyleByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1027,7 +1023,7 @@ describe("pokedex", function () {
 
   describe(".getMoveCategoryByName(Id: int)", function() {
     before(function() {
-      promise = P.getMoveCategoryByName(id);
+      promise = secureP.getMoveCategoryByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1039,7 +1035,7 @@ describe("pokedex", function () {
 
   describe(".getMoveDamageClassByName(Id: int)", function() {
     before(function() {
-      promise = P.getMoveDamageClassByName(id);
+      promise = secureP.getMoveDamageClassByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1051,7 +1047,7 @@ describe("pokedex", function () {
 
   describe(".getMoveTargetByName(Id: int)", function() {
     before(function() {
-      promise = P.getMoveTargetByName(id);
+      promise = secureP.getMoveTargetByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1063,7 +1059,7 @@ describe("pokedex", function () {
 
   describe(".getLocationByName(Id: int)", function() {
     before(function() {
-      promise = P.getLocationByName(id);
+      promise = secureP.getLocationByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1075,7 +1071,7 @@ describe("pokedex", function () {
 
   describe(".getLocationAreaByName(Id: int)", function() {
     before(function() {
-      promise = P.getLocationAreaByName(id);
+      promise = secureP.getLocationAreaByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1087,7 +1083,7 @@ describe("pokedex", function () {
 
   describe(".getPalParkAreaByName(Id: int)", function() {
     before(function() {
-      promise = P.getPalParkAreaByName(id);
+      promise = secureP.getPalParkAreaByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1099,7 +1095,7 @@ describe("pokedex", function () {
 
   describe(".getRegionByName(Id: int)", function() {
     before(function() {
-      promise = P.getRegionByName(id);
+      promise = secureP.getRegionByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1111,7 +1107,7 @@ describe("pokedex", function () {
 
   describe(".getAbilityByName(Id: int)", function() {
     before(function() {
-      promise = P.getAbilityByName(id);
+      promise = secureP.getAbilityByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1123,7 +1119,7 @@ describe("pokedex", function () {
 
   describe(".getCharacteristicById(Id: int)", function() {
     before(function() {
-      promise = P.getCharacteristicById(id);
+      promise = secureP.getCharacteristicById(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1135,7 +1131,7 @@ describe("pokedex", function () {
 
   describe(".getEggGroupByName(Id: int)", function() {
     before(function() {
-      promise = P.getEggGroupByName(id);
+      promise = secureP.getEggGroupByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1147,7 +1143,7 @@ describe("pokedex", function () {
 
   describe(".getGenderByName(Id: int)", function() {
     before(function() {
-      promise = P.getGenderByName(id);
+      promise = secureP.getGenderByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1159,7 +1155,7 @@ describe("pokedex", function () {
 
   describe(".getGrowthRateByName(Id: int)", function() {
     before(function() {
-      promise = P.getGrowthRateByName(id);
+      promise = secureP.getGrowthRateByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1171,7 +1167,7 @@ describe("pokedex", function () {
 
   describe(".getNatureByName(Id: int)", function() {
     before(function() {
-      promise = P.getNatureByName(id);
+      promise = secureP.getNatureByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1183,7 +1179,7 @@ describe("pokedex", function () {
 
   describe(".getPokeathlonStatByName(Id: int)", function() {
     before(function() {
-      promise = P.getPokeathlonStatByName(id);
+      promise = secureP.getPokeathlonStatByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1195,7 +1191,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonByName(Id: int)", function() {
     before(function() {
-      promise = P.getPokemonByName(id);
+      promise = secureP.getPokemonByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1207,7 +1203,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonColorByName(Id: int)", function() {
     before(function() {
-      promise = P.getPokemonColorByName(id);
+      promise = secureP.getPokemonColorByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1219,7 +1215,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonFormByName(Id: int)", function() {
     before(function() {
-      promise = P.getPokemonFormByName(id);
+      promise = secureP.getPokemonFormByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1231,7 +1227,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonHabitatByName(Id: int)", function() {
     before(function() {
-      promise = P.getPokemonHabitatByName(id);
+      promise = secureP.getPokemonHabitatByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1243,7 +1239,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonShapeByName(Id: int)", function() {
     before(function() {
-      promise = P.getPokemonShapeByName(id);
+      promise = secureP.getPokemonShapeByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1255,7 +1251,7 @@ describe("pokedex", function () {
 
   describe(".getPokemonSpeciesByName(Id: int)", function() {
     before(function() {
-      promise = P.getPokemonSpeciesByName(id);
+      promise = secureP.getPokemonSpeciesByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1267,7 +1263,7 @@ describe("pokedex", function () {
 
   describe(".getStatByName(Id: int)", function() {
     before(function() {
-      promise = P.getStatByName(id);
+      promise = secureP.getStatByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1279,7 +1275,7 @@ describe("pokedex", function () {
 
   describe(".getTypeByName(Id: int)", function() {
     before(function() {
-      promise = P.getTypeByName(id);
+      promise = secureP.getTypeByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1291,7 +1287,7 @@ describe("pokedex", function () {
 
   describe(".getLanguageByName(Id: int)", function() {
     before(function() {
-      promise = P.getLanguageByName(id);
+      promise = secureP.getLanguageByName(id);
     });
     it("should succeed", function() {
       return promise;
@@ -1303,10 +1299,10 @@ describe("pokedex", function () {
 
   describe(".getBerryByName(Name: string)", function() {
     before(function() {
-      promise = P.getBerryByName('sfgfsgsfggsfg');
+      promise = secureP.getBerryByName('sfgfsgsfggsfg');
     });
     it("should fail", function() {
-      return expect(Promise.regect);
+      return expect(promise).rejected;
     });
   });
 
