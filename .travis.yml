@@ -1,15 +1,12 @@
 language: node_js
+node_js:
+  - "node"
 cache:
   directories:
     - node_modules
-node_js:
-  - "node"
-
 notifications:
   email: false
 before_install:
-  - npm i
-before_script:
-  - npm prune
-script:
-  - npm test
+  - npm install -g codecov
+after_script:
+  - nyc report --reporter=text-lcov > coverage.lcov && codecov
