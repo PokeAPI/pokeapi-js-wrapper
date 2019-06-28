@@ -10,7 +10,7 @@
     "build:watch": "webpack --watch",
     "doctoc": "doctoc .",
     "pretest": "npm run build",
-    "test": "mocha -r mock-local-storage ./test/test.js",
+    "test": "nyc mocha -r mock-local-storage -r source-map-support/register ./test/test.js",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -48,6 +48,8 @@
     "json-loader": "^0.5.7",
     "mocha": "^4.1.0",
     "mock-local-storage": "^1.1.8",
+    "nyc": "^14.1.1",
+    "source-map-support": "^0.5.12",
     "webpack": "^3.12.0",
     "webpack-bundle-size-analyzer": "^2.7.0"
   }
