@@ -1,4 +1,4 @@
-# pokeapi-js-wrapper <img heigth=50 width=50 src="http://imgur.com/2E5yZzQ.png">
+# pokeapi-js-wrapper <a href="https://pokeapi.co/api/v2/pokemon/poliwrath"><img src='https://veekun.com/dex/media/pokemon/global-link/62.png' height=50px/></a>
 
 [![npm version](https://badge.fury.io/js/pokeapi-js-wrapper.svg)](https://badge.fury.io/js/pokeapi-js-wrapper)
 [![Build Status](https://travis-ci.org/PokeAPI/pokeapi-js-wrapper.svg?branch=master)](https://travis-ci.org/PokeAPI/pokeapi-js-wrapper)
