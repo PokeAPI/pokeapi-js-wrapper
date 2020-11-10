@@ -1,7 +1,7 @@
 {
   "name": "pokeapi-js-wrapper",
   "version": "1.1.2",
-  "description": "An API wrapper for PokeAPI - browser use only",
+  "description": "An API wrapper for PokeAPI",
   "main": "dist/index.js",
   "module": "src/index.js",
   "scripts": {
@@ -45,6 +45,7 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "chai-things": "^0.2.0",
+    "copy-webpack-plugin": "^4.6.0",
     "json-loader": "^0.5.7",
     "mocha": "^4.1.0",
     "mock-local-storage": "^1.1.8",

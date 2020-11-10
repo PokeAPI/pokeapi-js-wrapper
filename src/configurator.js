@@ -21,6 +21,9 @@ configurator.setPokedexConfiguration = (config) => {
         if (config.hasOwnProperty('cache')) {
             values.setCache(config.cache);
         }
+        if (config.hasOwnProperty('cacheImages')) {
+            values.setCache(config.cacheImages);
+        }
     }
 }
 

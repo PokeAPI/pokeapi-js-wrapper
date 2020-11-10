@@ -1,6 +1,7 @@
 import endpoints from './endpoints.json';
 import rootEndpoints from './rootEndpoints.json';
 import { loadResource } from './getter.js';
+import { installSW } from './initSW.js';
 import { values } from './default.js';
 import { configurator } from './configurator.js';
 
@@ -43,6 +44,8 @@ export class Pokedex {
                 return loadResource(`${values.versionPath}${rootEndpoint[1]}?limit=${limit}&offset=${offset}`);
             }
         });
+
+        installSW();
     }
 
     resource(path) {

@@ -29,5 +29,8 @@ values.setTimeout = (newTimeout) => {
 values.setCache = (newCache) => {
     values.cache = newCache;
 }
+values.setCache = (newCacheImages) => {
+    values.cacheImages = newCacheImages;
+}
 
 export { values };
