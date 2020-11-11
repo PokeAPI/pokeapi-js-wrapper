@@ -7,6 +7,7 @@ values.offset = 0;
 values.limit = 100000;
 values.timeout = 20 * 1000; // 20 seconds
 values.cache = true;
+values.cacheImages = true;
 
 values.setProtocol = (newProtocol) => {
     values.protocol = newProtocol;

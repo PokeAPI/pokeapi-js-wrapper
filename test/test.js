@@ -6,6 +6,14 @@ var chai = require('chai'),
 chai.use(require("chai-things"));
 chai.use(require("chai-as-promised"));
 
+global.navigator = {
+  userAgent: 'node.js'
+};
+
+global.window = {
+  userAgent: 'node.js'
+};
+
 describe("pokedex", function () {
   var promise,
     id = 2,
