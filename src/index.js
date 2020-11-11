@@ -1,7 +1,7 @@
 import endpoints from './endpoints.json';
 import rootEndpoints from './rootEndpoints.json';
 import { loadResource } from './getter.js';
-import { installSW } from './initSW.js';
+import { installSW } from './installSW.js';
 import { values } from './default.js';
 import { configurator } from './configurator.js';
 
@@ -45,7 +45,9 @@ export class Pokedex {
             }
         });
 
-        installSW();
+        if (values.cacheImages) {
+            installSW()
+        }
     }
 
     resource(path) {
