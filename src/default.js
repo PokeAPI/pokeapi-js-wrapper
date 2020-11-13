@@ -1,37 +1,38 @@
-const values = {};
+class Values {
+    constructor(config={}) {
+        this.protocol = 'https';
+        this.hostName = 'pokeapi.co';
+        this.versionPath = '/api/v2/';
+        this.offset = 0;
+        this.limit = 100000;
+        this.timeout = 20 * 1000; // 20 seconds
+        this.cache = true;
+        this.cacheImages = true;
 
-values.protocol = 'https';
-values.hostName = 'pokeapi.co';
-values.versionPath = '/api/v2/';
-values.offset = 0;
-values.limit = 100000;
-values.timeout = 20 * 1000; // 20 seconds
-values.cache = true;
-values.cacheImages = true;
-
-values.setProtocol = (newProtocol) => {
-    values.protocol = newProtocol;
+        if (config.hasOwnProperty('protocol')) {
+            this.protocol = config.protocol;
+        }
+        if (config.hasOwnProperty('hostName')) {
+            this.hostName = config.hostName;
+        }
+        if (config.hasOwnProperty('versionPath')) {
+            this.versionPath = config.versionPath;
+        }
+        if (config.hasOwnProperty('offset')) {
+            this.offset = config.offset - 1;
+        }
+        if (config.hasOwnProperty('limit')) {
+            this.limit = config.limit;
+        }
+        if (config.hasOwnProperty('timeout')) {
+            this.timeout = config.timeout;
+        }
+        if (config.hasOwnProperty('cache')) {
+            this.cache = config.cache;
+        }
+        if (config.hasOwnProperty('cacheImages')) {
+            this.cacheImages = config.cacheImages;
+        }
+    }
 }
-values.setHostName = (newHostName) => {
-    values.hostName = newHostName;
-}
-values.setVersionPath = (newVersionPath) => {
-    values.versionPath = newVersionPath;
-}
-values.setOffset = (newOffset) => {
-    values.offset = newOffset - 1;
-}
-values.setLimit = (newLimit) => {
-    values.limit = newLimit + 1;
-}
-values.setTimeout = (newTimeout) => {
-    values.timeout = newTimeout;
-}
-values.setCache = (newCache) => {
-    values.cache = newCache;
-}
-values.setCache = (newCacheImages) => {
-    values.cacheImages = newCacheImages;
-}
-
-export { values };
+export { Values };

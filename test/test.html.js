@@ -1,12 +1,31 @@
-describe("pokedex", function () {
-  var id = 2,
-  secureP = new Pokedex.Pokedex({ protocol: 'https' });
+describe("service worker", function () {
+  it("should be activated on second run", function () {
+    return navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      const sw = registrations.filter(function(serviceworker) { 
+        return serviceworker.active.scriptURL.endsWith('pokeapi-js-wrapper-sw.js')
+       });
+      expect(sw).to.have.lengthOf(1)
+      expect(sw[0].active.state).to.be.equal('activated')
+    });
+  });
+});
 
-  this.timeout(21000);
+describe("pokedex", function () {
+  var id = 2;
+  secureP = new Pokedex.Pokedex({ protocol: 'https' });
+  P = new Pokedex.Pokedex({
+    protocol: 'http',  
+    offset: 10,
+    limit: 1,
+    timeout: 10000,
+    cache: false,
+    cacheImages: false
+  });
+  this.timeout(1000);
 
   describe(".resource(Mixed: array)", function () {
     it("should have property name", function () {
-      return secureP.resource(['/api/v2/pokemon/36', 'api/v2/berry/8', 'https://pokeapi.co/api/v2/ability/9/']).then(res => {
+      return P.resource(['/api/v2/pokemon/36', 'api/v2/berry/8', 'https://pokeapi.co/api/v2/ability/9/']).then(res => {
         expect(res[0]).to.have.property('name');
         expect(res[1]).to.have.property('name');
         expect(res[2]).to.have.property('name');

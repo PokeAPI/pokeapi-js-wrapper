@@ -1,36 +1,34 @@
 import axios from 'axios';
 import localForage from "localforage";
 
-import { values } from './default.js';
-
 const CACHE_PREFIX = "pokeapi-js-wrapper-";
 
-function loadResource(url) {
+function loadResource(values, url) {
     return new Promise((resolve, reject) => {
         localForage.ready()
             .then(() => {
                 localForage.getItem(`${CACHE_PREFIX}${url}`)
                     .then(value => {
                         if (value === null) {
-                            loadUrl(url).then(res => {resolve(res)})
+                            loadUrl(values, url).then(res => {resolve(res)})
                                 .catch(err => {reject(err)});
                         } else {
                             resolve(addCacheMark(value))
                         }
                     })
-                    .catch(error => {
-                        loadUrl(url).then(res => {resolve(res)})
+                    .catch(err => {
+                        loadUrl(values, url).then(res => {resolve(res)})
                             .catch(err => {reject(err)});
                     });
             })
             .catch(err => {
-                loadUrl(url).then(res => {resolve(res)})
+                loadUrl(values, url).then(res => {resolve(res)})
                     .catch(err => {reject(err)});
             });
     });
 };
 
-function loadUrl(url) {
+function loadUrl(values, url) {
     return new Promise((resolve, reject) => {
         let options = {
             baseURL: `${values.protocol}://${values.hostName}/`,
