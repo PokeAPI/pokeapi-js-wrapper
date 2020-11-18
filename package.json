@@ -1,9 +1,14 @@
 {
   "name": "pokeapi-js-wrapper",
-  "version": "1.1.2",
+  "version": "1.2.0-beta.0",
   "description": "An API wrapper for PokeAPI",
   "main": "dist/index.js",
   "module": "src/index.js",
+  "files": [
+    "dist/index.js",
+    "dist/pokeapi-js-wrapper-sw.js",
+    "src/*"
+  ],
   "scripts": {
     "analyze": "webpack --json | webpack-bundle-size-analyzer",
     "build": "webpack -p",
