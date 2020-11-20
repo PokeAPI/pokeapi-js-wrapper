@@ -6,18 +6,51 @@ var chai = require('chai'),
 chai.use(require("chai-things"));
 chai.use(require("chai-as-promised"));
 
+global.navigator = {
+  userAgent: 'node.js'
+};
+
+global.window = {
+  userAgent: 'node.js'
+};
+
 describe("pokedex", function () {
   var promise,
     id = 2,
     path = '/api/v2/pokemon/34',
     url = 'https://pokeapi.co/api/v2/pokemon/35',
-    secureP = new Pokedex.Pokedex(),
+    secureP = new Pokedex.Pokedex({cacheImages: true}),
+    P = new Pokedex.Pokedex({
+      protocol: 'http',
+      offset: 10,
+      limit: 1,
+      timeout: 10000,
+      cache: false
+    }),
     interval = {
       limit: 10,
       offset: 34
     }
 
   this.timeout(21000);
+
+  describe("P.getPokemonsList(interval: Interval) with default interval", function () {
+    it("should succeed", function () {
+      P.getPokemonsList().then(function(res) {
+        expect(res).to.have.property('results');
+        expect(res.results).to.have.lengthOf(1);
+        expect(res.results[0].name).to.be.equal("caterpie");
+        expect(res.results[0].name).not.to.be.equal("metapod");
+      });
+    });
+  });
+
+  describe(".getConfig()", function () {
+    it("should return protocol property", function () {
+      let config = P.getConfig()
+      expect(config).to.have.property('protocol');
+    });
+  });
 
   describe(".getPokemonsList(interval: Interval) with interval", function () {
     before(function () {
