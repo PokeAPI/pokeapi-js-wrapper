@@ -21,7 +21,7 @@ describe("pokedex", function () {
     url = 'https://pokeapi.co/api/v2/pokemon/35',
     secureP = new Pokedex.Pokedex({cacheImages: true}),
     P = new Pokedex.Pokedex({
-      protocol: 'http',
+      protocol: 'https',
       offset: 10,
       limit: 1,
       timeout: 10000,
