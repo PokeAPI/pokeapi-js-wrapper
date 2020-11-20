@@ -13,12 +13,12 @@ A PokeAPI wrapper intended for browsers only. Comes fully asynchronous (with [lo
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-**Table of Contents**
 
 - [Install](#install)
 - [Usage](#usage)
   - [Example requests](#example-requests)
 - [Configuration](#configuration)
+  - [Caching images](#caching-images)
 - [Tests](#tests)
 - [Endpoints](#endpoints)
   - [Berries](#berries)
@@ -116,7 +116,7 @@ In this way when `pokeapi-js-wrapper`'s `Pokedex` is created it will install and
 
 It's fundamental that you download the Service Worker [we provide](https://raw.githubusercontent.com/PokeAPI/pokeapi-js-wrapper/master/dist/pokeapi-js-wrapper-sw.js)_(Right Click + Save As)_ and you serve it from the root of your project/server. Service Workers in fact cannot be installed from a domain different than yours.
 
-A [basic example]() is hosted [here]().
+A [basic example](https://github.com/PokeAPI/pokeapi-js-wrapper/blob/master/test/example-sw.html) is hosted [here](https://pokeapi.github.io/pokeapi-js-wrapper/test/example-sw.html).
 
 ## Tests
 
