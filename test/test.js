@@ -19,14 +19,13 @@ describe("pokedex", function () {
     id = 2,
     path = '/api/v2/pokemon/34',
     url = 'https://pokeapi.co/api/v2/pokemon/35',
-    secureP = new Pokedex.Pokedex(),
+    secureP = new Pokedex.Pokedex({cacheImages: true}),
     P = new Pokedex.Pokedex({
-      protocol: 'http',  
+      protocol: 'http',
       offset: 10,
       limit: 1,
       timeout: 10000,
-      cache: false,
-      cacheImages: false
+      cache: false
     }),
     interval = {
       limit: 10,

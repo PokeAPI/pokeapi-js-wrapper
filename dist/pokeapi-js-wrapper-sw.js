@@ -11,13 +11,13 @@ self.addEventListener('fetch', function (event) {
             return fetch(event.request).then(function (response) {
                 if (event.request.url.match(imgRe)) {
                     caches.open("pokeapi-js-wrapper-images-" + version).then(function (cache) {
-                        // The response is opaque, if it fails the cache.add() will reject it
+                        // The response is opaque, if it fails cache.add() will reject it
                         cache.add(event.request.url)
                     })
                 }
                 return response;
             }).catch(function (error) {
-                console.log(error)
+                console.error(error)
             })
         }))
     }
