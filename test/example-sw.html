@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SW test</title>
+    <script src="https://unpkg.com/pokeapi-js-wrapper@1.2.0-beta.0/dist/index.js"></script>
+  </head>
+
+  <body>
+    <script>
+      const P = new Pokedex.Pokedex({ cacheImages: true });
+    </script>
+    <div id="app">
+      <img
+        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg"
+        alt="Pikachu"
+      />
+    </div>
+    <div>
+        The above image is served (once cached) by the local pokeapi-js-wrapper-sw.js. Check it out in the Developer Console (F12) by looking and the Network Panel and also at the Application Panel.
+    </div>
+  </body>
+</html>
