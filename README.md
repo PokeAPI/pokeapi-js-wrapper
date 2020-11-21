@@ -3,7 +3,6 @@
 [![npm version](https://badge.fury.io/js/pokeapi-js-wrapper.svg)](https://badge.fury.io/js/pokeapi-js-wrapper)
 [![Build Status](https://travis-ci.org/PokeAPI/pokeapi-js-wrapper.svg?branch=master)](https://travis-ci.org/PokeAPI/pokeapi-js-wrapper)
 [![Mocha browser tests](https://img.shields.io/badge/test-browser-brightgreen.svg)](https://pokeapi.github.io/pokeapi-js-wrapper/test/test.html)
-[![Known Vulnerabilities](https://snyk.io/test/github/pokeapi/pokeapi-js-wrapper/badge.svg?targetFile=package.json)](https://snyk.io/test/github/pokeapi/pokeapi-js-wrapper?targetFile=package.json)
 [![codecov](https://codecov.io/gh/PokeAPI/pokeapi-js-wrapper/branch/master/graph/badge.svg)](https://codecov.io/gh/PokeAPI/pokeapi-js-wrapper)
 
 Maintainer: [Naramsim](https://github.com/Naramsim)
