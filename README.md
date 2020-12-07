@@ -672,4 +672,4 @@ This is what you will get:
 
 ## Internet Explorer 8
 
-In order to target this browser if must load a Promise polyfill before `pokeapi-js-wrapper`. You can choose one of your chioce, we recommed [jakearchibald/es6-promise](https://cdnjs.com/libraries/es6-promise) or [stefanpenner/es6-promise](https://github.com/stefanpenner/es6-promise)
+In order to target this browser you must load a `Promise` polyfill before `pokeapi-js-wrapper`. You can choose one of your chioce, we recommed [jakearchibald/es6-promise](https://cdnjs.com/libraries/es6-promise) or [stefanpenner/es6-promise](https://github.com/stefanpenner/es6-promise)
