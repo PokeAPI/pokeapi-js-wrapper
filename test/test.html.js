@@ -14,7 +14,7 @@ describe("pokedex", function () {
   var id = 2;
   secureP = new Pokedex.Pokedex({ protocol: 'https' });
   P = new Pokedex.Pokedex({
-    protocol: 'http',  
+    protocol: 'https',  
     offset: 10,
     limit: 1,
     timeout: 10000,
