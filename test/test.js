@@ -64,6 +64,16 @@ describe("pokedex", function () {
     });
   });
 
+  describe(".clearCache()", function () {
+    it("should clear all cached entries", function () {
+      return P.clearCache().then(res => {
+          P.getCacheLength().then(length => {
+            expect(length).to.be.equal(0);
+          })
+      })  
+    });
+  });
+
   describe(".resource(Mixed: array)", function () {
     before(function () {
       promise = secureP.resource(['/api/v2/pokemon/36', 'api/v2/berry/8', 'https://pokeapi.co/api/v2/ability/9/']);

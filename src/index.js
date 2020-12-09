@@ -6,13 +6,14 @@ import { loadResource } from './getter.js'
 import { installSW } from './installSW.js'
 import { Config } from './config.js'
 
+localForage.config({
+    name: 'pokeapi-js-wrapper'
+})
+
 export class Pokedex {
 
     constructor(config) {
         this.config = new Config(config)
-        this.getConfig = function() {
-            return this.config
-        }
 
         // add to Pokedex.prototype all our endpoint functions
         endpoints.forEach(endpoint => {
@@ -49,13 +50,21 @@ export class Pokedex {
             }
         })
 
-        localForage.config({
-            name: 'pokeapi-js-wrapper'
-        })
-
         if (this.config.cacheImages) {
             installSW()
         }
+    }
+
+    getConfig() {
+        return this.config
+    }
+
+    getCacheLength() {
+        return localForage.length()
+    }
+
+    clearCache() {
+        return localForage.clear()
     }
 
     resource(path) {
