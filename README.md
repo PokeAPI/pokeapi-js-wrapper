@@ -648,7 +648,7 @@ This is what you will get:
 - .getMoveCategoriesList()
 - .getMoveDamageClassesList()
 - .getMoveLearnMethodsList()
-- .getMoveTar\* getsList()
+- .getMoveTargetsList()
 - .getLocationsList()
 - .getLocationAreasList()
 - .getPalParkAreasList()
