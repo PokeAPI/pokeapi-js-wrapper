@@ -113,6 +113,18 @@ describe("pokedex", function () {
     });
   });
 
+  describe(".getPokemonEncounterAreasByName(Id: int)", function () {
+    before(function () {
+      promise = secureP.getPokemonEncounterAreasByName(id);
+    });
+    it("should succeed", function () {
+      return promise;
+    });
+    it("should be an array", function () {
+      return expect(promise).to.eventually.be.an("array");
+    });
+  });
+
   describe(".getVersionByName(Id: int)", function () {
     before(function () {
       promise = secureP.getVersionByName(id);

@@ -17,14 +17,15 @@ export class Pokedex {
 
         // add to Pokedex.prototype all our endpoint functions
         endpoints.forEach(endpoint => {
-            this[endpoint[0]] = input => { 
+            const endpointFullName = buildEndpointFullName(endpoint)
+            this[endpointFullName] = input => { 
                 if (input) {
 
                     // if the user has submitted a Name or an ID, return the JSON promise
                     if (typeof input === 'number' || typeof input === 'string') {
-                        return loadResource(this.config, `${this.config.versionPath}${endpoint[1]}/${input}/`) 
+                        return loadResource(this.config, `${this.config.versionPath}${endpoint[2].replace(':id', input)}`) 
                     }
-
+            
                     // if the user has submitted an Array
                     // return a new promise which will resolve when all loadResource calls are ended
                     else if (typeof input === 'object') {
@@ -32,6 +33,7 @@ export class Pokedex {
                     }
                 }
             }
+            this[buildEndpointName(endpoint)] = this[endpointFullName]
         })
 
         rootEndpoints.forEach(rootEndpoint => {
@@ -78,8 +80,20 @@ export class Pokedex {
     }
 }
 
-function mapResources(config, endpoint, input) {
-    return input.map(res => {
-        return loadResource(config, `${config.versionPath}${endpoint[1]}/${res}/`)
+function mapResources(config, endpoint, inputs) {
+    return inputs.map(input => {
+        return loadResource(config, `${config.versionPath}${endpoint[2].replace(':id', input)}`)
     })
+}
+
+function buildEndpointFullName(endpoint) {
+    return `${endpoint[0]}By${capitalize(endpoint[1])}`
+}
+
+function buildEndpointName(endpoint) {
+    return `${endpoint[0]}}`
+}
+
+function capitalize([first,...rest]) {
+    return first.toUpperCase() + rest.join('').toLowerCase()
 }
