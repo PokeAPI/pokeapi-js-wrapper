@@ -143,57 +143,57 @@ P.getMachineById(3).then(function(response) {
 })
 ```
 
-| Function | Mapped PokeAPI endpoint |
-| --- | --- |
-| `getBerryByName(name)` | [/berry/:name](https://pokeapi.co/api/v2/berry/:name/) |
-| `getBerryFirmnessByName(name)` | [/berry-firmness/:name](https://pokeapi.co/api/v2/berry-firmness/:name/) |
-| `getBerryFlavorByName(name)` | [/berry-flavor/:name](https://pokeapi.co/api/v2/berry-flavor/:name/) |
-| `getContestTypeByName(name)` | [/contest-type/:name](https://pokeapi.co/api/v2/contest-type/:name/) |
-| `getContestEffectById(id)` | [/contest-effect/:id](https://pokeapi.co/api/v2/contest-effect/:id/) |
-| `getSuperContestEffectById(id)` | [/super-contest-effect/:id](https://pokeapi.co/api/v2/super-contest-effect/:id/) |
-| `getEncounterMethodByName(name)` | [/encounter-method/:name](https://pokeapi.co/api/v2/encounter-method/:name/) |
-| `getEncounterConditionByName(name)` | [/encounter-condition/:name](https://pokeapi.co/api/v2/encounter-condition/:name/) |
-| `getEncounterConditionValueByName(name)` | [/encounter-condition-value/:nam/](https://pokeapi.co/api/v2/encounter-condition-value/:name/) |
-| `getEvolutionChainById(id)` | [/evolution-chain/:id](https://pokeapi.co/api/v2/evolution-chain/:id/) |
-| `getEvolutionTriggerByName(name)` | [/evolution-trigger/:name](https://pokeapi.co/api/v2/evolution-trigger/:name/) |
-| `getGenerationByName(name)` | [/generation/:name](https://pokeapi.co/api/v2/generation/:name/) |
-| `getPokedexByName(name)` | [/pokedex/:name](https://pokeapi.co/api/v2/pokedex/:name/) |
-| `getVersionByName(name)` | [/version/:name](https://pokeapi.co/api/v2/version/:name/) |
-| `getVersionGroupByName(name)` | [/version-group/:name](https://pokeapi.co/api/v2/version-group/:name/) |
-| `getItemByName(name)` | [/item/:name](https://pokeapi.co/api/v2/item/:name/) |
-| `getItemAttributeByName(name)` | [/item-attribute/:name](https://pokeapi.co/api/v2/item-attribute/:name/) |
-| `getItemCategoryByName(name)` | [/item-category/:name](https://pokeapi.co/api/v2/item-category/:name/) |
-| `getItemFlingEffectByName(name)` | [/item-fling-effect/:name](https://pokeapi.co/api/v2/item-fling-effect/:name/) |
-| `getItemPocketByName(name)` | [/item-pocket/:name](https://pokeapi.co/api/v2/item-pocket/:name/) |
-| `getMachineById(id)` | [/machine/:id](https://pokeapi.co/api/v2/machine/:id/) |
-| `getMoveByName(name)` | [/move/:name](https://pokeapi.co/api/v2/move/:name/) |
-| `getMoveAilmentByName(name)` | [/move-ailment/:name](https://pokeapi.co/api/v2/move-ailment/:name/) |
-| `getMoveBattleStyleByName(name)` | [/move-battle-style/:name](https://pokeapi.co/api/v2/move-battle-style/:name/) |
-| `getMoveCategoryByName(name)` | [/move-category/:name](https://pokeapi.co/api/v2/move-category/:name/) |
-| `getMoveDamageClassByName(name)` | [/move-damage-class/:name](https://pokeapi.co/api/v2/move-damage-class/:name/) |
-| `getMoveLearnMethodByName(name)` | [/move-learn-method/:name](https://pokeapi.co/api/v2/move-learn-method/:name/) |
-| `getMoveTargetByName(name)` | [/move-target/:name](https://pokeapi.co/api/v2/move-target/:name/) |
-| `getLocationByName(name)` | [/location/:name](https://pokeapi.co/api/v2/location/:name/) |
-| `getLocationAreaByName(name)` | [/location-area/:name](https://pokeapi.co/api/v2/location-area/:name/) |
-| `getPalParkAreaByName(name)` | [/pal-park-area/:name](https://pokeapi.co/api/v2/pal-park-area/:name/) |
-| `getRegionByName(name)` | [/region/:name](https://pokeapi.co/api/v2/region/:name/) |
-| `getAbilityByName(name)` | [/ability/:name](https://pokeapi.co/api/v2/ability/:name/) |
-| `getCharacteristicById(id)` | [/characteristic/:id](https://pokeapi.co/api/v2/characteristic/:id/) |
-| `getEggGroupByName(name)` | [/egg-group/:name](https://pokeapi.co/api/v2/egg-group/:name/) |
-| `getGenderByName(name)` | [/gender/:name](https://pokeapi.co/api/v2/gender/:name/) |
-| `getGrowthRateByName(name)` | [/growth-rate/:name](https://pokeapi.co/api/v2/growth-rate/:name/) |
-| `getNatureByName(name)` | [/nature/:name](https://pokeapi.co/api/v2/nature/:name/) |
-| `getPokeathlonStatByName(name)` | [/pokeathlon-stat/:name](https://pokeapi.co/api/v2/pokeathlon-stat/:name/) |
-| `getPokemonByName(name)` | [/pokemon/:name](https://pokeapi.co/api/v2/pokemon/:name/) |
-| `getPokemonEncounterAreasByName(name)` | [/pokemon/:name/encounters](https://pokeapi.co/api/v2/pokemon/:name/encounters/) |
-| `getPokemonColorByName(name)` | [/pokemon-color/:name](https://pokeapi.co/api/v2/pokemon-color/:name/) |
-| `getPokemonFormByName(name)` | [/pokemon-form/:name](https://pokeapi.co/api/v2/pokemon-form/:name/) |
-| `getPokemonHabitatByName(name)` | [/pokemon-habitat/:name](https://pokeapi.co/api/v2/pokemon-habitat/:name/) |
-| `getPokemonShapeByName(name)` | [/pokemon-shape/:name](https://pokeapi.co/api/v2/pokemon-shape/:name/) |
-| `getPokemonSpeciesByName(name)` | [/pokemon-species/:name](https://pokeapi.co/api/v2/pokemon-species/:name/) |
-| `getStatByName(name)` | [/stat/:name](https://pokeapi.co/api/v2/stat/:name/) |
-| `getTypeByName(name)` | [/type/:name](https://pokeapi.co/api/v2/type/:name/) |
-| `getLanguageByName(name)` | [/language/:name](https://pokeapi.co/api/v2/language/:name/) |
+| Function | Mapped PokeAPI endpoint | Documentation |
+| --- | --- | --- |
+| `getBerryByName(name)` | [/berry/:name](https://pokeapi.co/api/v2/berry/:name/) | [Documentation](https://pokeapi.co/docs/v2#berries) |
+| `getBerryFirmnessByName(name)` | [/berry-firmness/:name](https://pokeapi.co/api/v2/berry-firmness/:name/) | [Documentation](https://pokeapi.co/docs/v2#berry-firmnesses) |
+| `getBerryFlavorByName(name)` | [/berry-flavor/:name](https://pokeapi.co/api/v2/berry-flavor/:name/) | [Documentation](https://pokeapi.co/docs/v2#berry-flavors) |
+| `getContestTypeByName(name)` | [/contest-type/:name](https://pokeapi.co/api/v2/contest-type/:name/) | [Documentation](https://pokeapi.co/docs/v2#contest-types) |
+| `getContestEffectById(id)` | [/contest-effect/:id](https://pokeapi.co/api/v2/contest-effect/:id/) | [Documentation](https://pokeapi.co/docs/v2#contest-effects) |
+| `getSuperContestEffectById(id)` | [/super-contest-effect/:id](https://pokeapi.co/api/v2/super-contest-effect/:id/) | [Documentation](https://pokeapi.co/docs/v2#super-contest-effects) |
+| `getEncounterMethodByName(name)` | [/encounter-method/:name](https://pokeapi.co/api/v2/encounter-method/:name/) | [Documentation](https://pokeapi.co/docs/v2#encounter-methods) |
+| `getEncounterConditionByName(name)` | [/encounter-condition/:name](https://pokeapi.co/api/v2/encounter-condition/:name/) | [Documentation](https://pokeapi.co/docs/v2#encounter-conditions) |
+| `getEncounterConditionValueByName(name)` | [/encounter-condition-value/:nam/](https://pokeapi.co/api/v2/encounter-condition-value/:name/) | [Documentation](https://pokeapi.co/docs/v2#encounter-condition-values) |
+| `getEvolutionChainById(id)` | [/evolution-chain/:id](https://pokeapi.co/api/v2/evolution-chain/:id/) | [Documentation](https://pokeapi.co/docs/v2#evolution-chains) |
+| `getEvolutionTriggerByName(name)` | [/evolution-trigger/:name](https://pokeapi.co/api/v2/evolution-trigger/:name/) | [Documentation](https://pokeapi.co/docs/v2#evolution-triggers) |
+| `getGenerationByName(name)` | [/generation/:name](https://pokeapi.co/api/v2/generation/:name/) | [Documentation](https://pokeapi.co/docs/v2#generations) |
+| `getPokedexByName(name)` | [/pokedex/:name](https://pokeapi.co/api/v2/pokedex/:name/) | [Documentation](https://pokeapi.co/docs/v2#pokedexes) |
+| `getVersionByName(name)` | [/version/:name](https://pokeapi.co/api/v2/version/:name/) | [Documentation](https://pokeapi.co/docs/v2#version) |
+| `getVersionGroupByName(name)` | [/version-group/:name](https://pokeapi.co/api/v2/version-group/:name/) | [Documentation](https://pokeapi.co/docs/v2#version-groups) |
+| `getItemByName(name)` | [/item/:name](https://pokeapi.co/api/v2/item/:name/) | [Documentation](https://pokeapi.co/docs/v2#item) |
+| `getItemAttributeByName(name)` | [/item-attribute/:name](https://pokeapi.co/api/v2/item-attribute/:name/) | [Documentation](https://pokeapi.co/docs/v2#item-attributes) |
+| `getItemCategoryByName(name)` | [/item-category/:name](https://pokeapi.co/api/v2/item-category/:name/) | [Documentation](https://pokeapi.co/docs/v2#item-categories) |
+| `getItemFlingEffectByName(name)` | [/item-fling-effect/:name](https://pokeapi.co/api/v2/item-fling-effect/:name/) | [Documentation](https://pokeapi.co/docs/v2#item-fling-effects) |
+| `getItemPocketByName(name)` | [/item-pocket/:name](https://pokeapi.co/api/v2/item-pocket/:name/) | [Documentation](https://pokeapi.co/docs/v2#item-pockets) |
+| `getMachineById(id)` | [/machine/:id](https://pokeapi.co/api/v2/machine/:id/) | [Documentation](https://pokeapi.co/docs/v2#machines) |
+| `getMoveByName(name)` | [/move/:name](https://pokeapi.co/api/v2/move/:name/) | [Documentation](https://pokeapi.co/docs/v2#moves) |
+| `getMoveAilmentByName(name)` | [/move-ailment/:name](https://pokeapi.co/api/v2/move-ailment/:name/) | [Documentation](https://pokeapi.co/docs/v2#move-ailments) |
+| `getMoveBattleStyleByName(name)` | [/move-battle-style/:name](https://pokeapi.co/api/v2/move-battle-style/:name/) | [Documentation](https://pokeapi.co/docs/v2#move-battle-styles) |
+| `getMoveCategoryByName(name)` | [/move-category/:name](https://pokeapi.co/api/v2/move-category/:name/) | [Documentation](https://pokeapi.co/docs/v2#move-categories) |
+| `getMoveDamageClassByName(name)` | [/move-damage-class/:name](https://pokeapi.co/api/v2/move-damage-class/:name/) | [Documentation](https://pokeapi.co/docs/v2#move-damage-classes) |
+| `getMoveLearnMethodByName(name)` | [/move-learn-method/:name](https://pokeapi.co/api/v2/move-learn-method/:name/) | [Documentation](https://pokeapi.co/docs/v2#move-learn-methods) |
+| `getMoveTargetByName(name)` | [/move-target/:name](https://pokeapi.co/api/v2/move-target/:name/) | [Documentation](https://pokeapi.co/docs/v2#move-targets) |
+| `getLocationByName(name)` | [/location/:name](https://pokeapi.co/api/v2/location/:name/) | [Documentation](https://pokeapi.co/docs/v2#locations) |
+| `getLocationAreaByName(name)` | [/location-area/:name](https://pokeapi.co/api/v2/location-area/:name/) | [Documentation](https://pokeapi.co/docs/v2#location-areas) |
+| `getPalParkAreaByName(name)` | [/pal-park-area/:name](https://pokeapi.co/api/v2/pal-park-area/:name/) | [Documentation](https://pokeapi.co/docs/v2#pal-park-areas) |
+| `getRegionByName(name)` | [/region/:name](https://pokeapi.co/api/v2/region/:name/) | [Documentation](https://pokeapi.co/docs/v2#regions) |
+| `getAbilityByName(name)` | [/ability/:name](https://pokeapi.co/api/v2/ability/:name/) | [Documentation](https://pokeapi.co/docs/v2#abilities) |
+| `getCharacteristicById(id)` | [/characteristic/:id](https://pokeapi.co/api/v2/characteristic/:id/) | [Documentation](https://pokeapi.co/docs/v2#characteristics) |
+| `getEggGroupByName(name)` | [/egg-group/:name](https://pokeapi.co/api/v2/egg-group/:name/) | [Documentation](https://pokeapi.co/docs/v2#egg-groups) |
+| `getGenderByName(name)` | [/gender/:name](https://pokeapi.co/api/v2/gender/:name/) | [Documentation](https://pokeapi.co/docs/v2#genders) |
+| `getGrowthRateByName(name)` | [/growth-rate/:name](https://pokeapi.co/api/v2/growth-rate/:name/) | [Documentation](https://pokeapi.co/docs/v2#growth-rates) |
+| `getNatureByName(name)` | [/nature/:name](https://pokeapi.co/api/v2/nature/:name/) | [Documentation](https://pokeapi.co/docs/v2#natures) |
+| `getPokeathlonStatByName(name)` | [/pokeathlon-stat/:name](https://pokeapi.co/api/v2/pokeathlon-stat/:name/) | [Documentation](https://pokeapi.co/docs/v2#pokeathlon-stats) |
+| `getPokemonByName(name)` | [/pokemon/:name](https://pokeapi.co/api/v2/pokemon/:name/) | [Documentation](https://pokeapi.co/docs/v2#pokemon) |
+| `getPokemonEncounterAreasByName(name)` | [/pokemon/:name/encounters](https://pokeapi.co/api/v2/pokemon/:name/encounters/) | [Documentation](https://pokeapi.co/docs/v2#pokemon-location-areas) |
+| `getPokemonColorByName(name)` | [/pokemon-color/:name](https://pokeapi.co/api/v2/pokemon-color/:name/) | [Documentation](https://pokeapi.co/docs/v2#pokemon-colors) |
+| `getPokemonFormByName(name)` | [/pokemon-form/:name](https://pokeapi.co/api/v2/pokemon-form/:name/) | [Documentation](https://pokeapi.co/docs/v2#pokemon-forms) |
+| `getPokemonHabitatByName(name)` | [/pokemon-habitat/:name](https://pokeapi.co/api/v2/pokemon-habitat/:name/) | [Documentation](https://pokeapi.co/docs/v2#pokemon-habitats) |
+| `getPokemonShapeByName(name)` | [/pokemon-shape/:name](https://pokeapi.co/api/v2/pokemon-shape/:name/) | [Documentation](https://pokeapi.co/docs/v2#pokemon-shapes) |
+| `getPokemonSpeciesByName(name)` | [/pokemon-species/:name](https://pokeapi.co/api/v2/pokemon-species/:name/) | [Documentation](https://pokeapi.co/docs/v2#pokemon-species) |
+| `getStatByName(name)` | [/stat/:name](https://pokeapi.co/api/v2/stat/:name/) | [Documentation](https://pokeapi.co/docs/v2#stats) |
+| `getTypeByName(name)` | [/type/:name](https://pokeapi.co/api/v2/type/:name/) | [Documentation](https://pokeapi.co/docs/v2#types) |
+| `getLanguageByName(name)` | [/language/:name](https://pokeapi.co/api/v2/language/:name/) | [Documentation](https://pokeapi.co/docs/v2#languages) |
 
 ### Root Endpoints list
 
