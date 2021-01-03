@@ -7,11 +7,10 @@
 
 Maintainer: [Naramsim](https://github.com/Naramsim)
 
-A PokeAPI wrapper intended for browsers only. Comes fully asynchronous (with [localForage](https://github.com/localForage/localForage)) and built-in cache. Offers also Images Caching through the inclusion of a Service Worker. _For a Node (server-side) wrapper see: [pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2)_
+A PokeAPI wrapper intended for browsers only. Comes fully asynchronous (with [localForage](https://github.com/localForage/localForage)) and built-in cache. Offers also Image Caching through the inclusion of a Service Worker. _For a Node (server-side) wrapper see: [pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2)_
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 
 - [Install](#install)
 - [Usage](#usage)
@@ -20,20 +19,8 @@ A PokeAPI wrapper intended for browsers only. Comes fully asynchronous (with [lo
   - [Caching images](#caching-images)
 - [Tests](#tests)
 - [Endpoints](#endpoints)
-  - [Berries](#berries)
-  - [Contests](#contests)
-  - [Encounters](#encounters)
-  - [Evolution](#evolution)
-  - [Games](#games)
-  - [Items](#items)
-  - [Machines](#machines)
-  - [Moves](#moves)
-  - [Locations](#locations)
-  - [Pokemon](#pokemon)
-  - [Utility](#utility)
+  - [Root Endpoints list](#root-endpoints-list)
   - [Custom URLs and paths](#custom-urls-and-paths)
-- [Root Endpoints](#root-endpoints)
-  - [List of supported root endpoints](#list-of-supported-root-endpoints)
 - [Internet Explorer 8](#internet-explorer-8)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -65,14 +52,18 @@ const P = new Pokedex.Pokedex()
 </script>
 ```
 
-### [Example](http://jsbin.com/jedakor/edit?html,console) requests
+### [Example](https://jsbin.com/jedakor/5/edit?html,console) requests
 
 ```js
-const golduck = await P.getPokemonByName("golduck") // with await, be sure to be in an async function (and in a try/catch)
-console.log(golduck)
+// with await, be sure to be in an async function (and in a try/catch)
+(async () => {
+  const golduck = await P.getPokemonByName("golduck")
+  console.log(golduck)
+})()
 
-P.getPokemonByName("eevee") // with Promise
-  .then(function (response) {
+// or with Promises
+P.getPokemonByName("eevee")
+  .then(function(response) {
     console.log(response)
   })
 
@@ -80,21 +71,19 @@ P.resource([
   "/api/v2/pokemon/36",
   "api/v2/berry/8",
   "https://pokeapi.co/api/v2/ability/9/",
-]).then(function (response) {
-  console.log(response) // resource function accepts singles or arrays of URLs/paths
+]).then( response => {
+  console.log(response)
 })
 ```
 
 ## Configuration
 
-Pass an Object to Pokedex() in order to configure it. Available options: `protocol`, `hostName`, `versionPath`, `cache`, `timeout`(ms).
-Any option is optional :smile:. If no Object is passed, the Pokedex will be initialized to grab data from https://pokeapi.co/api/v2/ using https with 2 seconds timeout and caching resources.
-
-All the defaults values for the Pokedex config can be found [here](https://github.com/PokeAPI/pokeapi-js-wrapper/blob/master/src/config.js#L3-L10)
+Pass an Object to `Pokedex()` in order to configure it. Available options: `protocol`, `hostName`, `versionPath`, `cache`, `timeout`(ms), and `cacheImages`.
+Any option is optional :smile:. All the default values can be found [here](https://github.com/PokeAPI/pokeapi-js-wrapper/blob/master/src/config.js#L3-L10)
 
 ```js
 const Pokedex = require("pokeapi-js-wrapper")
-const options = {
+const customOptions = {
   protocol: "https",
   hostName: "localhost:443",
   versionPath: "/api/v2/",
@@ -102,16 +91,19 @@ const options = {
   timeout: 5 * 1000, // 5s
   cacheImages: true
 }
-const P = new Pokedex.Pokedex(options)
+const P = new Pokedex.Pokedex(customOptions)
 ```
 
 ### Caching images
 
 Pokeapi.co serves its Pokemon images through [Github](https://github.com/PokeAPI/sprites). For example, the front default DreamWorld image of Pikachu is found at this URL: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg`.
 
-`pokeapi-js-wrapper` enables browsers to cache all these images by: 1. enabling the config parameter `cacheImages` and 2. by serving [our service worker](https://raw.githubusercontent.com/PokeAPI/pokeapi-js-wrapper/master/dist/pokeapi-js-wrapper-sw.js) from the root of your project.
+`pokeapi-js-wrapper` enables browsers to cache all these images by:
 
-In this way when `pokeapi-js-wrapper`'s `Pokedex` is created it will install and start the Service Worker you are serving at the root of your server. The Service Worker will intercept all the calls your HTML/CSS/JS are making to get PokeAPI images and will cache them.
+  1. enabling the config parameter `cacheImages`
+  2. serving [our service worker](https://raw.githubusercontent.com/PokeAPI/pokeapi-js-wrapper/master/dist/pokeapi-js-wrapper-sw.js) from the root of your project
+
+In this way when `pokeapi-js-wrapper`'s `Pokedex` is created it will install and start the Service Worker you are serving at the root of your server. The Service Worker will intercept all the calls your HTML/CSS/JS are making to get PokeAPI's images and will cache them.
 
 It's fundamental that you download the Service Worker [we provide](https://raw.githubusercontent.com/PokeAPI/pokeapi-js-wrapper/master/dist/pokeapi-js-wrapper-sw.js)_(Right Click + Save As)_ and you serve it from the root of your project/server. Service Workers in fact cannot be installed from a domain different than yours.
 
@@ -119,7 +111,7 @@ A [basic example](https://github.com/PokeAPI/pokeapi-js-wrapper/blob/master/test
 
 ## Tests
 
-`pokeapi-js-wrapper` can be tested using two strategies. One is with Node, since this package works even with Node (although not recommended), and the other with a browser.
+`pokeapi-js-wrapper` can be tested using two strategies. One is with Node, since this package works with Node (although not recommended), and the other with a browser.
 
 ```js
 npm test
@@ -129,474 +121,102 @@ Or open `/test/test.html` in your browser. A live version can be found at [`gh-p
 
 ## Endpoints
 
-You can pass an array to each function, it will retrieve data for each array element. If you scroll down, you will find an example.
-
-Any function with the designation "ByName" can also be passed an integer ID. However, the functions with the designation "ById" can only be passed an integer ID. Refer to the [pokeapi v2 docs](http://pokeapi.co/docsv2/) to find out more about how the data is structured.
-
-### Berries
-
-Use **getBerryByName** to return data about a specific berry.
+All the endpoints and the functions to access PokeAPI's endpoints are listed in the long table below. Each function `.ByName(name)` accepts names and ids. The only 5 functions `ById(id)` only accept ids. You can also pass an array to each function, it will retrieve the data for each element asynchronously.
 
 ```js
-P.getBerryByName("cheri").then(function (response) {
+P.getPokemonByName("eevee").then(function(response) {
+  console.log(response)
+})
+
+P.getPokemonSpeciesByName(25).then(function(response) {
+  console.log(response)
+})
+
+P.getBerryByName(["cheri", "chesto", 5]).then(function(response) {
+  // `response` will be an Array containing 3 Objects
+  // response.forEach((item) => {console.log(item.size)}) // 80,50,20
+  console.log(response)
+})
+
+P.getMachineById(3).then(function(response) {
   console.log(response)
 })
 ```
 
-Use **getBerryFirmnessByName** to return data about the firmness of a specific berry.
-
-```js
-P.getBerryFirmnessByName("very-soft").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getBerryFlavorByName** to return data about the flavor of a specific berry.
-
-```js
-P.getBerryFlavorByName("spicy").then(function (response) {
-  console.log(response)
-})
-```
-
-**Array** as a parameter example. It can be a mixed array.
-This method fetches data asynchronously. So it is quite fast :smile:
-
-```js
-P.getBerryByName(["cheri", "chesto", 5]).then(function (response) {
-  console.log(response)
-})
-// response will be an Array containing 3 Objects
-// response.forEach((item) => {console.log(item.size)}) // 80,50,20
-```
-
-### Contests
-
-Use **getContestTypeByName** to return data about the effects of moves when used in contests.
-
-```js
-P.getContestTypeByName("cool").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getContestEffectById** to return data about the effects of moves when used in contests.
-
-```js
-P.getContestEffectById(1).then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getSuperContestEffectById** to return data about the effects of moves when used in super contests.
-
-```js
-P.getSuperContestEffectById(1).then(function (response) {
-  console.log(response)
-})
-```
-
-### Encounters
-
-Use **getEncounterMethodByName** to return data about the conditions in which a trainer may encounter a pokemon in the wild.
-
-```js
-P.getEncounterMethodByName("walk").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getEncounterConditionByName** to return data that affects which pokemon might appear in the wild.
-
-```js
-P.getEncounterConditionByName("swarm").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getEncounterConditionValueByName** to return data the various states that an encounter condition can have.
-
-```js
-P.getEncounterConditionValueByName("swarm-yes").then(function (response) {
-  console.log(response)
-})
-```
-
-### Evolution
-
-Use **getEvolutionChainById** to return data evolution chains.
-
-```js
-P.getEvolutionChainById(1).then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getEvolutionTriggerByName** to return data about triggers which cause pokemon to evolve.
-
-```js
-P.getEvolutionTriggerByName("level-up").then(function (response) {
-  console.log(response)
-})
-```
-
-### Games
-
-Use **getGenerationByName** to return data about the different generations of pokemon games.
-
-```js
-P.getGenerationByName("generation-i").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getPokedexByName** to return data about specific types of pokedexes.
-
-```js
-P.getPokedexByName("kanto").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getVersionByName** to return data about specific versions of pokemon games.
-
-```js
-P.getVersionByName("red").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getVersionGroupByName** to return data about specific version groups of pokemon games.
-
-```js
-P.getVersionGroupByName("red-blue").then(function (response) {
-  console.log(response)
-})
-```
-
-### Items
-
-Use **getItemByName** to return data about specific items.
-
-```js
-P.getItemByName("master-ball").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getItemAttributeByName** to return data about specific item attribute.
-
-```js
-P.getItemAttributeByName("countable").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getItemCategoryByName** to return data about specific item category.
-
-```js
-P.getItemCategoryByName("stat-boosts").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getItemFlingEffectByName** to return data about specific item fling effect.
-
-```js
-P.getItemFlingEffectByName("badly-poison").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getItemPocketByName** to return data about specific pockets in a players bag.
-
-```js
-P.getItemPocketByName("misc").then(function (response) {
-  console.log(response)
-})
-```
-
-### Machines
-
-Use **getMachineById** to return data about specific machine.
-
-```js
-P.getMachineById(2).then(function (response) {
-  console.log(response)
-})
-```
-
-### Moves
-
-Use **getMoveByName** to return data about specific pokemon move.
-
-```js
-P.getMoveByName("pound").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getMoveAilmentByName** to return data about specific pokemon move ailment.
-
-```js
-P.getMoveAilmentByName("paralysis").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getMoveBattleStyleByName** to return data about specific pokemon move battle style.
-
-```js
-P.getMoveBattleStyleByName("attack").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getMoveCategoryByName** to return data about specific pokemon move category.
-
-```js
-P.getMoveCategoryByName("ailment").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getMoveDamageClassByName** to return data about specific pokemon damage class.
-
-```js
-P.getMoveDamageClassByName("status").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getMoveLearnMethodByName** to return data about specific pokemon learn method.
-
-```js
-P.getMoveLearnMethodByName("level-up").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getMoveTargetByName** to return data about specific pokemon move target.
-
-```js
-P.getMoveTargetByName("specific-move").then(function (response) {
-  console.log(response)
-})
-```
-
-### Locations
-
-Use **getLocationByName** to return data about specific pokemon location.
-
-```js
-P.getLocationByName("sinnoh").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getLocationAreaByName** to return data about specific pokemon location area.
-
-```js
-P.getLocationAreaByName("canalave-city-area").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getPalParkAreaByName** to return data about specific pokemon pal park area.
-
-```js
-P.getPalParkAreaByName("forest").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getRegionByName** to return data about specific pokemon region.
-
-```js
-P.getRegionByName("kanto").then(function (response) {
-  console.log(response)
-})
-```
-
-### Pokemon
-
-Use **getAbilityByName** to return data about specific pokemon ability.
-
-```js
-P.getAbilityByName("stench").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getCharacteristicById** to return data about specific pokemon characteristic.
-
-```js
-P.getCharacteristicById(1).then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getEggGroupByName** to return data about specific pokemon egg group.
-
-```js
-P.getEggGroupByName("monster").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getGenderByName** to return data about specific pokemon gender.
-
-```js
-P.getGenderByName("female").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getGrowthRateByName** to return data about specific pokemon growth rate.
-
-```js
-P.getGrowthRateByName("slow").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getNatureByName** to return data about specific pokemon nature.
-
-```js
-P.getNatureByName("bold").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getPokeathlonStatByName** to return data about specific pokeathon stat.
-
-```js
-P.getPokeathlonStatByName("speed").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getPokemonByName** to return data about specific pokemon.
-
-```js
-P.getPokemonByName("butterfree").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getPokemonEncounterAreasByName** to return data about the locations a specific pokemon can be caught.
-
-```js
-P.getPokemonEncounterAreasByName("butterfree").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getPokemonColorByName** to return data about specific pokemon color.
-
-```js
-P.getPokemonColorByName("black").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getPokemonFormByName** to return data about specific pokemon form.
-
-```js
-P.getPokemonFormByName("wormadam-plant").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getPokemonHabitatByName** to return data about specific pokemon habitat.
-
-```js
-P.getPokemonHabitatByName("grottes").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getPokemonShapeByName** to return data about specific pokemon shape.
-
-```js
-P.getPokemonShapeByName("ball").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getPokemonSpeciesByName** to return data about specific pokemon species.
-
-```js
-P.getPokemonSpeciesByName("wormadam").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getStatByName** to return data about specific pokemon stat.
-
-```js
-P.getStatByName("attack").then(function (response) {
-  console.log(response)
-})
-```
-
-Use **getTypeByName** to return data about specific pokemon type.
-
-```js
-P.getTypeByName("ground").then(function (response) {
-  console.log(response)
-})
-```
-
-### Utility
-
-Use **getLanguageByName** to return data about specific pokemon language.
-
-```js
-P.getLanguageByName("ja").then(function (response) {
-  console.log(response)
-})
-```
-
-### Custom URLs and paths
-
-Use **resource** to return data about any URL or path.
-
-```js
-P.resource([
-  "/api/v2/pokemon/36",
-  "api/v2/berry/8",
-  "https://pokeapi.co/api/v2/ability/9/",
-]).then(function (response) {
-  console.log(response) // resource function accepts singles or arrays of URLs/paths
-})
-
-P.resource("api/v2/berry/5").then(function (response) {
-  console.log(response)
-})
-```
-
-## Root Endpoints
-
-For each root endpoint we provide a method to get all the items contained by that endpoint. By default the method will return every item in the endpoint. If you want you can configure its offset and limit.
+| Function | Mapped PokeAPI endpoint |
+| --- | --- |
+| `getBerryByName(name)` | [/berry/:name](https://pokeapi.co/api/v2/berry/:name/) |
+| `getBerryFirmnessByName(name)` | [/berry-firmness/:name](https://pokeapi.co/api/v2/berry-firmness/:name/) |
+| `getBerryFlavorByName(name)` | [/berry-flavor/:name](https://pokeapi.co/api/v2/berry-flavor/:name/) |
+| `getContestTypeByName(name)` | [/contest-type/:name](https://pokeapi.co/api/v2/contest-type/:name/) |
+| `getContestEffectById(id)` | [/contest-effect/:id](https://pokeapi.co/api/v2/contest-effect/:id/) |
+| `getSuperContestEffectById(id)` | [/super-contest-effect/:id](https://pokeapi.co/api/v2/super-contest-effect/:id/) |
+| `getEncounterMethodByName(name)` | [/encounter-method/:name](https://pokeapi.co/api/v2/encounter-method/:name/) |
+| `getEncounterConditionByName(name)` | [/encounter-condition/:name](https://pokeapi.co/api/v2/encounter-condition/:name/) |
+| `getEncounterConditionValueByName(name)` | [/encounter-condition-value/:nam/](https://pokeapi.co/api/v2/encounter-condition-value/:name/) |
+| `getEvolutionChainById(id)` | [/evolution-chain/:id](https://pokeapi.co/api/v2/evolution-chain/:id/) |
+| `getEvolutionTriggerByName(name)` | [/evolution-trigger/:name](https://pokeapi.co/api/v2/evolution-trigger/:name/) |
+| `getGenerationByName(name)` | [/generation/:name](https://pokeapi.co/api/v2/generation/:name/) |
+| `getPokedexByName(name)` | [/pokedex/:name](https://pokeapi.co/api/v2/pokedex/:name/) |
+| `getVersionByName(name)` | [/version/:name](https://pokeapi.co/api/v2/version/:name/) |
+| `getVersionGroupByName(name)` | [/version-group/:name](https://pokeapi.co/api/v2/version-group/:name/) |
+| `getItemByName(name)` | [/item/:name](https://pokeapi.co/api/v2/item/:name/) |
+| `getItemAttributeByName(name)` | [/item-attribute/:name](https://pokeapi.co/api/v2/item-attribute/:name/) |
+| `getItemCategoryByName(name)` | [/item-category/:name](https://pokeapi.co/api/v2/item-category/:name/) |
+| `getItemFlingEffectByName(name)` | [/item-fling-effect/:name](https://pokeapi.co/api/v2/item-fling-effect/:name/) |
+| `getItemPocketByName(name)` | [/item-pocket/:name](https://pokeapi.co/api/v2/item-pocket/:name/) |
+| `getMachineById(id)` | [/machine/:id](https://pokeapi.co/api/v2/machine/:id/) |
+| `getMoveByName(name)` | [/move/:name](https://pokeapi.co/api/v2/move/:name/) |
+| `getMoveAilmentByName(name)` | [/move-ailment/:name](https://pokeapi.co/api/v2/move-ailment/:name/) |
+| `getMoveBattleStyleByName(name)` | [/move-battle-style/:name](https://pokeapi.co/api/v2/move-battle-style/:name/) |
+| `getMoveCategoryByName(name)` | [/move-category/:name](https://pokeapi.co/api/v2/move-category/:name/) |
+| `getMoveDamageClassByName(name)` | [/move-damage-class/:name](https://pokeapi.co/api/v2/move-damage-class/:name/) |
+| `getMoveLearnMethodByName(name)` | [/move-learn-method/:name](https://pokeapi.co/api/v2/move-learn-method/:name/) |
+| `getMoveTargetByName(name)` | [/move-target/:name](https://pokeapi.co/api/v2/move-target/:name/) |
+| `getLocationByName(name)` | [/location/:name](https://pokeapi.co/api/v2/location/:name/) |
+| `getLocationAreaByName(name)` | [/location-area/:name](https://pokeapi.co/api/v2/location-area/:name/) |
+| `getPalParkAreaByName(name)` | [/pal-park-area/:name](https://pokeapi.co/api/v2/pal-park-area/:name/) |
+| `getRegionByName(name)` | [/region/:name](https://pokeapi.co/api/v2/region/:name/) |
+| `getAbilityByName(name)` | [/ability/:name](https://pokeapi.co/api/v2/ability/:name/) |
+| `getCharacteristicById(id)` | [/characteristic/:id](https://pokeapi.co/api/v2/characteristic/:id/) |
+| `getEggGroupByName(name)` | [/egg-group/:name](https://pokeapi.co/api/v2/egg-group/:name/) |
+| `getGenderByName(name)` | [/gender/:name](https://pokeapi.co/api/v2/gender/:name/) |
+| `getGrowthRateByName(name)` | [/growth-rate/:name](https://pokeapi.co/api/v2/growth-rate/:name/) |
+| `getNatureByName(name)` | [/nature/:name](https://pokeapi.co/api/v2/nature/:name/) |
+| `getPokeathlonStatByName(name)` | [/pokeathlon-stat/:name](https://pokeapi.co/api/v2/pokeathlon-stat/:name/) |
+| `getPokemonByName(name)` | [/pokemon/:name](https://pokeapi.co/api/v2/pokemon/:name/) |
+| `getPokemonEncounterAreasByName(name)` | [/pokemon/:name/encounters](https://pokeapi.co/api/v2/pokemon/:name/encounters/) |
+| `getPokemonColorByName(name)` | [/pokemon-color/:name](https://pokeapi.co/api/v2/pokemon-color/:name/) |
+| `getPokemonFormByName(name)` | [/pokemon-form/:name](https://pokeapi.co/api/v2/pokemon-form/:name/) |
+| `getPokemonHabitatByName(name)` | [/pokemon-habitat/:name](https://pokeapi.co/api/v2/pokemon-habitat/:name/) |
+| `getPokemonShapeByName(name)` | [/pokemon-shape/:name](https://pokeapi.co/api/v2/pokemon-shape/:name/) |
+| `getPokemonSpeciesByName(name)` | [/pokemon-species/:name](https://pokeapi.co/api/v2/pokemon-species/:name/) |
+| `getStatByName(name)` | [/stat/:name](https://pokeapi.co/api/v2/stat/:name/) |
+| `getTypeByName(name)` | [/type/:name](https://pokeapi.co/api/v2/type/:name/) |
+| `getLanguageByName(name)` | [/language/:name](https://pokeapi.co/api/v2/language/:name/) |
+
+### Root Endpoints list
+
+For each PokeAPI's root endpoint we provide a method to get all the items served by that endpoint. By default the method will return every item in the endpoint. If needed an offset and a limit can be configured.
 
 - `offset` is where to start. The first item that you will get. Default `0`
 - `limit` is how many items you want to list. Default `100000`
 
-**TIP**: Do not pass any config Object to your call, since you will get every item and everything will be cached to your browser.
+> **TIP**: Do not pass any config Object to your call, since you will get every item and everything will be cached
 
-This call will get the list of Pokémon between ID 35 and ID 44
+The following snippet will get the list of Pokémon between ID 34 and ID 44
 
 ```js
-var interval = {
+const interval = {
   offset: 34,
   limit: 10,
 }
-P.getPokemonsList(interval).then(function (response) {
+P.getPokemonsList(interval).then(function(response) {
   console.log(response)
 })
 ```
 
+<!--
 This is what you will get:
 
 ```json
@@ -625,59 +245,78 @@ This is what you will get:
   ]
 }
 ```
+-->
 
-### List of supported root endpoints
+| Function | Mapped PokeAPI endpoint |
+| --- | --- |
+| `getEndpointsList()` | [/](https://pokeapi.co/api/v2/) |
+| `getBerriesList()` | [/berry](https://pokeapi.co/api/v2/berry/) |
+| `getBerriesFirmnesssList()` | [/berry-firmness](https://pokeapi.co/api/v2/berry-firmness/) |
+| `getBerriesFlavorsList()` | [/berry-flavor](https://pokeapi.co/api/v2/berry-flavor/) |
+| `getContestTypesList()` | [/contest-type](https://pokeapi.co/api/v2/contest-type/) |
+| `getContestEffectsList()` | [/contest-effect](https://pokeapi.co/api/v2/contest-effect/) |
+| `getSuperContestEffectsList()` | [/super-contest-effect](https://pokeapi.co/api/v2/super-contest-effect/) |
+| `getEncounterMethodsList()` | [/encounter-method](https://pokeapi.co/api/v2/encounter-method/) |
+| `getEncounterConditionsList()` | [/encounter-condition](https://pokeapi.co/api/v2/encounter-condition/) |
+| `getEncounterConditionValuesList()` | [/encounter-condition-value](https://pokeapi.co/api/v2/encounter-condition-value/) |
+| `getEvolutionChainsList()` | [/evolution-chain](https://pokeapi.co/api/v2/evolution-chain/) |
+| `getEvolutionTriggersList()` | [/evolution-trigger](https://pokeapi.co/api/v2/evolution-trigger/) |
+| `getGenerationsList()` | [/generation](https://pokeapi.co/api/v2/generation/) |
+| `getPokedexsList()` | [/pokedex](https://pokeapi.co/api/v2/pokedex/) |
+| `getVersionsList()` | [/version](https://pokeapi.co/api/v2/version/) |
+| `getVersionGroupsList()` | [/version-group](https://pokeapi.co/api/v2/version-group/) |
+| `getItemsList()` | [/item](https://pokeapi.co/api/v2/item/) |
+| `getItemAttributesList()` | [/item-attribute](https://pokeapi.co/api/v2/item-attribute/) |
+| `getItemCategoriesList()` | [/item-category](https://pokeapi.co/api/v2/item-category/) |
+| `getItemFlingEffectsList()` | [/item-fling-effect](https://pokeapi.co/api/v2/item-fling-effect/) |
+| `getItemPocketsList()` | [/item-pocket](https://pokeapi.co/api/v2/item-pocket/) |
+| `getMachinesList()` | [/machine](https://pokeapi.co/api/v2/machine/) |
+| `getMovesList()` | [/move](https://pokeapi.co/api/v2/move/) |
+| `getMoveAilmentsList()` | [/move-ailment](https://pokeapi.co/api/v2/move-ailment/) |
+| `getMoveBattleStylesList()` | [/move-battle-style](https://pokeapi.co/api/v2/move-battle-style/) |
+| `getMoveCategoriesList()` | [/move-category](https://pokeapi.co/api/v2/move-category/) |
+| `getMoveDamageClassesList()` | [/move-damage-class](https://pokeapi.co/api/v2/move-damage-class/) |
+| `getMoveLearnMethodsList()` | [/move-learn-method](https://pokeapi.co/api/v2/move-learn-method/) |
+| `getMoveTargetsList()` | [/move-target](https://pokeapi.co/api/v2/move-target/) |
+| `getLocationsList()` | [/location](https://pokeapi.co/api/v2/location/) |
+| `getLocationAreasList()` | [/location-area](https://pokeapi.co/api/v2/location-area/) |
+| `getPalParkAreasList()` | [/pal-park-area](https://pokeapi.co/api/v2/pal-park-area/) |
+| `getRegionsList()` | [/region](https://pokeapi.co/api/v2/region/) |
+| `getAbilitiesList()` | [/ability](https://pokeapi.co/api/v2/ability/) |
+| `getCharacteristicsList()` | [/characteristic](https://pokeapi.co/api/v2/characteristic/) |
+| `getEggGroupsList()` | [/egg-group](https://pokeapi.co/api/v2/egg-group/) |
+| `getGendersList()` | [/gender](https://pokeapi.co/api/v2/gender/) |
+| `getGrowthRatesList()` | [/growth-rate](https://pokeapi.co/api/v2/growth-rate/) |
+| `getNaturesList()` | [/nature](https://pokeapi.co/api/v2/nature/) |
+| `getPokeathlonStatsList()` | [/pokeathlon-stat](https://pokeapi.co/api/v2/pokeathlon-stat/) |
+| `getPokemonsList()` | [/pokemon](https://pokeapi.co/api/v2/pokemon/) |
+| `getPokemonColorsList()` | [/pokemon-color](https://pokeapi.co/api/v2/pokemon-color/) |
+| `getPokemonFormsList()` | [/pokemon-form](https://pokeapi.co/api/v2/pokemon-form/) |
+| `getPokemonHabitatsList()` | [/pokemon-habitat](https://pokeapi.co/api/v2/pokemon-habitat/) |
+| `getPokemonShapesList()` | [/pokemon-shape](https://pokeapi.co/api/v2/pokemon-shape/) |
+| `getPokemonSpeciesList()` | [/pokemon-species](https://pokeapi.co/api/v2/pokemon-species/) |
+| `getStatsList()` | [/stat](https://pokeapi.co/api/v2/stat/) |
+| `getTypesList()` | [/type](https://pokeapi.co/api/v2/type/) |
+| `getLanguagesList()` | [/language](https://pokeapi.co/api/v2/language/) |
 
-- .getEndpointsList()
-- .getBerriesList()
-- .getBerriesFirmnesssList()
-- .getBerriesFlavorsList()
-- .getContestTypesList()
-- .getContestEffectsList()
-- .getSuperContestEffectsList()
-- .getEncounterMethodsList()
-- .getEncounterConditionsList()
-- .getEncounterConditionValuesList()
-- .getEvolutionChainsList()
-- .getEvolutionTriggersList()
-- .getGenerationsList()
-- .getPokedexsList()
-- .getVersionsList()
-- .getVersionGroupsList()
-- .getItemsList()
-- .getItemAttributesList()
-- .getItemCategoriesList()
-- .getItemFlingEffectsList()
-- .getItemPocketsList()
-- .getMachinesList()
-- .getMovesList()
-- .getMoveAilmentsList()
-- .getMoveBattleStylesList()
-- .getMoveCategoriesList()
-- .getMoveDamageClassesList()
-- .getMoveLearnMethodsList()
-- .getMoveTargetsList()
-- .getLocationsList()
-- .getLocationAreasList()
-- .getPalParkAreasList()
-- .getRegionsList()
-- .getAbilitiesList()
-- .getCharacteristicsList()
-- .getEggGroupsList()
-- .getGendersList()
-- .getGrowthRatesList()
-- .getNaturesList()
-- .getPokeathlonStatsList()
-- .getPokemonsList()
-- .getPokemonColorsList()
-- .getPokemonFormsList()
-- .getPokemonHabitatsList()
-- .getPokemonShapesList()
-- .getPokemonSpeciesList()
-- .getStatsList()
-- .getTypesList()
-- .getLanguagesList()
+### Custom URLs and paths
+
+Use `.resource()` to query any URL or path. Also this function accepts both single values and Arrays.
+
+```js
+P.resource([
+  "/api/v2/pokemon/36",
+  "api/v2/berry/8",
+  "https://pokeapi.co/api/v2/ability/9/",
+]).then(function(response) {
+  console.log(response)
+})
+
+P.resource("api/v2/berry/5").then(function(response) {
+  console.log(response)
+})
+```
 
 ## Internet Explorer 8
 
-In order to target this browser you must load a `Promise` polyfill before `pokeapi-js-wrapper`. You can choose one of your chioce, we recommed [jakearchibald/es6-promise](https://cdnjs.com/libraries/es6-promise) or [stefanpenner/es6-promise](https://github.com/stefanpenner/es6-promise)
+In order to target this browser you must load a `Promise` polyfill before `pokeapi-js-wrapper`. You can choose one of your choice, we recommend [jakearchibald/es6-promise](https://cdnjs.com/libraries/es6-promise) or [stefanpenner/es6-promise](https://github.com/stefanpenner/es6-promise)
