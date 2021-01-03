@@ -484,6 +484,14 @@ P.getPokemonByName("butterfree").then(function (response) {
 })
 ```
 
+Use **getPokemonEncounterAreasByName** to return data about the locations a specific pokemon can be caught.
+
+```js
+P.getPokemonEncounterAreasByName("butterfree").then(function (response) {
+  console.log(response)
+})
+```
+
 Use **getPokemonColorByName** to return data about specific pokemon color.
 
 ```js
