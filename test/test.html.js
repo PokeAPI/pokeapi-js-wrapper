@@ -21,7 +21,7 @@ describe("pokedex", function () {
     cache: false,
     cacheImages: false
   });
-  this.timeout(2000);
+  this.timeout(5000);
 
   describe(".resource(Mixed: array)", function () {
     it("should have property name", function () {
