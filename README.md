@@ -121,7 +121,7 @@ Or open `/test/test.html` in your browser. A live version can be found at [`gh-p
 
 ## Endpoints
 
-All the endpoints and the functions to access PokeAPI's endpoints are listed in the long table below. Each function `.ByName(name)` accepts names and ids. The only 5 functions `ById(id)` only accept ids. You can also pass an array to each function, it will retrieve the data for each element asynchronously.
+All the endpoints and the functions to access PokeAPI's endpoints are listed in the long table below. Each function `.ByName(name)` accepts names and ids. The only 5 functions `.ById(id)` only accept ids. You can also pass an array to each function, it will retrieve the data for each element asynchronously.
 
 ```js
 P.getPokemonByName("eevee").then(function(response) {
