@@ -37,7 +37,8 @@ export class Pokedex {
         })
 
         rootEndpoints.forEach(rootEndpoint => {
-            this[rootEndpoint[0]] = config => {
+            const rootEndpointFullName = buildRootEndpointFullName(rootEndpoint)
+            this[rootEndpointFullName] = config => {
                 var limit = this.config.limit
                 var offset = this.config.offset
                 if (config) {
@@ -50,6 +51,7 @@ export class Pokedex {
                 }
                 return loadResource(this.config, `${this.config.versionPath}${rootEndpoint[1]}?limit=${limit}&offset=${offset}`)
             }
+            this[rootEndpoint[0]] = this[rootEndpointFullName]
         })
 
         if (this.config.cacheImages) {
@@ -91,7 +93,11 @@ function buildEndpointFullName(endpoint) {
 }
 
 function buildEndpointName(endpoint) {
-    return `${endpoint[0]}}`
+    return `${endpoint[0]}`
+}
+
+function buildRootEndpointFullName(endpoint) {
+    return `${endpoint[0]}List`
 }
 
 function capitalize([first,...rest]) {
