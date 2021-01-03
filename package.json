@@ -1,6 +1,6 @@
 {
   "name": "pokeapi-js-wrapper",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "An API wrapper for PokeAPI",
   "main": "dist/index.js",
   "module": "src/index.js",
@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/PokeAPI/pokeapi-js-wrapper#readme",
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "localforage": "^1.9.0"
   },
   "devDependencies": {
