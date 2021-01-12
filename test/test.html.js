@@ -1,9 +1,10 @@
 describe("service worker", function () {
   it("should be activated on second run", function () {
+    const P = new Pokedex.Pokedex({cacheImages: true});
     return navigator.serviceWorker.getRegistrations().then(function(registrations) {
       const sw = registrations.filter(function(serviceworker) { 
         return serviceworker.active.scriptURL.endsWith('pokeapi-js-wrapper-sw.js')
-       });
+      });
       expect(sw).to.have.lengthOf(1)
       expect(sw[0].active.state).to.be.equal('activated')
     });
