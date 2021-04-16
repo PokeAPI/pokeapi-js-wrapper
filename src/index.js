@@ -74,7 +74,7 @@ export class Pokedex {
     resource(path) {
         if (typeof path === 'string') {
             return loadResource(this.config, path)
-        } else if (typeof path === 'object') {
+        } else if (Array.isArray(path)) {
             return Promise.all(path.map(p => loadResource(this.config, p)))
         } else {
             return 'String or Array is required'
