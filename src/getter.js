@@ -28,10 +28,10 @@ function loadResource(config, url) {
     })
 }
 
-function loadUrl(config, url) {
+function loadUrl(config, url, isRetry=false) {
     return new Promise((resolve, reject) => {
         let options = {
-            baseURL: `${config.protocol}://${config.hostName}/`,
+            baseURL: `${config.protocol}://${config.hostName}` + (isRetry ? '' : '/'),
             timeout: config.timeout
         }
         axios.get(url, options)
@@ -49,7 +49,15 @@ function loadUrl(config, url) {
                     resolve(response.data)
                 }  
             })
-            .catch(err => { reject(err) }) 
+            .catch(err => {
+                if (!isRetry){
+                    return loadUrl(config, url, isRetry=true)
+                    .then(res => {resolve(res)})
+                    .catch(err => {reject(err)})
+                } else {
+                    reject(err)
+                }
+            }) 
     })
 }
 
