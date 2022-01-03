@@ -10,11 +10,13 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'index.js',
         libraryTarget: 'umd',
-        library: 'Pokedex'
+        library: 'Pokedex',
+        globalObject: `(typeof self !== 'undefined' ? self : this)`
     },
     node: {
         process: false
     },
+    mode: 'production',
     module: {
         rules: [
             {
@@ -24,28 +26,23 @@ module.exports = {
                 options: {
                     presets: ['es2015']
                 }
-            },
-            {
-                test: /\.json$/,
-                loader: "json-loader"
             }
         ]
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-        }),
-        new CopyPlugin([
-            {
-                from: 'src/pokeapi-js-wrapper-sw.js',
-                to: 'pokeapi-js-wrapper-sw.js',
-                toType: 'file'
-            },
-            {
-                from: 'src/pokeapi-js-wrapper-sw.js',
-                to: '../test/pokeapi-js-wrapper-sw.js',
-                toType: 'file'
-            }
-        ]),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: 'src/pokeapi-js-wrapper-sw.js',
+                    to: 'pokeapi-js-wrapper-sw.js',
+                    toType: 'file'
+                },
+                {
+                    from: 'src/pokeapi-js-wrapper-sw.js',
+                    to: '../test/pokeapi-js-wrapper-sw.js',
+                    toType: 'file'
+                }
+            ]
+        })
     ]
 };
