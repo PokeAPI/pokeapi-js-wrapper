@@ -13,7 +13,6 @@
     "build": "webpack",
     "build:watch": "webpack --watch",
     "doctoc": "doctoc .",
-    "pretest": "npm run build",
     "test": "nyc mocha -r mock-local-storage -r source-map-support/register ./test/test.js --timeout 10000",
     "prepublish": "npm run build",
     "serve": "http-server ."
