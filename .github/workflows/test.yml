@@ -23,3 +23,5 @@ jobs:
         run: npm run build
       - name: Unit test
         run: npm t
+      - name: Upload coverage
+        uses: codecov/codecov-action@v2
