@@ -70,7 +70,7 @@ describe("pokedex", function () {
           P.getCacheLength().then(length => {
             expect(length).to.be.equal(0);
           })
-      })  
+      })
     });
   });
 
@@ -138,7 +138,7 @@ describe("pokedex", function () {
   });
 
   // start root endpoints
-  
+
   describe(".getEndpointsList() secure (with ssl)", function() {
     before(function() {
       promise = secureP.getEndpointsList();

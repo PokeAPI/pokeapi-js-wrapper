@@ -13,22 +13,7 @@ module.exports = {
         library: 'Pokedex',
         globalObject: `(typeof self !== 'undefined' ? self : this)`
     },
-    node: {
-        process: false
-    },
     mode: 'production',
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /localforage/,
-                loader: 'babel-loader',
-                options: {
-                    presets: ['es2015']
-                }
-            }
-        ]
-    },
     plugins: [
         new CopyPlugin({
             patterns: [

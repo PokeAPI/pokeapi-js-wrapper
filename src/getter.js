@@ -47,9 +47,9 @@ function loadUrl(config, url) {
                         localForage.setItem(`${CACHE_PREFIX}${url}`, response.data)
                     }
                     resolve(response.data)
-                }  
+                }
             })
-            .catch(err => { reject(err) }) 
+            .catch(err => { reject(err) })
     })
 }
 
