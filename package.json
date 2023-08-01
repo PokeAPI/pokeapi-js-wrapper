@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/PokeAPI/pokeapi-js-wrapper#readme",
   "dependencies": {
-    "axios": "^0.24.0",
+    "axios": "^1.4.0",
     "localforage": "^1.10.0"
   },
   "devDependencies": {
@@ -52,7 +52,7 @@
     "mocha": "^10.2.0",
     "mock-local-storage": "^1.1.24",
     "nyc": "^15.1.0",
-    "webpack": "^5.88.1",
+    "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   }
 }
