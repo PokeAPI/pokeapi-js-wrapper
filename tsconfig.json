@@ -1,3 +1,0 @@
-{
-  "include": ["@types/pokeapi-js-wrapper.d.ts"]
-}
