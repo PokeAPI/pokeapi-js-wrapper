@@ -1,7 +1,7 @@
 import localForage from "localforage"
 
-import endpoints from './endpoints.json'
-import rootEndpoints from './rootEndpoints.json'
+import endpoints from './endpoints.json' assert { type: "json" }
+import rootEndpoints from './rootEndpoints.json' assert { type: "json" }
 import { loadResource } from './getter.js'
 import { installSW } from './installSW.js'
 import { Config } from './config.js'
@@ -10,7 +10,7 @@ localForage.config({
     name: 'pokeapi-js-wrapper'
 })
 
-export class Pokedex {
+export default class Pokedex {
 
     constructor(config) {
         this.config = new Config(config)
@@ -18,14 +18,14 @@ export class Pokedex {
         // add to Pokedex.prototype all our endpoint functions
         endpoints.forEach(endpoint => {
             const endpointFullName = buildEndpointFullName(endpoint)
-            this[endpointFullName] = input => { 
+            this[endpointFullName] = input => {
                 if (input) {
 
                     // if the user has submitted a Name or an ID, return the JSON promise
                     if (typeof input === 'number' || typeof input === 'string') {
-                        return loadResource(this.config, `${this.config.versionPath}${endpoint[2].replace(':id', input)}`) 
+                        return loadResource(this.config, `${this.config.versionPath}${endpoint[2].replace(':id', input)}`)
                     }
-            
+
                     // if the user has submitted an Array
                     // return a new promise which will resolve when all loadResource calls are ended
                     else if (typeof input === 'object') {
