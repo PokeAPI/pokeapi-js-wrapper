@@ -7,7 +7,8 @@
   "files": [
     "dist/index.js",
     "dist/pokeapi-js-wrapper-sw.js",
-    "src/*"
+    "src/*",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "webpack",
@@ -38,6 +39,7 @@
     "url": "https://github.com/PokeAPI/pokeapi-js-wrapper/issues"
   },
   "homepage": "https://github.com/PokeAPI/pokeapi-js-wrapper#readme",
+  "types": "./index.d.ts",
   "dependencies": {
     "axios": "^0.24.0",
     "localforage": "^1.10.0"
