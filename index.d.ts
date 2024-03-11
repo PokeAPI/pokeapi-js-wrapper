@@ -1,14 +1,14 @@
 declare module "pokeapi-js-wrapper" {
   export class Pokedex {
     constructor(config?: {
-      protocol: string,
-      hostName: string,
-      versionPath: string,
-      offset: number
-      limit: number,
-      timeout: number,
-      cache: boolean,
-      cacheImages: boolean
+      protocol?: string,
+      hostName?: string,
+      versionPath?: string,
+      offset?: number
+      limit?: number,
+      timeout?: number,
+      cache?: boolean,
+      cacheImages?: boolean
     });
 
     getBerryByName(name: string | number | string[] | number[]): Promise<object>;
