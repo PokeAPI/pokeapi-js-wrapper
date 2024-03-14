@@ -2225,27 +2225,29 @@ declare module "pokeapi-js-wrapper" {
 
   export class Pokedex {
     constructor(config?: {
-      /** The protocol to be used */
-      /** @default 'https' */
+      /** The protocol to be used
+       * @default 'https' */
       protocol?: "https" | "http";
-      /** The hostname of the PokeAPI instance */
-      /** @default 'pokeapi.co' */
+      /** The hostname of the PokeAPI instance
+       * @default 'pokeapi.co' */
       hostName?: string;
-      /** The version path of the API */
-      /** @default '/api/v2/' */
+      /** The version path of the API
+       * @default '/api/v2/' */
       versionPath?: string;
-      /** The offset to be used in list requests */
-      /** @default 0 */
+      /** The offset to be used in list requests
+       * @default 0 */
       offset?: number;
-      /** The limit to be used in list requests */
-      /** @default 100000 */
+      /** The limit to be used in list requests
+       * @default 100000 */
       limit?: number;
-      /** The timeout of a response in milliseconds */
-      /** @default 10 * 1000 // (10 seconds) */
+      /** The timeout of a response in milliseconds
+       * @default 10 * 1000 // (10 seconds) */
       timeout?: number;
-      /** @default true */
+      /** Enables browsers to cache all responses when set to `true`
+       * @default true */
       cache?: boolean;
-      /** @default false */
+      /** Enables browsers to cache images when set to `true`. [Learn more](https://github.com/PokeAPI/pokeapi-js-wrapper#caching-images)
+       * @default false */
       cacheImages?: boolean;
     });
 
