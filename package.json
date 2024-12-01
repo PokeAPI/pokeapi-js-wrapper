@@ -41,20 +41,20 @@
   "homepage": "https://github.com/PokeAPI/pokeapi-js-wrapper#readme",
   "types": "./index.d.ts",
   "dependencies": {
-    "axios": "^1.7.7",
+    "axios": "^1.7.8",
     "localforage": "^1.10.0"
   },
   "devDependencies": {
     "chai": "^4.5.0",
-    "chai-as-promised": "^7.1.2",
+    "chai-as-promised": "^8.0.1",
     "chai-things": "^0.2.0",
     "copy-webpack-plugin": "^12.0.2",
     "doctoc": "^2.2.1",
     "http-server": "^14.1.1",
-    "mocha": "^10.7.3",
+    "mocha": "^10.8.2",
     "mock-local-storage": "^1.1.24",
-    "nyc": "^17.0.0",
-    "webpack": "^5.94.0",
+    "nyc": "^17.1.0",
+    "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4"
   }
 }
