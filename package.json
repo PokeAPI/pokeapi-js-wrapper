@@ -41,7 +41,7 @@
   "homepage": "https://github.com/PokeAPI/pokeapi-js-wrapper#readme",
   "types": "./index.d.ts",
   "dependencies": {
-    "axios": "^1.8.1",
+    "axios": "^1.8.3",
     "localforage": "^1.10.0"
   },
   "devDependencies": {
