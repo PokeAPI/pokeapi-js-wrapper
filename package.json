@@ -51,10 +51,10 @@
     "copy-webpack-plugin": "^13.0.0",
     "doctoc": "^2.2.1",
     "http-server": "^14.1.1",
-    "mocha": "^11.1.0",
+    "mocha": "^11.5.0",
     "mock-local-storage": "^1.1.24",
     "nyc": "^17.1.0",
-    "webpack": "^5.99.7",
+    "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1"
   }
 }
