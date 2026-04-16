@@ -1,14 +1,11 @@
-import localForage from "localforage"
+//import localForage from "localforage"
 
-import endpoints from './endpoints.json'
-import rootEndpoints from './rootEndpoints.json'
-import { loadResource } from './getter.js'
-import { installSW } from './installSW.js'
+import endpoints from './endpoints.json' with { type: "json" }
+import rootEndpoints from './rootEndpoints.json' with { type: "json" }
+import { loadResource, openDB, sizeDB, clearDB } from './getter.js'
 import { Config } from './config.js'
 
-localForage.config({
-    name: 'pokeapi-js-wrapper'
-})
+openDB()
 
 export class Pokedex {
 
@@ -18,14 +15,14 @@ export class Pokedex {
         // add to Pokedex.prototype all our endpoint functions
         endpoints.forEach(endpoint => {
             const endpointFullName = buildEndpointFullName(endpoint)
-            this[endpointFullName] = input => { 
+            this[endpointFullName] = input => {
                 if (input) {
 
                     // if the user has submitted a Name or an ID, return the JSON promise
                     if (typeof input === 'number' || typeof input === 'string') {
-                        return loadResource(this.config, `${this.config.versionPath}${endpoint[2].replace(':id', input)}`) 
+                        return loadResource(this.config, `${this.config.versionPath}${endpoint[2].replace(':id', input)}`)
                     }
-            
+
                     // if the user has submitted an Array
                     // return a new promise which will resolve when all loadResource calls are ended
                     else if (typeof input === 'object') {
@@ -55,7 +52,7 @@ export class Pokedex {
         })
 
         if (this.config.cacheImages) {
-            installSW()
+            import('./installSW.js').then(a=>a.installSW())
         }
     }
 
@@ -64,11 +61,11 @@ export class Pokedex {
     }
 
     getCacheLength() {
-        return localForage.length()
+        return sizeDB()
     }
 
     clearCache() {
-        return localForage.clear()
+        return clearDB()
     }
 
     resource(path) {

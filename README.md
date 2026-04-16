@@ -32,19 +32,19 @@ npm install pokeapi-js-wrapper --save
 ```
 
 ```html
-<script src="https://unpkg.com/pokeapi-js-wrapper/dist/index.js"></script>
+<script src="https://unpkg.com/pokeapi-js-wrapper/src/index.js"></script>
 ```
 
 ## Usage
 
 ```js
 const Pokedex = require("pokeapi-js-wrapper")
-const P = new Pokedex.Pokedex()
+const P = new Pokedex()
 ```
 
 ```html
 <script>
-  const P = new Pokedex.Pokedex()
+  const P = new Pokedex()
 </script>
 ```
 
@@ -87,7 +87,7 @@ const customOptions = {
   timeout: 5 * 1000, // 5s
   cacheImages: true
 }
-const P = new Pokedex.Pokedex(customOptions)
+const P = new Pokedex(customOptions)
 ```
 
 ### Caching images
@@ -101,7 +101,7 @@ Pokeapi.co serves its Pokemon images through [Github](https://github.com/PokeAPI
 
 In this way when `pokeapi-js-wrapper`'s `Pokedex` is created it will install and start the Service Worker you are serving at the root of your server. The Service Worker will intercept all the calls your HTML/CSS/JS are making to get PokeAPI's images and will cache them.
 
-It's fundamental that you download the Service Worker [we provide](https://raw.githubusercontent.com/PokeAPI/pokeapi-js-wrapper/master/dist/pokeapi-js-wrapper-sw.js)_(Right Click + Save As)_ and you serve it from the root of your project/server. Service Workers in fact cannot be installed from a domain different than yours.
+It's fundamental that you download the Service Worker [we provide](https://raw.githubusercontent.com/PokeAPI/pokeapi-js-wrapper/master/src/pokeapi-js-wrapper-sw.js)_(Right Click + Save As)_ and you serve it from the root of your project/server. Service Workers in fact cannot be installed from a domain different than yours.
 
 A [basic example](https://github.com/PokeAPI/pokeapi-js-wrapper/blob/master/test/example-sw.html) is hosted [here](https://pokeapi.github.io/pokeapi-js-wrapper/test/example-sw.html).
 

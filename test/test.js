@@ -1,26 +1,21 @@
 //var localStorage = require('localStorage');
-var Pokedex = require("../dist/index.js");
-var chai = require('chai'),
-  expect = chai.expect,
-  assert = chai.assert;
-chai.use(require("chai-things"));
-chai.use(require("chai-as-promised"));
+import { Pokedex } from"../src/index.js";
+import * as chai from 'chai';
+import chaiThings from 'chai-things';
+import chaiAsPromised from 'chai-as-promised';
+const expect = chai.expect;
+const assert = chai.assert;
+chai.use(chaiThings);
+chai.use(chaiAsPromised);
 
-global.navigator = {
-  userAgent: 'node.js'
-};
-
-global.window = {
-  userAgent: 'node.js'
-};
 
 describe("pokedex", function () {
   var promise,
     id = 2,
     path = '/api/v2/pokemon/34',
     url = 'https://pokeapi.co/api/v2/pokemon/35',
-    secureP = new Pokedex.Pokedex({cacheImages: true}),
-    P = new Pokedex.Pokedex({
+    secureP = new Pokedex({cacheImages: true}),
+    P = new Pokedex({
       protocol: 'https',
       offset: 10,
       limit: 1,

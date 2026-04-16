@@ -1,13 +1,13 @@
-function installSW() {
+import { log } from './log.js'
+
+export function installSW() {
     if (navigator && window && 'serviceWorker' in navigator) {
         window.addEventListener('load', function() {
             navigator.serviceWorker.register('./pokeapi-js-wrapper-sw.js', { scope: './' })
                 .catch(error => {
-                    console.log('Pokeapi-js-wrapper SW installation failed with the following error:')
-                    console.error(error)
+                    log('SW installation failed with the following error:')
+                    log(error)
                 })
         })
     }
 }
-
-export { installSW }

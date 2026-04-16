@@ -2,13 +2,13 @@
 <html>
   <head>
     <title>SW test</title>
-    <script src="https://unpkg.com/pokeapi-js-wrapper/dist/index.js"></script>
+    <script type="module">
+      import {Pokedex} from '../src/index.js'
+      const P = new Pokedex({ cacheImages: true });
+    </script>
   </head>
 
   <body>
-    <script>
-      const P = new Pokedex.Pokedex({ cacheImages: true });
-    </script>
     <div id="app">
       <img
         src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg"

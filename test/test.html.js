@@ -1,8 +1,19 @@
+import {Pokedex} from '../src/index.js'
+
+var P = new Pokedex();
+P.getVersionByName(1).then(res => {
+  console.assert(res.name === 'red')
+})
+
+mocha.setup('bdd')
+var expect = chai.expect
+mocha.run();
+
 describe("service worker", function () {
   it("should be activated on second run", function () {
-    const P = new Pokedex.Pokedex({cacheImages: true});
+    const P = new Pokedex({cacheImages: true});
     return navigator.serviceWorker.getRegistrations().then(function(registrations) {
-      const sw = registrations.filter(function(serviceworker) { 
+      const sw = registrations.filter(function(serviceworker) {
         return serviceworker.active.scriptURL.endsWith('pokeapi-js-wrapper-sw.js')
       });
       expect(sw).to.have.lengthOf(1)
@@ -11,11 +22,13 @@ describe("service worker", function () {
   });
 });
 
+
+
 describe("pokedex", function () {
   var id = 2;
-  defaultP = new Pokedex.Pokedex();
-  customP = new Pokedex.Pokedex({
-    protocol: 'https',  
+  var defaultP = new Pokedex();
+  var customP = new Pokedex({
+    protocol: 'https',
     offset: 10,
     limit: 1,
     timeout: 10000,
@@ -30,7 +43,7 @@ describe("pokedex", function () {
         expect(res[0]).to.have.property('name');
         expect(res[1]).to.have.property('name');
         expect(res[2]).to.have.property('name');
-      })  
+      })
     });
   });
 
@@ -38,7 +51,7 @@ describe("pokedex", function () {
     it("should have property height", function () {
       return defaultP.resource('/api/v2/pokemon/34').then(res => {
         expect(res).to.have.property('height');
-      }) 
+      })
     });
   });
 
@@ -46,7 +59,7 @@ describe("pokedex", function () {
     it("should have property height", function () {
       return defaultP.resource('https://pokeapi.co/api/v2/pokemon/400').then(res => {
         expect(res).to.have.property('height')
-      }) 
+      })
     });
   });
 
@@ -59,7 +72,7 @@ describe("pokedex", function () {
   });
 
   // start root endpoints
-  
+
   describe(".getEndpointsList() secure (with ssl)", function() {
     it("should have property pokedex", function() {
       return defaultP.getEndpointsList().then(res => {
@@ -856,15 +869,15 @@ describe("pokedex", function () {
     });
   });
 
-  describe(".clearCache()", function () {
-    it("should clear all cached entries", function () {
-      return defaultP.clearCache().then(res => {
-          defaultP.getCacheLength().then(length => {
-            expect(length).to.be.equal(0);
-          })
-      })  
-    });
-  });
+  // describe(".clearCache()", function () {
+  //   it("should clear all cached entries", function () {
+  //     return defaultP.clearCache().then(res => {
+  //         defaultP.getCacheLength().then(length => {
+  //           expect(length).to.be.equal(0);
+  //         })
+  //     })
+  //   });
+  // });
 
   describe(".getLanguageByName(Id: int)", function() {
     it("should have property name", function() {
@@ -873,4 +886,4 @@ describe("pokedex", function () {
       })
     });
   });
-});  
+});

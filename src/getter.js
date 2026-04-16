@@ -1,56 +1,98 @@
-import axios from 'axios'
-import localForage from "localforage"
+import { log } from './log.js'
 
-const CACHE_PREFIX = "pokeapi-js-wrapper-"
+var db
 
-function loadResource(config, url) {
-    return new Promise((resolve, reject) => {
-        localForage.ready()
-            .then(() => {
-                localForage.getItem(`${CACHE_PREFIX}${url}`)
-                    .then(value => {
-                        if (value === null) {
-                            loadUrl(config, url).then(res => {resolve(res)})
-                                .catch(err => {reject(err)})
-                        } else {
-                            resolve(addCacheMark(value))
-                        }
-                    })
-                    .catch(err => {
-                        loadUrl(config, url).then(res => {resolve(res)})
-                            .catch(err => {reject(err)})
-                    })
-            })
-            .catch(err => {
-                loadUrl(config, url).then(res => {resolve(res)})
-                    .catch(err => {reject(err)})
-            })
-    })
-}
+function openDB() {
+    if (typeof window !== 'undefined') {
+        const request = window.indexedDB.open("pokeapi-js-wrapper", 1);
 
-function loadUrl(config, url) {
-    return new Promise((resolve, reject) => {
-        let options = {
-            baseURL: `${config.protocol}://${config.hostName}/`,
-            timeout: config.timeout
+        request.onerror = (event) => {
+            log('IndexedDB not available')
         }
-        axios.get(url, options)
-            .then(response => {
-                // if there was an error
-                if (response.status >= 400) {
-                    reject(response)
-                } else {
-                    // if everything was good
-                    // cache the object in browser memory
-                    // only if cache is true
-                    if (config.cache) {
-                        localForage.setItem(`${CACHE_PREFIX}${url}`, response.data)
-                    }
-                    resolve(response.data)
-                }
-            })
-            .catch(err => { reject(err) })
-    })
+        request.onupgradeneeded = (event) => {
+            db = event.target.result;
+            log('db opened and cache created')
+            db.createObjectStore("cache", { autoIncrement: false });
+        }
+        request.onsuccess = (event) => {
+            log('db opened')
+            db = event.target.result;
+        }
+        request.onversionchange = (event) => {
+            db.close()
+        }
+    }
 }
 
-export { loadResource }
+function getFromDB(objectStore, url) {
+    return new Promise((resolve, reject) => {
+        const cachedObject = objectStore.get(url)
+        cachedObject.onsuccess = () => resolve(cachedObject.result);
+        cachedObject.onerror = () => reject(cachedObject.error);
+    });
+}
+
+async function loadResource(config, url) {
+    if (! url.includes('://')) {
+        url = url.replace(/^\//, '');
+        url = `${config.protocol}://${config.hostName}/${url}`
+    }
+
+    if (config.cache && typeof window !== 'undefined' && typeof db !== 'undefined') {
+        const transaction = db.transaction("cache", "readonly");
+        const objectStore = transaction.objectStore("cache");
+        const data = await getFromDB(objectStore, url);
+        if (data) {
+            log(`read from cache ${url}`)
+            return data
+        } else {
+            return await loadUrl(config, url)
+        }
+    } else {
+        return await loadUrl(config, url)
+    }
+}
+
+async function loadUrl(config, url) {
+    const response = await fetch(url);
+    const body = await response.json()
+    if (response.status === 200) {
+        if (config.cache) {
+            const transaction = db.transaction("cache", "readwrite");
+            const objectStore = transaction.objectStore("cache");
+            const request = objectStore.add(body, url)
+            request.onsuccess = () => log(`object cached ${url}`);
+            request.onerror = () => {
+                log(request.error)
+            }
+        }
+    }
+
+    return body
+}
+
+function sizeDB() {
+    if (typeof window !== 'undefined' && typeof db !== 'undefined') {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction("cache", "readwrite");
+            const objectStore = transaction.objectStore("cache");
+            const request = objectStore.count()
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+}
+
+function clearDB() {
+    if (typeof window !== 'undefined' && typeof db !== 'undefined') {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction("cache", "readwrite");
+            const objectStore = transaction.objectStore("cache");
+            const request = objectStore.clear()
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+}
+
+export { loadResource, openDB, sizeDB, clearDB }
