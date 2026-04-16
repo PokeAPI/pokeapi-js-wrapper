@@ -1,0 +1,11 @@
+<html>
+  <body>
+      <div>The first released Pokemon version name is: </div><div id="version"></div>
+  </body>
+  <script type="module">
+    import {Pokedex} from "https://cdn.jsdelivr.net/gh/pokeapi/pokeapi-js-wrapper@beta/src/index.js"
+    const P = new Pokedex();
+    const version = await P.getVersionByName(1)
+    document.getElementById("version").textContent = version.name;
+  </script>
+</html>
