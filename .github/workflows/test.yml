@@ -19,8 +19,6 @@ jobs:
         run: |
           npm ci
           npm install -g codecov
-      - name: Build
-        run: npm run build
       - name: Unit test
         run: npm t
       - name: Upload coverage
