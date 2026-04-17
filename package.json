@@ -2,21 +2,14 @@
   "name": "pokeapi-js-wrapper",
   "version": "2.0.0",
   "description": "An API wrapper for PokeAPI",
-  "main": "dist/index.js",
-  "module": "src/index.js",
+  "main": "src/index.js",
+  "type": "module",
   "files": [
-    "dist/index.js",
-    "dist/pokeapi-js-wrapper-sw.js",
-    "src/*",
-    "index.d.ts"
+    "src/*"
   ],
   "scripts": {
-    "build": "webpack",
-    "build:watch": "webpack --watch",
-    "clean": "rm -rf ./dist/*",
     "doctoc": "doctoc .",
-    "test": "nyc --reporter=lcov mocha -r mock-local-storage -r source-map-support/register ./test/test.js --timeout 10000",
-    "prepublish": "npm run build",
+    "test": "nyc --reporter=lcov mocha ./test/test.js",
     "serve": "http-server ."
   },
   "repository": {
@@ -39,23 +32,14 @@
     "url": "https://github.com/PokeAPI/pokeapi-js-wrapper/issues"
   },
   "homepage": "https://github.com/PokeAPI/pokeapi-js-wrapper#readme",
-  "types": "./index.d.ts",
-  "dependencies": {
-    "axios": "^1.15.0",
-    "localforage": "^1.10.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "^6.2.2",
     "chai-as-promised": "^8.0.2",
     "chai-things": "^0.2.0",
-    "copy-webpack-plugin": "^14.0.0",
-    "doctoc": "^2.4.0",
+    "doctoc": "^2.4.1",
     "http-server": "^14.1.1",
-    "jsdom": "^29.0.2",
     "mocha": "^11.7.5",
-    "mock-local-storage": "^1.1.24",
-    "nyc": "^18.0.0",
-    "webpack": "^5.106.1",
-    "webpack-cli": "^7.0.2"
+    "nyc": "^18.0.0"
   }
 }

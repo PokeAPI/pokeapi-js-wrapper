@@ -5,13 +5,11 @@ import rootEndpoints from './rootEndpoints.json' with { type: "json" }
 import { loadResource, openDB, sizeDB, clearDB } from './getter.js'
 import { Config } from './config.js'
 
-openDB()
-
 export class Pokedex {
 
     constructor(config) {
         this.config = new Config(config)
-
+        openDB(this.config)
         // add to Pokedex.prototype all our endpoint functions
         endpoints.forEach(endpoint => {
             const endpointFullName = buildEndpointFullName(endpoint)
@@ -61,11 +59,11 @@ export class Pokedex {
     }
 
     getCacheLength() {
-        return sizeDB()
+        return sizeDB(this.config)
     }
 
     clearCache() {
-        return clearDB()
+        return clearDB(this.config)
     }
 
     resource(path) {

@@ -1,9 +1,9 @@
-import { log } from './log.js'
+import { log, canUseCache } from './utils.js'
 
 var db
 
-function openDB() {
-    if (typeof window !== 'undefined') {
+function openDB(config) {
+    if (config.cache && typeof window !== 'undefined') {
         const request = window.indexedDB.open("pokeapi-js-wrapper", 1);
 
         request.onerror = (event) => {
@@ -38,7 +38,7 @@ async function loadResource(config, url) {
         url = `${config.protocol}://${config.hostName}/${url}`
     }
 
-    if (config.cache && typeof window !== 'undefined' && typeof db !== 'undefined') {
+    if (canUseCache(config, db)) {
         const transaction = db.transaction("cache", "readonly");
         const objectStore = transaction.objectStore("cache");
         const data = await getFromDB(objectStore, url);
@@ -57,7 +57,7 @@ async function loadUrl(config, url) {
     const response = await fetch(url);
     const body = await response.json()
     if (response.status === 200) {
-        if (config.cache) {
+        if (canUseCache(config, db)) {
             const transaction = db.transaction("cache", "readwrite");
             const objectStore = transaction.objectStore("cache");
             const request = objectStore.add(body, url)
@@ -71,8 +71,8 @@ async function loadUrl(config, url) {
     return body
 }
 
-function sizeDB() {
-    if (typeof window !== 'undefined' && typeof db !== 'undefined') {
+function sizeDB(config) {
+    if (canUseCache(config, db)) {
         return new Promise((resolve, reject) => {
             const transaction = db.transaction("cache", "readwrite");
             const objectStore = transaction.objectStore("cache");
@@ -80,11 +80,13 @@ function sizeDB() {
             request.onsuccess = () => resolve(request.result);
             request.onerror = () => reject(request.error);
         });
+    } else {
+        return Promise.reject()
     }
 }
 
-function clearDB() {
-    if (typeof window !== 'undefined' && typeof db !== 'undefined') {
+function clearDB(config) {
+    if (canUseCache(config, db)) {
         return new Promise((resolve, reject) => {
             const transaction = db.transaction("cache", "readwrite");
             const objectStore = transaction.objectStore("cache");
@@ -92,6 +94,8 @@ function clearDB() {
             request.onsuccess = () => resolve(request.result);
             request.onerror = () => reject(request.error);
         });
+    } else {
+        return Promise.reject()
     }
 }
 

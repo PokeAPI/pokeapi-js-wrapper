@@ -1,4 +1,4 @@
-import { log } from './log.js'
+import { log } from './utils.js'
 
 export function installSW() {
     if (navigator && window && 'serviceWorker' in navigator) {

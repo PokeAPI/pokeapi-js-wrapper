@@ -7,12 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 16, 18, 20 ]
+        node-version: [ 16, 18, 20, lts/*, latest ]
     steps:
       - name: Clone repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node }}
       - name: Install dependencies
@@ -24,4 +24,4 @@ jobs:
       - name: Unit test
         run: npm t
       - name: Upload coverage
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v6
