@@ -24,4 +24,5 @@ jobs:
       - name: Upload coverage
         uses: codecov/codecov-action@v6
         with:
+          files: ./lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}

@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "doctoc": "doctoc .",
-    "test": "nyc --reporter=lcov node --test ./test/test.js",
+    "test": "node --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info --test ./test/test.js",
     "serve": "http-server ."
   },
   "repository": {
@@ -35,7 +35,6 @@
   "dependencies": {},
   "devDependencies": {
     "doctoc": "^2.4.1",
-    "http-server": "^14.1.1",
-    "nyc": "^18.0.0"
+    "http-server": "^14.1.1"
   }
 }
