@@ -1,19 +1,12 @@
 import { Pokedex } from "../src/index.js";
-import * as chai from 'chai';
-import chaiThings from 'chai-things';
-import chaiAsPromised from 'chai-as-promised';
+import { describe, it } from "node:test";
+import assert from "node:assert/strict";
 
-const expect = chai.expect;
-chai.use(chaiThings);
-chai.use(chaiAsPromised);
-
-describe("pokedex", function () {
-  // Set a high timeout for the entire suite to account for PokeAPI response times
-  this.timeout(30000);
-
+describe("pokedex", { timeout: 30000 }, function () {
   const id = 2;
   const path = '/api/v2/pokemon/34';
   const url = 'https://pokeapi.co/api/v2/pokemon/35';
+
   const p1 = new Pokedex({ cacheImages: false });
   const p2 = new Pokedex({
     protocol: 'https',
@@ -29,14 +22,14 @@ describe("pokedex", function () {
   describe(".getConfig()", function () {
     it("should return protocol property", function () {
       const config = p2.getConfig();
-      expect(config).to.have.property('protocol');
+      assert.ok(Object.hasOwn(config, 'protocol'), "Config should have protocol");
     });
   });
 
   describe(".clearCache()", function () {
     it("should be rejected", async function () {
-      expect(p2.clearCache()).to.be.rejected;
-      expect(p2.getCacheLength()).to.be.rejected;
+      await assert.rejects(p2.clearCache());
+      await assert.rejects(p2.getCacheLength());
     });
   });
 
@@ -45,14 +38,14 @@ describe("pokedex", function () {
   describe(".getPokemonsList()", function () {
     it("should succeed with default interval", async function () {
       const res = await p2.getPokemonsList();
-      expect(res).to.have.property('results');
-      expect(res.results).to.have.lengthOf(1);
-      expect(res.results[0].name).to.be.equal("caterpie");
+      assert.ok(res.results, "Response should have results");
+      assert.strictEqual(res.results.length, 1);
+      assert.strictEqual(res.results[0].name, "caterpie");
     });
 
     it("should succeed with custom interval", async function () {
       const res = await p1.getPokemonsList(interval);
-      expect(res).to.have.property('results');
+      assert.ok(res.results);
     });
   });
 
@@ -65,37 +58,40 @@ describe("pokedex", function () {
         'api/v2/berry/8',
         'https://pokeapi.co/api/v2/ability/9/'
       ]);
-      expect(res).to.have.length(3);
-      expect(res).to.all.have.property('name');
+      assert.strictEqual(res.length, 3);
+      // Replacement for chai-things: loop through and assert
+      res.forEach(item => {
+        assert.ok(item.name, `Item ${item.url} should have a name`);
+      });
     });
 
     it("should succeed with a path string", async function () {
       const res = await p1.resource(path);
-      expect(res).to.have.property('height');
+      assert.ok(Object.hasOwn(res, 'height'));
     });
 
     it("should succeed with a URL string", async function () {
       const res = await p1.resource(url);
-      expect(res).to.have.property('height');
+      assert.ok(Object.hasOwn(res, 'height'));
     });
   });
 
-  // --- Root Endpoints (Sample of endpoints) ---
+  // --- Root Endpoints ---
 
   describe("Root Endpoints", function () {
     it(".getEndpointsList() should have property pokedex", async function () {
       const res = await p1.getEndpointsList();
-      expect(res).to.have.property("pokedex");
+      assert.ok(res.pokedex);
     });
 
     it(".getBerriesList() should have property count", async function () {
       const res = await p1.getBerriesList();
-      expect(res).to.have.property("count");
+      assert.ok(Object.hasOwn(res, 'count'));
     });
 
     it(".getMovesList() should have property count", async function () {
       const res = await p1.getMovesList();
-      expect(res).to.have.property("count");
+      assert.ok(Object.hasOwn(res, 'count'));
     });
   });
 
@@ -104,33 +100,33 @@ describe("pokedex", function () {
   describe(".getBerryByName()", function () {
     it("should fetch berries using an array of strings", async function () {
       const res = await p1.getBerryByName(['cheri', 'chesto', 'pecha']);
-      expect(res).to.have.length(3);
-      expect(res).to.all.have.property('growth_time');
+      assert.strictEqual(res.length, 3);
+      res.forEach(berry => assert.ok(berry.growth_time));
     });
 
     it("should fetch a berry by ID", async function () {
       const res = await p1.getBerryByName(id);
-      expect(res).to.have.property("name");
+      assert.ok(res.name);
     });
   });
 
   describe(".getPokemonByName()", function () {
     it("should fetch pokemons using an array of IDs", async function () {
       const res = await p1.getPokemonByName([15, 35, 433]);
-      expect(res).to.have.length(3);
-      expect(res).to.all.have.property('height');
+      assert.strictEqual(res.length, 3);
+      res.forEach(pokemon => assert.ok(pokemon.height));
     });
 
     it("should fetch a pokemon by ID", async function () {
       const res = await p1.getPokemonByName(id);
-      expect(res).to.have.property("name");
+      assert.ok(res.name);
     });
   });
 
   describe(".getAbilityByName()", function () {
     it("should fetch ability data by ID", async function () {
       const res = await p1.getAbilityByName(id);
-      expect(res).to.have.property("name");
+      assert.ok(res.name);
     });
   });
 
@@ -138,12 +134,10 @@ describe("pokedex", function () {
 
   describe("Error Handling", function () {
     it("should fail when getting a non-existent berry", async function () {
-      try {
-        await p1.getBerryByName('non-existent-berry');
-        throw new Error("Promise should have rejected");
-      } catch (err) {
-        // If it reaches here, the test passes because the promise rejected
-      }
+      await assert.rejects(
+        p1.getBerryByName('non-existent-berry'),
+        Error
+      );
     });
   });
 });

@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "doctoc": "doctoc .",
-    "test": "nyc --reporter=lcov mocha ./test/test.js",
+    "test": "nyc --reporter=lcov node --test ./test/test.js",
     "serve": "http-server ."
   },
   "repository": {
@@ -34,12 +34,8 @@
   "homepage": "https://github.com/PokeAPI/pokeapi-js-wrapper#readme",
   "dependencies": {},
   "devDependencies": {
-    "chai": "^6.2.2",
-    "chai-as-promised": "^8.0.2",
-    "chai-things": "^0.2.0",
     "doctoc": "^2.4.1",
     "http-server": "^14.1.1",
-    "mocha": "^11.7.5",
     "nyc": "^18.0.0"
   }
 }
