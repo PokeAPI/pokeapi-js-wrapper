@@ -20,7 +20,7 @@ jobs:
           npm ci
           npm install -g codecov
       - name: Unit test
-        run: npm t
+        run: npm run coverage
       - name: Upload coverage
         uses: codecov/codecov-action@v6
         with:

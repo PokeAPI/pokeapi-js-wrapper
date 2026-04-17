@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "doctoc": "doctoc .",
-    "test": "node --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info --test ./test/test.js",
+    "test": "node --test ./test/test.js",
+    "coverage": "node --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info --test ./test/test.js",
     "serve": "http-server ."
   },
   "repository": {

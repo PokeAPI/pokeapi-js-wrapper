@@ -3,11 +3,11 @@
 [![npm](https://img.shields.io/npm/v/pokeapi-js-wrapper)](https://www.npmjs.com/package/pokeapi-js-wrapper)
 [![Tests](https://github.com/PokeAPI/pokeapi-js-wrapper/actions/workflows/test.yml/badge.svg)](https://github.com/PokeAPI/pokeapi-js-wrapper/actions/workflows/test.yml)
 [![Mocha browser tests](https://img.shields.io/badge/test-browser-brightgreen.svg)](https://pokeapi.github.io/pokeapi-js-wrapper/test/test.html)
-[![codecov](https://codecov.io/gh/PokeAPI/pokeapi-js-wrapper/branch/master/graph/badge.svg)](https://codecov.io/gh/PokeAPI/pokeapi-js-wrapper)
+[![codecov](https://codecov.io/github/PokeAPI/pokeapi-js-wrapper/graph/badge.svg?token=4oXXOVxG2n)](https://codecov.io/github/PokeAPI/pokeapi-js-wrapper)
 
 Maintainer: [Naramsim](https://github.com/Naramsim)
 
-A PokeAPI wrapper intended for browsers only. Comes fully asynchronous (with [localForage](https://github.com/localForage/localForage)) and built-in cache. Offers also Image Caching through the inclusion of a Service Worker. _For a Node (server-side) wrapper see: [pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2)_
+A PokeAPI wrapper intended for browsers. Comes fully asynchronous, zero dependencies and built-in cache. Offers also Image Caching through the inclusion of a Service Worker. _For a Node (server-side) wrapper see: [pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2)_
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -25,26 +25,22 @@ A PokeAPI wrapper intended for browsers only. Comes fully asynchronous (with [lo
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Install
-
-```sh
-npm install pokeapi-js-wrapper --save
-```
-
-```html
-<script src="https://unpkg.com/pokeapi-js-wrapper/src/index.js"></script>
-```
-
 ## Usage
 
 ```js
-const Pokedex = require("pokeapi-js-wrapper")
-const P = new Pokedex()
+// As a Node module
+// npm install pokeapi-js-wrapper --save
+const pokedex = await Pokedex.init();
+console.log(await pokedex.getPokemonsList())
 ```
 
 ```html
-<script>
-  const P = new Pokedex()
+<!-- Included in some HTML -->
+<script type="module">
+    import {Pokedex} from "https://cdn.jsdelivr.net/gh/pokeapi/pokeapi-js-wrapper@beta/src/index.js"
+    const pokedex = await Pokedex.init();
+    const version = await pokedex.getVersionByName(1)
+    console.log(version)
 </script>
 ```
 
@@ -53,17 +49,17 @@ const P = new Pokedex()
 ```js
 // with await, be sure to be in an async function (and in a try/catch)
 (async () => {
-  const golduck = await P.getPokemonByName("golduck")
+  const golduck = await pokedex.getPokemonByName("golduck")
   console.log(golduck)
 })()
 
 // or with Promises
-P.getPokemonByName("eevee")
+pokedex.getPokemonByName("eevee")
   .then(function(response) {
     console.log(response)
   })
 
-P.resource([
+pokedex.resource([
   "/api/v2/pokemon/36",
   "api/v2/berry/8",
   "https://pokeapi.co/api/v2/ability/9/",
@@ -74,11 +70,10 @@ P.resource([
 
 ## Configuration
 
-Pass an Object to `Pokedex()` in order to configure it. Available options: `protocol`, `hostName`, `versionPath`, `cache`, `timeout`(ms), and `cacheImages`.
+Pass an Object to `Pokedex.init()` in order to configure it. Available options: `protocol`, `hostName`, `versionPath`, `cache`, `timeout`(ms), and `cacheImages`.
 Any option is optional :smile:. All the default values can be found [here](https://github.com/PokeAPI/pokeapi-js-wrapper/blob/master/src/config.js#L3-L10)
 
 ```js
-const Pokedex = require("pokeapi-js-wrapper")
 const customOptions = {
   protocol: "https",
   hostName: "localhost:443",
@@ -87,7 +82,7 @@ const customOptions = {
   timeout: 5 * 1000, // 5s
   cacheImages: true
 }
-const P = new Pokedex(customOptions)
+const pokedex = await Pokedex.init(customOptions);
 ```
 
 ### Caching images
@@ -97,9 +92,9 @@ Pokeapi.co serves its Pokemon images through [Github](https://github.com/PokeAPI
 `pokeapi-js-wrapper` enables browsers to cache all these images by:
 
   1. enabling the config parameter `cacheImages`
-  2. serving [our service worker](https://raw.githubusercontent.com/PokeAPI/pokeapi-js-wrapper/master/dist/pokeapi-js-wrapper-sw.js) from the root of your project
+  2. serving [our service worker](https://raw.githubusercontent.com/PokeAPI/pokeapi-js-wrapper/master/src/pokeapi-js-wrapper-sw.js) from the root of your project
 
-In this way when `pokeapi-js-wrapper`'s `Pokedex` is created it will install and start the Service Worker you are serving at the root of your server. The Service Worker will intercept all the calls your HTML/CSS/JS are making to get PokeAPI's images and will cache them.
+In this way when `pokeapi-js-wrapper`'s `Pokedex` is initialized it will install and start the Service Worker you are serving at the root of your server. The Service Worker will intercept all the calls your HTML/CSS/JS are making to get PokeAPI's images and will cache them.
 
 It's fundamental that you download the Service Worker [we provide](https://raw.githubusercontent.com/PokeAPI/pokeapi-js-wrapper/master/src/pokeapi-js-wrapper-sw.js)_(Right Click + Save As)_ and you serve it from the root of your project/server. Service Workers in fact cannot be installed from a domain different than yours.
 
@@ -107,7 +102,7 @@ A [basic example](https://github.com/PokeAPI/pokeapi-js-wrapper/blob/master/test
 
 ## Tests
 
-`pokeapi-js-wrapper` can be tested using two strategies. One is with Node, since this package works with Node (although not recommended), and the other with a browser.
+`pokeapi-js-wrapper` can be tested using two strategies. One is with Node, since this package works with Node, and the other with a browser.
 
 ```js
 npm test
@@ -120,23 +115,15 @@ Or open `/test/test.html` in your browser. A live version can be found at [`gh-p
 All the endpoints and the functions to access PokeAPI's endpoints are listed in the long table below. Each function `.ByName(name)` accepts names and ids. The only 5 functions `.ById(id)` only accept ids. You can also pass an array to each function, it will retrieve the data for each element asynchronously.
 
 ```js
-P.getPokemonByName("eevee").then(function(response) {
-  console.log(response)
-})
+response = await pokedex.getPokemonByName("eevee")
 
-P.getPokemonSpeciesByName(25).then(function(response) {
-  console.log(response)
-})
+response = await pokedex.getPokemonSpeciesByName(25)
 
-P.getBerryByName(["cheri", "chesto", 5]).then(function(response) {
-  // `response` will be an Array containing 3 Objects
-  // response.forEach((item) => {console.log(item.size)}) // 80,50,20
-  console.log(response)
-})
+// `response` will be an Array containing 3 Objects
+// response.forEach((item) => {console.log(item.size)}) // 80,50,20
+response = await pokedex.getBerryByName(["cheri", "chesto", 5])
 
-P.getMachineById(3).then(function(response) {
-  console.log(response)
-})
+response = await pokedex.getMachineById(3)
 ```
 
 | Function | Mapped PokeAPI endpoint | Documentation |
@@ -207,41 +194,10 @@ const interval = {
   offset: 34,
   limit: 10,
 }
-P.getPokemonsList(interval).then(function(response) {
+pokedex.getPokemonsList(interval).then(function(response) {
   console.log(response)
 })
 ```
-
-<!--
-This is what you will get:
-
-```json
-{
-  "count": 1050,
-  "next": "https://pokeapi.co/api/v2/pokemon/?offset=43&limit=10",
-  "previous": "https://pokeapi.co/api/v2/pokemon/?offset=23&limit=10",
-  "results": [
-    {
-      "name": "nidoking",
-      "url": "https://pokeapi.co/api/v2/pokemon/34/"
-    },
-    {
-      "name": "clefairy",
-      "url": "https://pokeapi.co/api/v2/pokemon/35/"
-    },
-    // ...
-    {
-      "name": "golbat",
-      "url": "https://pokeapi.co/api/v2/pokemon/42/"
-    },
-    {
-      "name": "oddish",
-      "url": "https://pokeapi.co/api/v2/pokemon/43/"
-    }
-  ]
-}
-```
--->
 
 | Function | Mapped PokeAPI endpoint |
 | --- | --- |
@@ -267,6 +223,7 @@ This is what you will get:
 | `getItemFlingEffectsList()` | [/item-fling-effect](https://pokeapi.co/api/v2/item-fling-effect/) |
 | `getItemPocketsList()` | [/item-pocket](https://pokeapi.co/api/v2/item-pocket/) |
 | `getMachinesList()` | [/machine](https://pokeapi.co/api/v2/machine/) |
+| `getMeta()` | [/meta](https://pokeapi.co/api/v2/meta/) |
 | `getMovesList()` | [/move](https://pokeapi.co/api/v2/move/) |
 | `getMoveAilmentsList()` | [/move-ailment](https://pokeapi.co/api/v2/move-ailment/) |
 | `getMoveBattleStylesList()` | [/move-battle-style](https://pokeapi.co/api/v2/move-battle-style/) |
@@ -300,7 +257,7 @@ This is what you will get:
 Use `.resource()` to query any URL or path. Also this function accepts both single values and Arrays.
 
 ```js
-P.resource([
+pokedex.resource([
   "/api/v2/pokemon/36",
   "api/v2/berry/8",
   "https://pokeapi.co/api/v2/ability/9/",
@@ -308,11 +265,7 @@ P.resource([
   console.log(response)
 })
 
-P.resource("api/v2/berry/5").then(function(response) {
+pokedex.resource("api/v2/berry/5").then(function(response) {
   console.log(response)
 })
 ```
-
-## Internet Explorer 8
-
-In order to target this browser you must load a `Promise` polyfill before `pokeapi-js-wrapper`. You can choose one of your choice, we recommend [jakearchibald/es6-promise](https://cdnjs.com/libraries/es6-promise) or [stefanpenner/es6-promise](https://github.com/stefanpenner/es6-promise)

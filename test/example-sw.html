@@ -4,7 +4,7 @@
     <title>SW test</title>
     <script type="module">
       import {Pokedex} from '../src/index.js'
-      const P = new Pokedex({ cacheImages: true });
+      const P = await Pokedex.init({ cacheImages: true });
     </script>
   </head>
 

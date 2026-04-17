@@ -8,8 +8,8 @@ import { Config } from './config.js'
 export class Pokedex {
 
     constructor(config) {
-        this.config = new Config(config)
-        openDB(this.config)
+        this.config = config
+
         // add to Pokedex.prototype all our endpoint functions
         endpoints.forEach(endpoint => {
             const endpointFullName = buildEndpointFullName(endpoint)
@@ -50,8 +50,14 @@ export class Pokedex {
         })
 
         if (this.config.cacheImages) {
-            import('./installSW.js').then(a=>a.installSW())
+            import('./installSW.js').then(module=>module.installSW())
         }
+    }
+
+    static async init(config) {
+        config = new Config(config)
+        await openDB(config)
+        return new Pokedex(config)
     }
 
     getConfig() {
