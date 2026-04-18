@@ -1,56 +1,110 @@
-import axios from 'axios'
-import localForage from "localforage"
+import { log, canUseCache } from './utils.js'
 
-const CACHE_PREFIX = "pokeapi-js-wrapper-"
+var db
 
-function loadResource(config, url) {
-    return new Promise((resolve, reject) => {
-        localForage.ready()
-            .then(() => {
-                localForage.getItem(`${CACHE_PREFIX}${url}`)
-                    .then(value => {
-                        if (value === null) {
-                            loadUrl(config, url).then(res => {resolve(res)})
-                                .catch(err => {reject(err)})
-                        } else {
-                            resolve(addCacheMark(value))
-                        }
-                    })
-                    .catch(err => {
-                        loadUrl(config, url).then(res => {resolve(res)})
-                            .catch(err => {reject(err)})
-                    })
-            })
-            .catch(err => {
-                loadUrl(config, url).then(res => {resolve(res)})
-                    .catch(err => {reject(err)})
-            })
-    })
+function openDB(config) {
+    if (config.cache && typeof window !== 'undefined') {
+        const request = window.indexedDB.open("pokeapi-js-wrapper", 1);
+        return new Promise((resolve, reject) => {
+            request.onerror = (event) => {
+                log('IndexedDB not available')
+                reject()
+            }
+            request.onupgradeneeded = (event) => {
+                db = event.target.result;
+                log('db opened and cache created')
+                db.createObjectStore("cache", { autoIncrement: false });
+                resolve(db)
+            }
+            request.onsuccess = (event) => {
+                log('db opened')
+                db = event.target.result;
+                resolve(db)
+            }
+            request.onversionchange = (event) => {
+                db.close()
+                reject()
+            }
+            request.onblocked = (event) => {
+                db.close()
+                reject()
+            }
+        });
+    }
 }
 
-function loadUrl(config, url) {
+function getFromDB(objectStore, url) {
     return new Promise((resolve, reject) => {
-        let options = {
-            baseURL: `${config.protocol}://${config.hostName}/`,
-            timeout: config.timeout
+        const cachedObject = objectStore.get(url)
+        cachedObject.onsuccess = () => resolve(cachedObject.result);
+        cachedObject.onerror = () => reject(cachedObject.error);
+    });
+}
+
+async function loadResource(config, url) {
+    if (! url.includes('://')) {
+        url = url.replace(/^\//, '');
+        url = `${config.protocol}://${config.hostName}/${url}`
+    }
+    if (canUseCache(config, db)) {
+        const transaction = db.transaction("cache", "readonly");
+        const objectStore = transaction.objectStore("cache");
+        const data = await getFromDB(objectStore, url);
+        if (data) {
+            log(`read from cache ${url}`)
+            return data
+        } else {
+            return await loadUrl(config, url)
         }
-        axios.get(url, options)
-            .then(response => {
-                // if there was an error
-                if (response.status >= 400) {
-                    reject(response)
-                } else {
-                    // if everything was good
-                    // cache the object in browser memory
-                    // only if cache is true
-                    if (config.cache) {
-                        localForage.setItem(`${CACHE_PREFIX}${url}`, response.data)
-                    }
-                    resolve(response.data)
-                }
-            })
-            .catch(err => { reject(err) })
-    })
+    } else {
+        return await loadUrl(config, url)
+    }
 }
 
-export { loadResource }
+async function loadUrl(config, url) {
+    const response = await fetch(url);
+    const body = await response.json()
+    if (response.status === 200) {
+        if (canUseCache(config, db)) {
+            const transaction = db.transaction("cache", "readwrite");
+            const objectStore = transaction.objectStore("cache");
+            const request = objectStore.add(body, url)
+            request.onsuccess = () => log(`object cached ${url}`);
+            request.onerror = () => {
+                log(request.error)
+            }
+        }
+    }
+
+    return body
+}
+
+function sizeDB(config) {
+    if (canUseCache(config, db)) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction("cache", "readwrite");
+            const objectStore = transaction.objectStore("cache");
+            const request = objectStore.count()
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    } else {
+        return Promise.reject()
+    }
+}
+
+function clearDB(config) {
+    if (canUseCache(config, db)) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction("cache", "readwrite");
+            const objectStore = transaction.objectStore("cache");
+            const request = objectStore.clear()
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    } else {
+        return Promise.reject()
+    }
+}
+
+export { loadResource, openDB, sizeDB, clearDB }
