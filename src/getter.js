@@ -4,7 +4,7 @@ var db
 
 function openDB(config) {
     if (config.cache && typeof window !== 'undefined') {
-        const request = window.indexedDB.open("pokeapi-js-wrapper", 1);
+        const request = window.indexedDB.open("pokeapi-js-wrapper", 3);
         return new Promise((resolve, reject) => {
             request.onerror = (event) => {
                 log('IndexedDB not available')
