@@ -9,9 +9,6 @@ Maintainer: [Naramsim](https://github.com/Naramsim)
 
 A PokeAPI wrapper intended for browsers. Comes fully asynchronous, zero dependencies and built-in cache. Offers also Image Caching through the inclusion of a Service Worker. _For a Node (server-side) wrapper see: [pokedex-promise-v2](https://github.com/PokeAPI/pokedex-promise-v2)_
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 - [Install](#install)
 - [Usage](#usage)
   - [Example requests](#example-requests)
@@ -21,9 +18,6 @@ A PokeAPI wrapper intended for browsers. Comes fully asynchronous, zero dependen
 - [Endpoints](#endpoints)
   - [Root Endpoints list](#root-endpoints-list)
   - [Custom URLs and paths](#custom-urls-and-paths)
-- [Internet Explorer 8](#internet-explorer-8)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Usage
 

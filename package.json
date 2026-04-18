@@ -33,9 +33,7 @@
     "url": "https://github.com/PokeAPI/pokeapi-js-wrapper/issues"
   },
   "homepage": "https://github.com/PokeAPI/pokeapi-js-wrapper#readme",
-  "dependencies": {},
   "devDependencies": {
-    "doctoc": "^2.4.1",
     "http-server": "^14.1.1"
   }
 }
