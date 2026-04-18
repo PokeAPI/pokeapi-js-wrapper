@@ -40,7 +40,7 @@ describe("pokedex", function () {
 
   // --- Resource Methods ---
 
-  describe(".resource(Mixed: array)", function () {
+  describe(".resource(Mixed: array) not cached", function () {
     it("should have property name", async function () {
       const res = await customP.resource(['/api/v2/pokemon/36', 'api/v2/berry/8', 'https://pokeapi.co/api/v2/ability/9/']);
       expect(res[0]).to.have.property('name');

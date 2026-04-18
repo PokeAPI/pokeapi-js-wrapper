@@ -5,22 +5,31 @@ var db
 function openDB(config) {
     if (config.cache && typeof window !== 'undefined') {
         const request = window.indexedDB.open("pokeapi-js-wrapper", 1);
-
-        request.onerror = (event) => {
-            log('IndexedDB not available')
-        }
-        request.onupgradeneeded = (event) => {
-            db = event.target.result;
-            log('db opened and cache created')
-            db.createObjectStore("cache", { autoIncrement: false });
-        }
-        request.onsuccess = (event) => {
-            log('db opened')
-            db = event.target.result;
-        }
-        request.onversionchange = (event) => {
-            db.close()
-        }
+        return new Promise((resolve, reject) => {
+            request.onerror = (event) => {
+                log('IndexedDB not available')
+                reject()
+            }
+            request.onupgradeneeded = (event) => {
+                db = event.target.result;
+                log('db opened and cache created')
+                db.createObjectStore("cache", { autoIncrement: false });
+                resolve(db)
+            }
+            request.onsuccess = (event) => {
+                log('db opened')
+                db = event.target.result;
+                resolve(db)
+            }
+            request.onversionchange = (event) => {
+                db.close()
+                reject()
+            }
+            request.onblocked = (event) => {
+                db.close()
+                reject()
+            }
+        });
     }
 }
 
@@ -37,7 +46,6 @@ async function loadResource(config, url) {
         url = url.replace(/^\//, '');
         url = `${config.protocol}://${config.hostName}/${url}`
     }
-
     if (canUseCache(config, db)) {
         const transaction = db.transaction("cache", "readonly");
         const objectStore = transaction.objectStore("cache");
