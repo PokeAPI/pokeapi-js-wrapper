@@ -2,7 +2,7 @@
 
 import endpoints from './endpoints.json' with { type: "json" }
 import rootEndpoints from './rootEndpoints.json' with { type: "json" }
-import { loadResource, openDB, sizeDB, clearDB } from './getter.js'
+import { loadResource, openCache, sizeCache, clearCache, invalidateCache } from './getter.js'
 import { Config } from './config.js'
 
 export class Pokedex {
@@ -18,7 +18,7 @@ export class Pokedex {
 
                     // if the user has submitted a Name or an ID, return the JSON promise
                     if (typeof input === 'number' || typeof input === 'string') {
-                        return loadResource(this.config, `${this.config.versionPath}${endpoint[2].replace(':id', input)}`)
+                        return loadResource(this.config, `${endpoint[2].replace(':id', input)}`)
                     }
 
                     // if the user has submitted an Array
@@ -44,7 +44,7 @@ export class Pokedex {
                         limit = config.limit
                     }
                 }
-                return loadResource(this.config, `${this.config.versionPath}${rootEndpoint[1]}?limit=${limit}&offset=${offset}`)
+                return loadResource(this.config, `${rootEndpoint[1]}?limit=${limit}&offset=${offset}`)
             }
             this[rootEndpoint[0]] = this[rootEndpointFullName]
         })
@@ -56,7 +56,7 @@ export class Pokedex {
 
     static async init(config) {
         config = new Config(config)
-        await openDB(config)
+        await openCache(config)
         return new Pokedex(config)
     }
 
@@ -72,6 +72,10 @@ export class Pokedex {
         return clearDB(this.config)
     }
 
+    invalidateCache() {
+        return invalidateCache(this.config)
+    }
+
     resource(path) {
         if (typeof path === 'string') {
             return loadResource(this.config, path)
@@ -85,7 +89,7 @@ export class Pokedex {
 
 function mapResources(config, endpoint, inputs) {
     return inputs.map(input => {
-        return loadResource(config, `${config.versionPath}${endpoint[2].replace(':id', input)}`)
+        return loadResource(config, `${endpoint[2].replace(':id', input)}`)
     })
 }
 

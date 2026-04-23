@@ -42,16 +42,17 @@ describe("pokedex", function () {
 
   describe(".resource(Mixed: array) not cached", function () {
     it("should have property name", async function () {
-      const res = await customP.resource(['/api/v2/pokemon/36', 'api/v2/berry/8', 'https://pokeapi.co/api/v2/ability/9/']);
+      const res = await customP.resource(['pokemon/37', '/pokemon/36', '/berry/8', 'https://pokeapi.co/api/v2/ability/9/']);
       expect(res[0]).to.have.property('name');
       expect(res[1]).to.have.property('name');
       expect(res[2]).to.have.property('name');
+      expect(res[3]).to.have.property('name');
     });
   });
 
   describe(".resource(Path: string)", function () {
     it("should have property height", async function () {
-      const res = await defaultP.resource('/api/v2/pokemon/34');
+      const res = await defaultP.resource('pokemon/34');
       expect(res).to.have.property('height');
     });
   });
