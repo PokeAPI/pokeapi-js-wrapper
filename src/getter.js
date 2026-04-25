@@ -110,26 +110,29 @@ function sizeCache(config) {
 
 async function invalidateCache(config) {
     if (canUseCache(config, db)) {
-        const meta = await loadResource({...config, cache: false}, 'meta')
-        const upstream_deploy_date = parseInt(meta.deploy_date)
-        const transaction = db.transaction("cache", "readwrite");
-        const objectStore = transaction.objectStore("cache");
-        const index = objectStore.index("deploy_date_index")
-        const range = IDBKeyRange.upperBound(upstream_deploy_date, true);
-        const request = index.getAllKeys(range);
+        const meta = await loadResource({ ...config, cache: false }, 'meta');
+        const upstream_deploy_date = parseInt(meta.deploy_date);
 
-        request.onsuccess = () => {
-            const keys = request.result;
-            keys.forEach(pk => {
-                objectStore.delete(pk);
-                log(`invalidated ${pk}`);
-            });
-            return true
-        };
-        request.onerror = () => {throw new Error(request.error);
-        };
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction("cache", "readwrite");
+            const objectStore = transaction.objectStore("cache");
+            const index = objectStore.index("deploy_date_index");
+
+            const range = IDBKeyRange.upperBound(upstream_deploy_date, true);
+            const request = index.getAllKeys(range);
+
+            request.onsuccess = () => {
+                const keys = request.result;
+                keys.forEach(pk => {
+                    objectStore.delete(pk);
+                    log(`invalidated ${pk}`);
+                });
+                resolve(true);
+            };
+            request.onerror = () => reject(new Error(request.error));
+        });
     } else {
-        throw new Error('cache not available')
+        throw new Error('cache not available');
     }
 }
 
