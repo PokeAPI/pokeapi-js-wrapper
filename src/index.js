@@ -65,11 +65,11 @@ export class Pokedex {
     }
 
     getCacheLength() {
-        return sizeDB(this.config)
+        return sizeCache(this.config)
     }
 
     clearCache() {
-        return clearDB(this.config)
+        return clearCache(this.config)
     }
 
     invalidateCache() {
