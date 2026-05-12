@@ -2,23 +2,34 @@ import { log, canUseCache } from './utils.js'
 
 var db
 
-function openDB(config) {
+function openCache(config) {
     if (config.cache && typeof window !== 'undefined') {
-        const request = window.indexedDB.open("pokeapi-js-wrapper", 3);
+        const request = window.indexedDB.open("pokeapi-js-wrapper", 8);
         return new Promise((resolve, reject) => {
             request.onerror = (event) => {
                 log('IndexedDB not available')
                 reject()
             }
             request.onupgradeneeded = (event) => {
-                db = event.target.result;
-                log('db opened and cache created')
-                db.createObjectStore("cache", { autoIncrement: false });
-                resolve(db)
+                const db = event.target.result;
+                const transaction = event.target.transaction;
+                let objectStore;
+
+                if (!db.objectStoreNames.contains('cache')) {
+                    objectStore = db.createObjectStore("cache", { autoIncrement: false });
+                    log('Object store "cache" created');
+                } else {
+                    objectStore = transaction.objectStore("cache");
+                }
+
+                if (!objectStore.indexNames.contains("deploy_date_index")) {
+                    objectStore.createIndex("deploy_date_index", "meta.deploy_date", { unique: false });
+                    log('Index "deploy_date_index" created');
+                }
             }
             request.onsuccess = (event) => {
-                log('db opened')
                 db = event.target.result;
+                log('db opened')
                 resolve(db)
             }
             request.onversionchange = (event) => {
@@ -43,8 +54,11 @@ function getFromDB(objectStore, url) {
 
 async function loadResource(config, url) {
     if (! url.includes('://')) {
-        url = url.replace(/^\//, '');
-        url = `${config.protocol}://${config.hostName}/${url}`
+        if (url.startsWith('/api/v2/')) {
+            url = `${config.protocol}://${config.hostName}${url}`
+        } else if (!url.includes('://')) {
+            url = `${config.protocol}://${config.hostName}${config.versionPath}${url}`
+        }
     }
     if (canUseCache(config, db)) {
         const transaction = db.transaction("cache", "readonly");
@@ -66,10 +80,14 @@ async function loadUrl(config, url) {
     const body = await response.json()
     if (response.status === 200) {
         if (canUseCache(config, db)) {
+            const deploy_date = parseInt(response.headers.get('X-PokeAPI-Deploy-Date'))
+            body.meta = { deploy_date }
             const transaction = db.transaction("cache", "readwrite");
             const objectStore = transaction.objectStore("cache");
             const request = objectStore.add(body, url)
-            request.onsuccess = () => log(`object cached ${url}`);
+            request.onsuccess = () => {
+                log(`object cached ${url}`);
+            }
             request.onerror = () => {
                 log(request.error)
             }
@@ -79,7 +97,7 @@ async function loadUrl(config, url) {
     return body
 }
 
-function sizeDB(config) {
+function sizeCache(config) {
     if (canUseCache(config, db)) {
         return new Promise((resolve, reject) => {
             const transaction = db.transaction("cache", "readwrite");
@@ -89,11 +107,39 @@ function sizeDB(config) {
             request.onerror = () => reject(request.error);
         });
     } else {
-        return Promise.reject()
+        return Promise.reject(new Error('Cache not available'))
     }
 }
 
-function clearDB(config) {
+async function invalidateCache(config) {
+    if (canUseCache(config, db)) {
+        const meta = await loadResource({ ...config, cache: false }, 'meta');
+        const upstream_deploy_date = parseInt(meta.deploy_date);
+
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction("cache", "readwrite");
+            const objectStore = transaction.objectStore("cache");
+            const index = objectStore.index("deploy_date_index");
+
+            const range = IDBKeyRange.upperBound(upstream_deploy_date, true);
+            const request = index.getAllKeys(range);
+
+            request.onsuccess = () => {
+                const keys = request.result;
+                keys.forEach(pk => {
+                    objectStore.delete(pk);
+                    log(`invalidated ${pk}`);
+                });
+                resolve(true);
+            };
+            request.onerror = () => reject(new Error(request.error));
+        });
+    } else {
+        throw new Error('cache not available');
+    }
+}
+
+function clearCache(config) {
     if (canUseCache(config, db)) {
         return new Promise((resolve, reject) => {
             const transaction = db.transaction("cache", "readwrite");
@@ -103,8 +149,8 @@ function clearDB(config) {
             request.onerror = () => reject(request.error);
         });
     } else {
-        return Promise.reject()
+        return Promise.reject(new Error('Cache not available'))
     }
 }
 
-export { loadResource, openDB, sizeDB, clearDB }
+export { loadResource, openCache, sizeCache, clearCache, invalidateCache }

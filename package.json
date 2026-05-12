@@ -1,6 +1,6 @@
 {
   "name": "pokeapi-js-wrapper",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "An API wrapper for PokeAPI",
   "main": "src/index.js",
   "type": "module",

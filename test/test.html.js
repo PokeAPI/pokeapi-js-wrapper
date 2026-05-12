@@ -42,16 +42,17 @@ describe("pokedex", function () {
 
   describe(".resource(Mixed: array) not cached", function () {
     it("should have property name", async function () {
-      const res = await customP.resource(['/api/v2/pokemon/36', 'api/v2/berry/8', 'https://pokeapi.co/api/v2/ability/9/']);
+      const res = await customP.resource(['pokemon/37', '/pokemon/36', '/berry/8', 'https://pokeapi.co/api/v2/ability/9/']);
       expect(res[0]).to.have.property('name');
       expect(res[1]).to.have.property('name');
       expect(res[2]).to.have.property('name');
+      expect(res[3]).to.have.property('name');
     });
   });
 
   describe(".resource(Path: string)", function () {
     it("should have property height", async function () {
-      const res = await defaultP.resource('/api/v2/pokemon/34');
+      const res = await defaultP.resource('pokemon/34');
       expect(res).to.have.property('height');
     });
   });
@@ -370,6 +371,75 @@ describe("pokedex", function () {
       expect(res).to.have.property("name");
     });
   });
+});
+
+describe("Cache", function () {
+    this.timeout(10000);
+    const originalFetch = window.fetch;
+    let P;
+    let fetchCalls = [];
+
+    before(async function () {
+        P = await Pokedex.init({ cache: true });
+        window.fetch = async (url) => {
+            const url_str = url.toString();
+            fetchCalls.push(url_str);
+
+            if (url_str.includes('/pokemon/ditto')) {
+                return new Response(JSON.stringify({ name: 'ditto' }), {
+                    headers: { 'X-PokeAPI-Deploy-Date': '100' }
+                });
+            }
+            if (url_str.includes('/pokemon/pikachu')) {
+                return new Response(JSON.stringify({ name: 'pikachu' }), {
+                    headers: { 'X-PokeAPI-Deploy-Date': '300' }
+                });
+            }
+            if (url_str.includes('/meta')) {
+                return new Response(JSON.stringify({ deploy_date: '200' }));
+            }
+            return originalFetch(url);
+        };
+    });
+
+    beforeEach(async function () {
+        await P.clearCache();
+        fetchCalls = [];
+    });
+
+    after(function () {
+        window.fetch = originalFetch;
+    });
+
+    it("should invalidate old cache entries and keep new ones", async function () {
+        await P.getPokemonByName('ditto');
+        await P.getPokemonByName('pikachu');
+        expect(fetchCalls.length).to.equal(2);
+
+        let cacheSize = await P.getCacheLength();
+        expect(cacheSize).to.equal(2);
+
+        fetchCalls = [];
+        await P.getPokemonByName('ditto');
+        await P.getPokemonByName('pikachu');
+        expect(fetchCalls.length).to.equal(0);
+
+        await P.invalidateCache();
+        expect(fetchCalls.length).to.equal(1);
+        expect(fetchCalls[0]).to.include('/meta');
+
+        cacheSize = await P.getCacheLength();
+        expect(cacheSize).to.equal(1);
+
+        fetchCalls = [];
+        await P.getPokemonByName('ditto');
+        await P.getPokemonByName('pikachu');
+        expect(fetchCalls.length).to.equal(1);
+        expect(fetchCalls[0]).to.include('/pokemon/ditto');
+
+        cacheSize = await P.getCacheLength();
+        expect(cacheSize).to.equal(2);
+    });
 });
 
 const button = document.getElementById('flush-cache-btn');
