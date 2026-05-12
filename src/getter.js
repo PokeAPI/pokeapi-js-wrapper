@@ -54,8 +54,11 @@ function getFromDB(objectStore, url) {
 
 async function loadResource(config, url) {
     if (! url.includes('://')) {
-        url = url.replace(/^\//, '');
-        url = `${config.protocol}://${config.hostName}${config.versionPath}${url}`
+        if (url.startsWith('/api/v2/')) {
+            url = `${config.protocol}://${config.hostName}${url}`
+        } else if (!url.includes('://')) {
+            url = `${config.protocol}://${config.hostName}${config.versionPath}${url}`
+        }
     }
     if (canUseCache(config, db)) {
         const transaction = db.transaction("cache", "readonly");
@@ -104,7 +107,7 @@ function sizeCache(config) {
             request.onerror = () => reject(request.error);
         });
     } else {
-        return Promise.reject()
+        return Promise.reject(new Error('Cache not available'))
     }
 }
 
@@ -146,7 +149,7 @@ function clearCache(config) {
             request.onerror = () => reject(request.error);
         });
     } else {
-        return Promise.reject()
+        return Promise.reject(new Error('Cache not available'))
     }
 }
 
