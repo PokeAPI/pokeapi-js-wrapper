@@ -86,7 +86,7 @@ Pokeapi.co serves its Pokemon images through [Github](https://github.com/PokeAPI
 `pokeapi-js-wrapper` enables browsers to cache all these images by:
 
   1. enabling the config parameter `cacheImages`
-  2. serving [our service worker](https://raw.githubusercontent.com/PokeAPI/pokeapi-js-wrapper/master/src/pokeapi-js-wrapper-sw.js) from the root of your project
+  2. serving [our service worker](https://raw.githubusercontent.com/PokeAPI/pokeapi-js-wrapper/master/test/pokeapi-js-wrapper-sw.js) from the root of your project
 
 In this way when `pokeapi-js-wrapper`'s `Pokedex` is initialized it will install and start the Service Worker you are serving at the root of your server. The Service Worker will intercept all the calls your HTML/CSS/JS are making to get PokeAPI's images and will cache them.
 

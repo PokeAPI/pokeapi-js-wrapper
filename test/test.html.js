@@ -8,7 +8,10 @@ describe("service worker", function () {
   this.timeout(10000);
 
   before(async function() {
-    P = await Pokedex.init({ cacheImages: true });
+    P = await Pokedex.init({
+      cacheImages: true,
+      swLocation: '/test/'
+    });
   });
 
   it("should be activated on second run", async function () {
