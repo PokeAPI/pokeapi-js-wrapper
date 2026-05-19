@@ -50,7 +50,7 @@ export class Pokedex {
         })
 
         if (this.config.cacheImages) {
-            import('./installSW.js').then(module=>module.installSW())
+            import('./installSW.js').then(module=>module.installSW(this.config.swLocation))
         }
     }
 

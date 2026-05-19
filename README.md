@@ -14,6 +14,7 @@ A PokeAPI wrapper intended for browsers. Comes fully asynchronous, zero dependen
   - [Example requests](#example-requests)
 - [Configuration](#configuration)
   - [Caching images](#caching-images)
+  - [Caching methods](#caching-methods)
 - [Tests](#tests)
 - [Endpoints](#endpoints)
   - [Root Endpoints list](#root-endpoints-list)
@@ -31,7 +32,7 @@ console.log(await pokedex.getPokemonsList())
 ```html
 <!-- Included in some HTML -->
 <script type="module">
-    import {Pokedex} from "https://cdn.jsdelivr.net/gh/pokeapi/pokeapi-js-wrapper@beta/src/index.js"
+    import {Pokedex} from "https://cdn.jsdelivr.net/gh/pokeapi/pokeapi-js-wrapper@2.0.2/src/index.js"
     const pokedex = await Pokedex.init();
     const version = await pokedex.getVersionByName(1)
     console.log(version)
@@ -65,7 +66,7 @@ pokedex.resource([
 ## Configuration
 
 Pass an Object to `Pokedex.init()` in order to configure it. Available options: `protocol`, `hostName`, `versionPath`, `cache`, `timeout`(ms), and `cacheImages`.
-Any option is optional :smile:. All the default values can be found [here](https://github.com/PokeAPI/pokeapi-js-wrapper/blob/master/src/config.js#L3-L10)
+Any option is optional :smile:. All the default values can be found [here](https://github.com/PokeAPI/pokeapi-js-wrapper/blob/master/src/config.js#L3-L11)
 
 ```js
 const customOptions = {
@@ -74,7 +75,8 @@ const customOptions = {
   versionPath: "/api/v2/",
   cache: true,
   timeout: 5 * 1000, // 5s
-  cacheImages: true
+  cacheImages: true,
+  swLocation: '/'
 }
 const pokedex = await Pokedex.init(customOptions);
 ```
@@ -86,13 +88,21 @@ Pokeapi.co serves its Pokemon images through [Github](https://github.com/PokeAPI
 `pokeapi-js-wrapper` enables browsers to cache all these images by:
 
   1. enabling the config parameter `cacheImages`
-  2. serving [our service worker](https://raw.githubusercontent.com/PokeAPI/pokeapi-js-wrapper/master/src/pokeapi-js-wrapper-sw.js) from the root of your project
+  2. serving [our service worker](https://raw.githubusercontent.com/PokeAPI/pokeapi-js-wrapper/master/test/pokeapi-js-wrapper-sw.js) from the root of your project
 
 In this way when `pokeapi-js-wrapper`'s `Pokedex` is initialized it will install and start the Service Worker you are serving at the root of your server. The Service Worker will intercept all the calls your HTML/CSS/JS are making to get PokeAPI's images and will cache them.
 
 It's fundamental that you download the Service Worker [we provide](https://raw.githubusercontent.com/PokeAPI/pokeapi-js-wrapper/master/src/pokeapi-js-wrapper-sw.js)_(Right Click + Save As)_ and you serve it from the root of your project/server. Service Workers in fact cannot be installed from a domain different than yours.
 
 A [basic example](https://github.com/PokeAPI/pokeapi-js-wrapper/blob/master/test/example-sw.html) is hosted [here](https://pokeapi.github.io/pokeapi-js-wrapper/test/example-sw.html).
+
+### Caching methods
+
+```js
+await P.getCacheLength() // Get how many objects are cached
+await P.clearCache() // Remove all entries
+await P.invalidateCache() // Remove only stale entries
+```
 
 ## Tests
 
@@ -102,7 +112,7 @@ A [basic example](https://github.com/PokeAPI/pokeapi-js-wrapper/blob/master/test
 npm test
 ```
 
-Or open `/test/test.html` in your browser. A live version can be found at [`gh-pages`](https://pokeapi.github.io/pokeapi-js-wrapper/test/test.html)
+Or open `test/test.html` in your browser after serving the project with `npm run serve`. A live version can be found on the project [`gh-pages`](https://pokeapi.github.io/pokeapi-js-wrapper/test/test.html)
 
 ## Endpoints
 

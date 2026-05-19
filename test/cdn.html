@@ -6,7 +6,7 @@
     // var PJSW_DEBUG=1
   </script>
   <script type="module">
-    //import {Pokedex} from "https://cdn.jsdelivr.net/gh/pokeapi/pokeapi-js-wrapper@beta/src/index.js"
+    //import {Pokedex} from "https://cdn.jsdelivr.net/gh/pokeapi/pokeapi-js-wrapper/src/index.js"
     import {Pokedex} from "../src/index.js"
     const pokedex = await Pokedex.init();
     const version = await pokedex.getVersionByName(1)

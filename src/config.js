@@ -8,6 +8,7 @@ class Config {
         this.timeout = 10 * 1000 // 2 seconds
         this.cache = true
         this.cacheImages = false
+        this.swLocation = '/'
 
         if (config.hasOwnProperty('protocol')) {
             this.protocol = config.protocol
@@ -32,6 +33,9 @@ class Config {
         }
         if (config.hasOwnProperty('cacheImages')) {
             this.cacheImages = config.cacheImages
+        }
+        if (config.hasOwnProperty('swLocation')) {
+            this.swLocation = config.swLocation
         }
     }
 }
