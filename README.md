@@ -39,7 +39,7 @@ console.log(await pokedex.getPokemonsList())
 </script>
 ```
 
-### [Example](https://jsbin.com/jedakor/9/edit?html,console) requests
+### [Example](https://jsbin.com/jedakor/11/edit?html,console) requests
 
 ```js
 // with await, be sure to be in an async function (and in a try/catch)
