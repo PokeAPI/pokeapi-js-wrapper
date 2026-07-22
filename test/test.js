@@ -68,6 +68,12 @@ describe("pokedex", { timeout: 30000 }, function () {
       const res = await p2.getPokemonsList();
       assert.ok(res.results, "Response should have results");
       assert.strictEqual(res.results.length, 1);
+      assert.strictEqual(res.results[0].name, "metapod");
+    });
+    it("should start at the first item when offset is 0", async function () {
+      const p = await Pokedex.init({ offset: 0, limit: 1, cache: false });
+      const res = await p.getPokemonsList();
+      assert.strictEqual(res.results[0].name, "bulbasaur");
     });
   });
 
