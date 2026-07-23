@@ -20,7 +20,7 @@ class Config {
             this.versionPath = config.versionPath
         }
         if (config.hasOwnProperty('offset')) {
-            this.offset = config.offset - 1
+            this.offset = config.offset
         }
         if (config.hasOwnProperty('limit')) {
             this.limit = config.limit
